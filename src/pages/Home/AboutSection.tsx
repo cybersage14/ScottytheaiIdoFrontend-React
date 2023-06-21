@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Stack, Typography, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import SectionTitle from "../../components/SectionTitle";
+import { SectionTitle } from "../../components/styledComponents";
 
 export default function AboutSection() {
   const theme = useTheme()
@@ -10,7 +10,7 @@ export default function AboutSection() {
         <Grid container>
           <Grid item md={6}>
             <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={2}>GUARDIAN OF THE CRYPTO UNIVERSE</Typography>
-            <SectionTitle title="Scotty the AI" />
+            <SectionTitle variant="h2">Scotty the AI</SectionTitle>
             <Stack spacing={2}>
               <Typography fontSize={15} color={grey[100]} lineHeight={2}>
                 In a vast and complex world of cryptocurrency, there existed the legend of a dog named Scotty the AI. He was a Scottish Terrier with shaggy, jet-black fur that shimmered like the night sky, making him both an enigma and a sight to behold. It wasn’t just his appearance that set him apart. Scotty possessed a rare combination of intelligence and cunning that made him a force to be reckoned with.

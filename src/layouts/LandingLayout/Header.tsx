@@ -59,7 +59,7 @@ export default function Header() {
               width="100%"
             />
 
-            <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center" width="100%" gap={{ xs: 2, md: 0 }}>
+            <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center" width="100%" spacing={{ xs: 2, md: 0 }}>
               {isMobile ? (
                 <Grid container spacing={6} direction="row-reverse">
                   <Grid item xs={6}>
