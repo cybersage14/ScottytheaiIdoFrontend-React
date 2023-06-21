@@ -6,9 +6,9 @@ interface IProps extends TypographyProps {
   children: string | ReactNode;
 }
 
-export default function SectionTitle({ children }: IProps) {
+export default function SectionTitle({ children, sx }: IProps) {
   return (
-    <Typography component="h2" fontSize={{ xs: 32, md: 48 }} color={grey[100]}>
+    <Typography component="h2" fontSize={{ xs: 32, md: 48 }} color={grey[100]} sx={sx}>
       {children}
     </Typography>
   )

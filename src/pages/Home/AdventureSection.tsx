@@ -39,7 +39,7 @@ export default function AdventureSection() {
   return (
     <Box component="section" py={12}>
       <Container id="adventures">
-        <Grid container spacing={4}>
+        <Grid container spacing={4} flexDirection={{ xs: 'column-reverse', md: 'row' }}>
           <Grid item md={6} sx={{ display: 'flex' }}>
             <Box
               component="img"
@@ -51,9 +51,9 @@ export default function AdventureSection() {
           </Grid>
 
           <Grid item md={6}>
-            <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={2}>JOIN SCOTTY’S QUEST FOR KNOWLEDGE</Typography>
-            <SectionTitle variant="h2" my={1}>Scotty's Adventures</SectionTitle>
-            <Stack gap={2}>
+            <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={{ xs: 0, md: 2 }}>JOIN SCOTTY’S QUEST FOR KNOWLEDGE</Typography>
+            <SectionTitle sx={{ my: 1 }}>Scotty's Adventures</SectionTitle>
+            <Stack spacing={{ xs: 1, md: 2 }}>
               {TEXTS.map(textItem => (
                 <Stack key={textItem.id} direction="row" spacing={2}>
                   <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 0.5 }} />
@@ -61,10 +61,10 @@ export default function AdventureSection() {
                 </Stack>
               ))}
             </Stack>
-            <Typography fontSize={16} color={grey[100]} mt={4}>
+            <Typography fontSize={16} color={grey[100]} mt={{ xs: 2, md: 4 }}>
               It is these powers that made Scotty the AI such a force to be reckoned with in the cryptocurrency world. He is a protector, a guardian, and a champion of the people.
             </Typography>
-            <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4, mt: 4 }}>Learn More</Button>
+            <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4, mt: { xs: 2, md: 4 } }}>Learn More</Button>
           </Grid>
         </Grid>
       </Container>

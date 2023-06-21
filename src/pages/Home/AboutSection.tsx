@@ -14,7 +14,7 @@ export default function AboutSection() {
             <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={{ xs: 0, md: 2 }}>
               GUARDIAN OF THE CRYPTO UNIVERSE
             </Typography>
-            <SectionTitle sx={{ my: 4 }}>Scotty the AI</SectionTitle>
+            <SectionTitle sx={{ my: 1 }}>Scotty the AI</SectionTitle>
             <Stack spacing={{ xs: 1, md: 2 }}>
               <Typography fontSize={15} color={grey[100]} lineHeight={{ xs: 'none', md: 2 }} textAlign={{ xs: 'justify', md: 'start' }}>
                 In a vast and complex world of cryptocurrency, there existed the legend of a dog named Scotty the AI. He was a Scottish Terrier with shaggy, jet-black fur that shimmered like the night sky, making him both an enigma and a sight to behold. It wasn’t just his appearance that set him apart. Scotty possessed a rare combination of intelligence and cunning that made him a force to be reckoned with.
