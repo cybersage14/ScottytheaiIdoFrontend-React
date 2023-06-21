@@ -86,36 +86,36 @@ export default function PlanSection() {
         <Box mt={{ xs: 0, md: 4 }}>
           <Grid container>
             <Grid item md={4} sx={{ py: 6, px: { xs: 0, md: 4 } }}>
-              <Typography component="h3" color={grey[100]} textAlign="center" fontSize={32} fontWeight={700}>Phase 1</Typography>
+              <Typography component="h3" color={grey[100]} textAlign="center" fontSize={{ xs: 24, md: 32 }} fontWeight={700}>Phase 1</Typography>
               <Stack spacing={2} mt={2}>
                 {TEXTS_OF_PHASE_1.map(textItem => (
                   <Stack key={textItem.id} direction="row" spacing={2}>
                     <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 1 }} />
-                    <Typography fontSize={20} color={grey[100]}>{textItem.text}</Typography>
+                    <Typography fontSize={{ xs: 16, md: 20 }} color={grey[100]}>{textItem.text}</Typography>
                   </Stack>
                 ))}
               </Stack>
             </Grid>
 
             <Grid item md={4} sx={{ bgcolor: theme.palette.primary.main, py: 6, px: { xs: 2, md: 4 } }}>
-              <Typography component="h3" textAlign="center" fontSize={32} fontWeight={700}>Phase 2</Typography>
+              <Typography component="h3" textAlign="center" fontSize={{ xs: 24, md: 32 }} fontWeight={700}>Phase 2</Typography>
               <Stack spacing={2} mt={2}>
                 {TEXTS_OF_PHASE_2.map(textItem => (
                   <Stack key={textItem.id} direction="row" spacing={2}>
                     <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: grey[100], mt: 1 }} />
-                    <Typography fontSize={20}>{textItem.text}</Typography>
+                    <Typography fontSize={{ xs: 16, md: 20 }}>{textItem.text}</Typography>
                   </Stack>
                 ))}
               </Stack>
             </Grid>
 
             <Grid item md={4} sx={{ py: 6, px: { xs: 0, md: 4 } }}>
-              <Typography component="h3" color={grey[100]} textAlign="center" fontSize={32} fontWeight={700}>Phase 3</Typography>
+              <Typography component="h3" color={grey[100]} textAlign="center" fontSize={{ xs: 24, md: 32 }} fontWeight={700}>Phase 3</Typography>
               <Stack spacing={2} mt={2}>
                 {TEXTS_OF_PHASE_3.map(textItem => (
                   <Stack key={textItem.id} direction="row" spacing={2}>
                     <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 1 }} />
-                    <Typography fontSize={20} color={grey[100]}>{textItem.text}</Typography>
+                    <Typography fontSize={{ xs: 16, md: 20 }} color={grey[100]}>{textItem.text}</Typography>
                   </Stack>
                 ))}
               </Stack>

@@ -4,15 +4,15 @@ import { Icon } from '@iconify/react';
 
 export default function CommunitySection() {
   return (
-    <Box component="section" py={12}>
+    <Box component="section" py={{ xs: 6, md: 12 }}>
       <Container maxWidth="md">
-        <Typography component="h2" fontSize={32} color={grey[100]} textAlign="center">
+        <Typography component="h2" fontSize={{ xs: 20, md: 32 }} color={grey[100]} textAlign="center">
           Join our community and learn more!
         </Typography>
         <Typography color={grey[100]} fontSize={14} textAlign="center" sx={{ mt: 2, lineHeight: 2 }}>
           The team actively engages with the community through social media and other channels, making it a truly community-driven project.
         </Typography>
-        <Stack direction="row" justifyContent="center" mt={8}>
+        <Stack direction="row" justifyContent="center" mt={{ xs: 4, md: 8 }}>
           <Button variant="contained" sx={{ borderRadius: 9999 }} component={Link} href="https://t.me/Scotty_The_Ai" target="_blank">
             Click Here to Join
           </Button>

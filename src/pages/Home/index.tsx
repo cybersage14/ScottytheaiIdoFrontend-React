@@ -22,7 +22,7 @@ export default function Home() {
       <CompanionsSection />
       <HowToBuySection />
       <PlanSection />
-      {/* <CommunitySection /> */}
+      <CommunitySection />
     </Box>
   )
 }
