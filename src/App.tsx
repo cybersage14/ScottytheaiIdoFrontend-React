@@ -1,8 +1,19 @@
+import { Suspense } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './Routes';
+import Loading from './components/Loading';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 320,
+      sm: 640,
+      md: 1024,
+      lg: 1280,
+      xl: 1420
+    }
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -27,11 +38,13 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-    </ThemeProvider>
+    <Suspense fallback={<Loading />}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </ThemeProvider>
+    </Suspense>
   );
 }
 
