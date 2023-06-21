@@ -5,7 +5,7 @@ import { grey } from "@mui/material/colors";
 
 export default function Footer() {
   return (
-    <Box component="footer">
+    <Box component="footer" bgcolor={grey[900]}>
       <Container>
         <Typography textAlign="center" color={grey[100]} fontSize={14} py={3}>
           © {new Date().getFullYear()} by Scotty Ai. All rights reserved!
