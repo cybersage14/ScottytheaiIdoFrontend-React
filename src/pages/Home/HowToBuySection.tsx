@@ -1,6 +1,6 @@
 import { Box, Container, Grid, LinearProgress, Stack, Typography, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { SectionTitle } from "../../components/styledComponents";
+import SectionTitle from "../../components/SectionTitle";
 
 // -------------------------------------------------------------------------------------------------------
 

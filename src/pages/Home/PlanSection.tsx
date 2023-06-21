@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Stack, Typography, Icon as MuiIcon, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { Icon } from '@iconify/react';
-import { SectionTitle } from "../../components/styledComponents";
+import SectionTitle from "../../components/SectionTitle";
 
 // ----------------------------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import { SectionTitle } from "../../../components/styledComponents";
+import SectionTitle from "../../../components/SectionTitle";
 
 export default function TokenSaleSection() {
   return (

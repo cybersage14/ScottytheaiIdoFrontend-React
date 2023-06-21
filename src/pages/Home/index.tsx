@@ -17,12 +17,12 @@ export default function Home() {
   return (
     <Box>
       <AboutSection />
-      <TokenSaleSection />
-      <AdventureSection />
-      <CompanionsSection />
-      <HowToBuySection />
-      <PlanSection />
-      <CommunitySection />
+      {/* <TokenSaleSection /> */}
+      {/* <AdventureSection /> */}
+      {/* <CompanionsSection /> */}
+      {/* <HowToBuySection /> */}
+      {/* <PlanSection /> */}
+      {/* <CommunitySection /> */}
     </Box>
   )
 }
