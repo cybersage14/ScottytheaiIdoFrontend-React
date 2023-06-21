@@ -40,8 +40,8 @@ const IMAGES: Array<IImage> = [
 export default function CompanionsSection() {
   return (
     <Box component="section" bgcolor={grey[900]} py={8}>
-      <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-        <SectionTitle variant="h2">Scotty AI's Companions</SectionTitle>
+      <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: { xs: 4, md: 8 } }}>
+        <SectionTitle variant="h2" sx={{ textAlign: { xs: 'center', md: 'start' } }}>Scotty AI's Companions</SectionTitle>
         <Grid container spacing={{ xs: 2, md: 8 }}>
           {IMAGES.map(imageItem => (
             <Grid key={imageItem.id} item xs={6} md={3}>

@@ -1,4 +1,4 @@
-import { Box, Container, Grid, LinearProgress, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Container, Grid, LinearProgress, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import SectionTitle from "../../components/SectionTitle";
 
@@ -39,18 +39,19 @@ const FAQS: Array<IFaq> = [
 
 export default function HowToBuySection() {
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Box component="section" py={12}>
-      <Container sx={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <Box component="section" py={{ xs: 6, md: 12 }}>
+      <Container sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 8, md: 16 } }}>
         {/* How to buy */}
         <Box>
-          <SectionTitle variant="h2" textAlign="center">How to Buy?</SectionTitle>
+          <SectionTitle variant="h2" sx={{ textAlign: 'center' }}>How to Buy?</SectionTitle>
 
-          <Stack spacing={3}>
+          <Stack spacing={3} sx={{ mt: { xs: 1, md: 0 } }}>
             {FAQS.map(faqItem => (
               <Stack key={faqItem.id} spacing={1}>
-                <Typography variant="h3" color={theme.palette.primary.main} fontSize={24}>{faqItem.question}</Typography>
+                <Typography component="h3" color={theme.palette.primary.main} fontSize={24}>{faqItem.question}</Typography>
                 <Typography color={grey[100]} fontSize={15} lineHeight={2}>{faqItem.answer}</Typography>
               </Stack>
             ))}
@@ -59,20 +60,20 @@ export default function HowToBuySection() {
 
         {/* Supply */}
         <Stack spacing={4}>
-          <SectionTitle variant="h2" textAlign="center">
+          <SectionTitle variant="h2" sx={{ textAlign: 'center' }}>
             Supply is <Typography component="span" fontWeight={700} variant="inherit">1,234,567,890</Typography>
           </SectionTitle>
 
           <Box>
-            <Grid container spacing={8} alignItems="center">
-              <Grid item md={4}>
+            <Grid container spacing={{ xs: 4, md: 8 }} alignItems="center">
+              <Grid item xs={12} md={4}>
                 <Stack alignItems="center">
-                  <Typography component="span" fontWeight={700} fontSize={48} color={grey[100]}>90%</Typography>
+                  <Typography component="span" fontWeight={700} fontSize={{ xs: 32, md: 48 }} color={grey[100]}>90%</Typography>
                   <Typography fontSize={14} color={grey[100]}>Supply to Liquidity Pool = 1111111101</Typography>
                 </Stack>
               </Grid>
 
-              <Grid item md={4}>
+              <Grid item xs={12} md={4}>
                 <LinearProgress
                   value={90}
                   variant="determinate"
@@ -80,30 +81,47 @@ export default function HowToBuySection() {
                 />
               </Grid>
 
-              <Grid item md={4}>
+              <Grid item xs={12} md={4}>
                 <Stack alignItems="center">
-                  <Typography component="span" fontWeight={700} fontSize={48} color={grey[100]}>10%</Typography>
-                  <Typography fontSize={14} color={grey[100]}>Supply for Exchange Listings = 123456789</Typography>
+                  <Typography component="span" fontWeight={700} fontSize={{ xs: 32, md: 48 }} color={grey[100]}>10%</Typography>
+                  <Typography fontSize={14} color={grey[100]} textAlign="center">Supply for Exchange Listings = 123456789</Typography>
                 </Stack>
               </Grid>
             </Grid>
           </Box>
         </Stack>
 
-        <Grid container>
-          <Grid item md={6}>
-            <Stack alignItems="center" spacing={4}>
-              <Typography color={grey[100]} fontSize={28} fontWeight={700}>Liquidity Keys Burned Forever</Typography>
-              <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700}>ERC20</Typography>
-            </Stack>
+        {isMobile ? (
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700} textAlign="center">Contract Renounced</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography color={grey[100]} fontSize={28} fontWeight={700} textAlign="center">Liquidity Keys Burned Forever</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700} textAlign="center">ERC20</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography color={grey[100]} fontSize={28} fontWeight={700} textAlign="center">No Team Tokens</Typography>
+            </Grid>
           </Grid>
-          <Grid item md={6}>
-            <Stack alignItems="center" spacing={4}>
-              <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700}>Contract Renounced</Typography>
-              <Typography color={grey[100]} fontSize={28} fontWeight={700}>No Team Tokens</Typography>
-            </Stack>
+        ) : (
+          <Grid container>
+            <Grid item md={6}>
+              <Stack alignItems="center" spacing={4}>
+                <Typography color={grey[100]} fontSize={28} fontWeight={700}>Liquidity Keys Burned Forever</Typography>
+                <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700}>ERC20</Typography>
+              </Stack>
+            </Grid>
+            <Grid item md={6}>
+              <Stack alignItems="center" spacing={4}>
+                <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700}>Contract Renounced</Typography>
+                <Typography color={grey[100]} fontSize={28} fontWeight={700}>No Team Tokens</Typography>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Container>
     </Box>
   )

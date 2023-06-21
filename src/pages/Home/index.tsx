@@ -19,8 +19,8 @@ export default function Home() {
       <AboutSection />
       <TokenSaleSection />
       <AdventureSection />
-      {/* <CompanionsSection /> */}
-      {/* <HowToBuySection /> */}
+      <CompanionsSection />
+      <HowToBuySection />
       {/* <PlanSection /> */}
       {/* <CommunitySection /> */}
     </Box>
