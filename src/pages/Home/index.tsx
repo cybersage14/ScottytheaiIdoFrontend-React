@@ -21,7 +21,7 @@ export default function Home() {
       <AdventureSection />
       <CompanionsSection />
       <HowToBuySection />
-      {/* <PlanSection /> */}
+      <PlanSection />
       {/* <CommunitySection /> */}
     </Box>
   )
