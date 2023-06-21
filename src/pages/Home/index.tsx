@@ -8,6 +8,7 @@ const TokenSaleSection = lazy(() => import('./TokenSaleSection'))
 const AdventureSection = lazy(() => import('./AdventureSection'))
 const CompanionsSection = lazy(() => import('./CompanionsSection'))
 const HowToBuySection = lazy(() => import('./HowToBuySection'))
+const PlanSection = lazy(() => import('./PlanSection'))
 
 // ----------------------------------------------------------------------------------------------
 
@@ -19,6 +20,7 @@ export default function Home() {
       <AdventureSection />
       <CompanionsSection />
       <HowToBuySection />
+      <PlanSection />
     </Box>
   )
 }

@@ -104,7 +104,6 @@ export default function HowToBuySection() {
             </Stack>
           </Grid>
         </Grid>
-
       </Container>
     </Box>
   )
