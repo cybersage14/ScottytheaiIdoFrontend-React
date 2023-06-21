@@ -7,7 +7,7 @@ import Loading from './components/Loading';
 const theme = createTheme({
   breakpoints: {
     values: {
-      xs: 320,
+      xs: 0,
       sm: 640,
       md: 1024,
       lg: 1280,
