@@ -38,7 +38,7 @@ export default function DialogClaimToken({ open, handleClose, claimableTokenInfo
       setAmount(value);
     }
   };
-
+  
   const handleClaim = () => {
     openLoading();
     api.put(`/distribute/distribute-token/${claimableTokenInfo.id}`, {

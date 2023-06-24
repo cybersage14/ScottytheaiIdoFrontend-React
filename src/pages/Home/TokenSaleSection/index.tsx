@@ -136,8 +136,8 @@ export default function TokenSaleSection() {
     apiOfCoinLore.get(`/ticker/?id=${COINLORE_ID_OF_ETHEREUM},${COINLORE_ID_OF_USDT}`)
       .then(response => {
         setCurrenciesInUsd({
-          ethereum: response.data[1]['price_usd'],
-          usdt: response.data[0]['price_usd']
+          ethereum: response.data[0]['price_usd'],
+          usdt: response.data[1]['price_usd']
         });
       })
       .catch(error => { });
