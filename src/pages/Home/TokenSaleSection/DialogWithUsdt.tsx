@@ -48,6 +48,7 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   console.log('>>>>>>>>>> CONTRACT_ADDRESS => ', CONTRACT_ADDRESS)
   console.log('>>>>>>>>>> CHAIN_ID => ', CHAIN_ID)
   console.log('>>>>>>>>>> parseUnits(`${Number(debouncedSellAmount)}`, 6) => ', parseUnits(`${Number(debouncedSellAmount)}`, 6))
+  console.log('>>>>>>>>>> usePrepareContractWrite => ', usePrepareContractWrite())
 
   const { config } = usePrepareContractWrite({
     address: USDT_CONTRACT_ADDRESS,
