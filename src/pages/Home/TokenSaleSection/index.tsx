@@ -8,6 +8,7 @@ import SectionTitle from "../../../components/SectionTitle";
 import api from "../../../utils/api";
 import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, CONTRACT_ADDRESS } from "../../../utils/constants";
 import apiOfCoinLore from "../../../utils/apiOfCoinLore";
+import { grey } from "@mui/material/colors";
 
 // --------------------------------------------------------------------------------------------------------
 
@@ -222,7 +223,7 @@ export default function TokenSaleSection() {
         <SectionTitle variant="h2">Presale Stage 1</SectionTitle>
 
         {!TOKEN_CLAIM_APPROVED && (
-          <Stack alignItems="center" spacing={2}>
+          <Stack alignItems="center" spacing={2} sx={{ color: grey[100], width: '100%' }}>
             <Stack>
               <Typography>1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
               <Typography>USDT Raised ${balanceInUsd.toFixed(4)}</Typography>
