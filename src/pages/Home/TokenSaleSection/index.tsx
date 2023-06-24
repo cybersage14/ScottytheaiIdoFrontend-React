@@ -225,8 +225,8 @@ export default function TokenSaleSection() {
         {!TOKEN_CLAIM_APPROVED && (
           <Stack alignItems="center" spacing={2} sx={{ color: grey[100], width: '100%' }}>
             <Stack>
-              <Typography>1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
-              <Typography>USDT Raised ${balanceInUsd.toFixed(4)}</Typography>
+              <Typography textAlign="center">1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
+              <Typography textAlign="center">USDT Raised ${balanceInUsd.toFixed(4)}</Typography>
             </Stack>
 
             <LinearProgress
@@ -236,9 +236,9 @@ export default function TokenSaleSection() {
             />
 
             <Stack>
-              <Typography>
+              <Typography textAlign="center">
                 {tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount} Tokens Remaining Until<br />
-                1 GWIZ = {TOKEN_PRICE_IN_USDT} BUSDT
+                1 SCOTTY = {TOKEN_PRICE_IN_USDT + 1} USDT
               </Typography>
             </Stack>
           </Stack>
