@@ -43,24 +43,13 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   }, [buyAmount, remainedTokenAmount]);
 
   /* ------------------ Send USDT from the wallet to the contract --------------- */
-  console.log('>>>>>>>>>> USDT_CONTRACT_ADDRESS => ', USDT_CONTRACT_ADDRESS)
-  console.log('>>>>>>>>>> USDT_CONTRACT_ABI => ', USDT_CONTRACT_ABI)
-  console.log('>>>>>>>>>> CONTRACT_ADDRESS => ', CONTRACT_ADDRESS)
-  console.log('>>>>>>>>>> CHAIN_ID => ', CHAIN_ID)
-  console.log('>>>>>>>>>> parseUnits(`${Number(debouncedSellAmount)}`, 6) => ', parseUnits(`${Number(debouncedSellAmount)}`, 6))
-  console.log('>>>>>>>>>> usePrepareContractWrite => ', usePrepareContractWrite())
-
   const { config } = usePrepareContractWrite({
     address: USDT_CONTRACT_ADDRESS,
     abi: USDT_CONTRACT_ABI,
-    functionName: 'transfer',
-    args: [CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
+    functionName: 'transferFrom',
+    args: [address, CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
     chainId: CHAIN_ID,
   });
-
-  const dataOfUseContractWrite = useContractWrite(config);
-  console.log('>>>>>> config of useContractWrite => ', config)
-  console.log('>>>>>> dataOfUseContractWrite => ', dataOfUseContractWrite)
 
   const { data, write } = useContractWrite(config);
 
