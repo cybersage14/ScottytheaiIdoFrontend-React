@@ -35,6 +35,10 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
 
   const claimStopped = useMemo<boolean>(() => {
     const _buyAmount = Number(buyAmount || '0');
+
+    console.log('>>>>>>> _buyAmount => ', _buyAmount)
+    console.log('>>>>>>> remainedTokenAmount => ', remainedTokenAmount)
+
     if (remainedTokenAmount >= _buyAmount) {
       return false;
     }
