@@ -51,6 +51,7 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   });
 
   const dataOfUseContractWrite = useContractWrite(config);
+  console.log('>>>>>> config of useContractWrite => ', config)
   console.log('>>>>>> dataOfUseContractWrite => ', dataOfUseContractWrite)
 
   const { data, write } = useContractWrite(config);
