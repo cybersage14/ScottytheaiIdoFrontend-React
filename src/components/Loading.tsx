@@ -1,14 +1,16 @@
-import { CircularProgress, Stack, Typography, useTheme } from "@mui/material";
+import { CircularProgress, Dialog, DialogContent } from "@mui/material";
+import useLoading from "../hooks/useLoading";
 
 // ---------------------------------------------------------------------------------------------
 
 export default function Loading() {
-  const theme = useTheme()
+  const { isLoading } = useLoading()
 
   return (
-    <Stack height="100vh" width="100vw" justifyContent="center" alignItems="center" bgcolor={theme.palette.background.default} spacing={1}>
-      <CircularProgress sx={{ color: theme.palette.primary.main }} />
-      <Typography component="span">Loading...</Typography>
-    </Stack>
+    <Dialog open={isLoading}>
+      <DialogContent>
+        <CircularProgress />
+      </DialogContent>
+    </Dialog>
   )
 }

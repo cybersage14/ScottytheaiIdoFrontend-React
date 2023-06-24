@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { useTheme, Stack, Box } from '@mui/material'
-import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
+import Footer from './Footer'
 
 // --------------------------------------------------------------------------------------------------
 
