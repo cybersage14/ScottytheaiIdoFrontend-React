@@ -117,7 +117,6 @@ export default function TokenSaleSection() {
     watch: true,
     address: CONTRACT_ADDRESS,
     onSettled: (data, error) => {
-      console.log('>>>>>>>> balance of ethereum => ', data)
       if (error) {
         return;
       }
@@ -167,7 +166,6 @@ export default function TokenSaleSection() {
   const getTokenAmountInfo = () => {
     api.get('/token-amount/get-token-amount-info')
       .then(response => {
-        console.log('>>>>>>>>>> resData of getTokenAmountInfo => ', response.data)
         if (response.data) {
           setTokenAmountInfo({
             claimedTokenAmount: response.data.claimed_token_amount,

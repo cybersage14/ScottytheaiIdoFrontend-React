@@ -51,6 +51,8 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
     chainId: CHAIN_ID,
   });
 
+  console.log('>>>>>>> config => ', config)
+
   const { data, write } = useContractWrite(config);
 
   const { isLoading } = useWaitForTransaction({
