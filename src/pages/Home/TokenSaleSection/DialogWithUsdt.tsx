@@ -36,9 +36,6 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   const claimStopped = useMemo<boolean>(() => {
     const _buyAmount = Number(buyAmount || '0');
 
-    console.log('>>>>>>> _buyAmount => ', _buyAmount)
-    console.log('>>>>>>> remainedTokenAmount => ', remainedTokenAmount)
-
     if (remainedTokenAmount >= _buyAmount) {
       return false;
     }
@@ -46,6 +43,12 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   }, [buyAmount, remainedTokenAmount]);
 
   /* ------------------ Send USDT from the wallet to the contract --------------- */
+  console.log('>>>>>>>>>> USDT_CONTRACT_ADDRESS => ', USDT_CONTRACT_ADDRESS)
+  console.log('>>>>>>>>>> USDT_CONTRACT_ABI => ', USDT_CONTRACT_ABI)
+  console.log('>>>>>>>>>> CONTRACT_ADDRESS => ', CONTRACT_ADDRESS)
+  console.log('>>>>>>>>>> CHAIN_ID => ', CHAIN_ID)
+  console.log('>>>>>>>>>> parseUnits(`${Number(debouncedSellAmount)}`, 6) => ', parseUnits(`${Number(debouncedSellAmount)}`, 6))
+
   const { config } = usePrepareContractWrite({
     address: USDT_CONTRACT_ADDRESS,
     abi: USDT_CONTRACT_ABI,
