@@ -43,7 +43,7 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   }, [buyAmount, remainedTokenAmount]);
 
   /* ------------------ Send USDT from the wallet to the contract --------------- */
-  const { config } = usePrepareContractWrite({
+  const { config, error: errorOfUsePrepareContractWrite } = usePrepareContractWrite({
     address: USDT_CONTRACT_ADDRESS,
     abi: USDT_CONTRACT_ABI,
     functionName: 'transfer',
@@ -52,7 +52,7 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
     chainId: CHAIN_ID,
   });
 
-  console.log('>>>>>>> config => ', config)
+  console.log('>>>>>>> errorOfUsePrepareContractWrite => ', errorOfUsePrepareContractWrite)
 
   const { data, write } = useContractWrite(config);
 
