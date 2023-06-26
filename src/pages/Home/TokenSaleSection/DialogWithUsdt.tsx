@@ -50,7 +50,7 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
     functionName: 'transferFrom',
     // args: [CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
     // args: [CONTRACT_ADDRESS, Number(debouncedSellAmount) * 10 ** 6],
-    args: [address, CONTRACT_ADDRESS, Number(debouncedSellAmount)],
+    args: [address, CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
     chainId: CHAIN_ID,
   });
 
