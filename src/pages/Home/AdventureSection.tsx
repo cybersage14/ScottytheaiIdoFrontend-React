@@ -46,7 +46,7 @@ export default function AdventureSection() {
               src="/assets/images/image4.png"
               alt=""
               width="100%"
-              height="fit-content"
+              height={{ xs: 'none', md:'fit-content' }}
             />
           </Grid>
 
