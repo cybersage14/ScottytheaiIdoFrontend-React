@@ -30,14 +30,16 @@ export default function AboutSection() {
           </Grid>
 
           <Grid item md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
-            <Box
-              component="img"
-              src="/assets/images/scotty-dog.webp"
-              alt=""
-              width={{ xs: '100%', md: '90%' }}
-              height="fit-content"
-              borderRadius={9999}
-            />
+            <Box width={{ xs: '100%', md: '90%' }}>
+              <Box
+                component="img"
+                src="/assets/images/scotty-dog.webp"
+                alt=""
+                width="100%"
+                height="fit-content"
+                borderRadius={9999}
+              />
+            </Box>
           </Grid>
         </Grid>
       </Container>
