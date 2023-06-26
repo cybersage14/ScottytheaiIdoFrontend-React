@@ -46,11 +46,10 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
   const { config, error: errorOfUsePrepareContractWrite } = usePrepareContractWrite({
     address: USDT_CONTRACT_ADDRESS,
     abi: USDT_CONTRACT_ABI,
-    // functionName: 'transfer',
-    functionName: 'transferFrom',
+    functionName: 'transfer',
     // args: [CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
+    args: [CONTRACT_ADDRESS, Number(parseUnits(`${Number(debouncedSellAmount)}`, 6))],
     // args: [CONTRACT_ADDRESS, Number(debouncedSellAmount) * 10 ** 6],
-    args: [address, CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
     chainId: CHAIN_ID,
   });
 
