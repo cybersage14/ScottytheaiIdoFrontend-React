@@ -30,13 +30,12 @@ export default function AboutSection() {
           </Grid>
 
           <Grid item md={6}>
-            <Stack direction="row" justifyContent="center">
+            <Stack direction="row" justifyContent="end">
               <Box
                 component="img"
                 src="/assets/images/scotty-dog.webp"
                 alt=""
                 width={{ xs: '100%', md: '90%' }}
-                height="fit-content"
                 borderRadius={9999}
               />
             </Stack>
