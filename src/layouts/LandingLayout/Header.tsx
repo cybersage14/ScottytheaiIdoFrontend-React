@@ -39,6 +39,8 @@ export default function Header() {
         component="video"
         autoPlay
         muted
+        loop
+        playsInline
         src="https://scottytheai.com/wp-content/uploads/2023/05/scotty_bg.mp4"
         position="absolute"
         right={0}
