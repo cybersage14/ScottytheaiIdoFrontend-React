@@ -58,10 +58,10 @@ export default function DialogWithEthereum({ open, handleClose, remainedTokenAmo
         tokenAmount: Number(buyAmount)
       }).then(response => {
         closeLoading();
-        toast.success('Claimed.')
+        toast.success('Transaction completed.')
       }).catch(error => {
         closeLoading();
-        toast.error('Error occured. not claimed.')
+        toast.error('Transaction failed.')
       });
     }
   });

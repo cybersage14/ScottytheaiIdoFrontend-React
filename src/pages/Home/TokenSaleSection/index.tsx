@@ -174,7 +174,8 @@ export default function TokenSaleSection() {
         }
       })
       .catch(error => {
-        toast.error('getTokenAmountInfo occured an error.')
+        console.log('error => ', error)
+        // toast.error('getTokenAmountInfo occured an error.')
       });
   };
 

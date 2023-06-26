@@ -67,10 +67,10 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
         tokenAmount: Number(buyAmount)
       }).then(response => {
         closeLoading();
-        toast.success('Claimed.')
+        toast.success('Transaction completed.')
       }).catch(error => {
         closeLoading();
-        toast.error('Error occured. not claimed.')
+        toast.error('Transaction failed.')
       });
     },
     onError: () => {
