@@ -46,6 +46,7 @@ export default function Header() {
         minWidth="100%"
         maxWidth="100%"
         minHeight="100%"
+        sx={{ objectFit: 'cover' }}
       />
 
       <Box sx={{ background: 'rgba(0, 0, 0, 0.7)' }} pt={{ xs: 16, md: 24 }} pb={4} position="relative" zIndex={99}>
