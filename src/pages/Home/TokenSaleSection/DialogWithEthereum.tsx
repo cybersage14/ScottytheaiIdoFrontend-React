@@ -121,7 +121,6 @@ export default function DialogWithEthereum({ open, handleClose, remainedTokenAmo
                     src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
                     alt="Ethereum"
                     width={32}
-                    height="fit-content"
                   />
                   <Typography component="span" color={grey[100]}>ETHEREUM</Typography>
                 </Stack>
@@ -144,7 +143,6 @@ export default function DialogWithEthereum({ open, handleClose, remainedTokenAmo
                     src="/logo192.png"
                     alt="Soctty"
                     width={32}
-                    height="fit-content"
                   />
                   <Typography component="span" color={grey[100]}>SCOTTY</Typography>
                 </Stack>

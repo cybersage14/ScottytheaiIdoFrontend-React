@@ -135,7 +135,6 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
                     src="https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024"
                     alt="USDT"
                     width={32}
-                    height="fit-content"
                   />
                   <Typography component="span" color={grey[100]}>USDT</Typography>
                 </Stack>
@@ -158,7 +157,6 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
                     src="/logo192.png"
                     alt="Soctty"
                     width={32}
-                    height="fit-content"
                   />
                   <Typography component="span" color={grey[100]}>SCOTTY</Typography>
                 </Stack>

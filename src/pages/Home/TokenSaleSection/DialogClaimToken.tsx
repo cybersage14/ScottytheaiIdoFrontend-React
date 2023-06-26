@@ -88,7 +88,6 @@ export default function DialogClaimToken({ open, handleClose, claimableTokenInfo
                       src="/logo192.png"
                       alt="Scotty"
                       width={32}
-                      height="fit-content"
                     />
                     <Typography component="span" color={grey[100]}>SCOTTY</Typography>
                   </Stack>
