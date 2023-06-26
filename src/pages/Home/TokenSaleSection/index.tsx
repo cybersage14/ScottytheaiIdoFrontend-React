@@ -230,7 +230,7 @@ export default function TokenSaleSection() {
             <LinearProgress
               value={tokenAmountInfo.claimedTokenAmount ? tokenAmountInfo.claimedTokenAmount / tokenAmountInfo.totalTokenAmount * 100 : 0}
               variant="determinate"
-              sx={{ height: 32, borderRadius: 9999, width: '60%' }}
+              sx={{ height: 32, borderRadius: 9999, width: { xs: '100%', md: '60%' } }}
             />
 
             <Stack>
@@ -242,7 +242,7 @@ export default function TokenSaleSection() {
           </Stack>
         )}
 
-        <Stack direction="row" justifyContent="center" spacing={2} alignItems="center">
+        <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="center" spacing={2} alignItems="center">
           {isConnected ? (
             <>
               {chain?.id === CHAIN_ID ? TOKEN_CLAIM_APPROVED ? (
