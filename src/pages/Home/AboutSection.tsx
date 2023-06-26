@@ -29,17 +29,17 @@ export default function AboutSection() {
             <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4, mt: 4 }}>Learn More</Button>
           </Grid>
 
-          <Grid item md={6} sx={{ display: 'flex', justifyContent: 'end' }}>
-            <Box width={{ xs: '100%', md: '90%' }}>
+          <Grid item md={6}>
+            <Stack direction="row" justifyContent="center">
               <Box
                 component="img"
                 src="/assets/images/scotty-dog.webp"
                 alt=""
-                width="100%"
+                width={{ xs: '100%', md: '90%' }}
                 height="fit-content"
                 borderRadius={9999}
               />
-            </Box>
+            </Stack>
           </Grid>
         </Grid>
       </Container>
