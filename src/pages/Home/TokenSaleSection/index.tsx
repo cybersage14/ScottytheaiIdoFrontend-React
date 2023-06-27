@@ -1,13 +1,12 @@
 import { lazy, useEffect, useState } from "react";
 import { Box, Button, Container, LinearProgress, Stack, Typography } from "@mui/material";
 import { useWeb3Modal } from "@web3modal/react"
-import { useAccount, useDisconnect, useSwitchNetwork, useNetwork, useBalance, useContractRead } from "wagmi"
-import { formatUnits } from "viem";
+import { useAccount, useDisconnect, useSwitchNetwork, useNetwork } from "wagmi"
+import { grey } from "@mui/material/colors";
 import SectionTitle from "../../../components/SectionTitle";
 import api from "../../../utils/api";
-import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, CONTRACT_ADDRESS } from "../../../utils/constants";
+import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT } from "../../../utils/constants";
 import apiOfCoinLore from "../../../utils/apiOfCoinLore";
-import { grey } from "@mui/material/colors";
 
 // --------------------------------------------------------------------------------------------------------
 
@@ -42,7 +41,6 @@ interface ITokenAmountInfo {
 const CHAIN_ID = process.env.REACT_APP_CHAIN_ID ? Number(process.env.REACT_APP_CHAIN_ID) : 1;
 const TOKEN_CLAIM_APPROVED = process.env.REACT_APP_TOKEN_CLAIM_APPROVED ? Boolean(Number(process.env.REACT_APP_TOKEN_CLAIM_APPROVED)) : false;
 const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
-const TOKEN_PRICE_IN_ETHEREUM = process.env.REACT_APP_TOKEN_PRICE_IN_ETHEREUM ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_ETHEREUM) : 0.00052
 
 // --------------------------------------------------------------------------------------------------------
 
@@ -76,7 +74,6 @@ export default function TokenSaleSection() {
   const [balanceInUsd, setBalanceInUsd] = useState<number>(0);
   const [remainedTokenAmount, setRemainedTokenAmount] = useState<number>(0);
   const [tokenClaimStopped, setTokenClaimStopped] = useState(false);
-  const [totalTokenRaisedInUsd, setTotalTokenRaisedInUsd] = useState(0)
 
   /* -------------- Handle open and close of dialogs --------------- */
   const handleDialogEthereumOpened = () => {
@@ -239,8 +236,7 @@ export default function TokenSaleSection() {
 
             <Stack>
               <Typography textAlign="center">
-                {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining Until<br />
-                1 SCOTTY = {TOKEN_PRICE_IN_USDT + 1} USDT
+                {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining Until
               </Typography>
             </Stack>
           </Stack>
