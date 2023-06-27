@@ -2,13 +2,16 @@ import { lazy, useEffect, useState } from "react";
 import { Box, Button, Container, LinearProgress, Stack, Typography } from "@mui/material";
 import { useWeb3Modal } from "@web3modal/react"
 import { useAccount, useDisconnect, useSwitchNetwork, useNetwork, useBalance, useContractRead } from "wagmi"
-import { toast } from 'react-toastify'
 import { formatUnits } from "viem";
 import SectionTitle from "../../../components/SectionTitle";
 import api from "../../../utils/api";
 import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, CONTRACT_ADDRESS } from "../../../utils/constants";
 import apiOfCoinLore from "../../../utils/apiOfCoinLore";
 import { grey } from "@mui/material/colors";
+
+// --------------------------------------------------------------------------------------------------------
+
+const REACT_APP_PRESALE_STAGE_NUMBER = process.env.REACT_APP_PRESALE_STAGE_NUMBER ? process.env.REACT_APP_PRESALE_STAGE_NUMBER : '1'
 
 // --------------------------------------------------------------------------------------------------------
 
@@ -73,6 +76,7 @@ export default function TokenSaleSection() {
   const [balanceInUsd, setBalanceInUsd] = useState<number>(0);
   const [remainedTokenAmount, setRemainedTokenAmount] = useState<number>(0);
   const [tokenClaimStopped, setTokenClaimStopped] = useState(false);
+  const [totalTokenRaisedInUsd, setTotalTokenRaisedInUsd] = useState(0)
 
   /* -------------- Handle open and close of dialogs --------------- */
   const handleDialogEthereumOpened = () => {
@@ -91,43 +95,43 @@ export default function TokenSaleSection() {
   /* ------------------ Get balance of contract --------------- */
   // if (!TOKEN_CLAIM_APPROVED) {
   //  Get balance of usdt
-  useContractRead({
-    watch: true,
-    address: USDT_CONTRACT_ADDRESS,
-    abi: USDT_CONTRACT_ABI,
-    functionName: 'balances',
-    args: [CONTRACT_ADDRESS],
-    onSettled: (data, error) => {
+  // useContractRead({
+  //   watch: true,
+  //   address: USDT_CONTRACT_ADDRESS,
+  //   abi: USDT_CONTRACT_ABI,
+  //   functionName: 'balances',
+  //   args: [CONTRACT_ADDRESS],
+  //   onSettled: (data, error) => {
 
-      if (error) {
-        return;
-      }
+  //     if (error) {
+  //       return;
+  //     }
 
-      if (typeof data === 'bigint') {
-        setBalance({
-          ...balance,
-          usdt: Number(formatUnits(data, 6))
-        });
-      }
-    }
-  });
+  //     if (typeof data === 'bigint') {
+  //       setBalance({
+  //         ...balance,
+  //         usdt: Number(formatUnits(data, 6))
+  //       });
+  //     }
+  //   }
+  // });
 
   //  Get balance of Ethereum
-  useBalance({
-    watch: true,
-    address: CONTRACT_ADDRESS,
-    onSettled: (data, error) => {
-      if (error) {
-        return;
-      }
-      if (data) {
-        setBalance({
-          ...balance,
-          ethereum: Number(data.formatted)
-        });
-      }
-    }
-  });
+  // useBalance({
+  //   watch: true,
+  //   address: CONTRACT_ADDRESS,
+  //   onSettled: (data, error) => {
+  //     if (error) {
+  //       return;
+  //     }
+  //     if (data) {
+  //       setBalance({
+  //         ...balance,
+  //         ethereum: Number(data.formatted)
+  //       });
+  //     }
+  //   }
+  // });
   // }
 
   //  Get currencies of BNB and BUSDT hourly
@@ -162,16 +166,15 @@ export default function TokenSaleSection() {
   }, [balance]);
   /* ------------------------------------------------------------ */
 
-  /* ----------------- Get token amount infos ------------------- */
+  /* ----------------- Get token amount infos and total raised balance ------------------- */
   const getTokenAmountInfo = () => {
     api.get('/token-amount/get-token-amount-info')
       .then(response => {
-        if (response.data) {
-          setTokenAmountInfo({
-            claimedTokenAmount: response.data.claimed_token_amount,
-            totalTokenAmount: response.data.total_token_amount
-          });
-        }
+        setTokenAmountInfo({
+          claimedTokenAmount: response.data.tokenAmountInfo.claimed_token_amount,
+          totalTokenAmount: response.data.tokenAmountInfo.total_token_amount
+        });
+        setBalance(response.data.totalInvestment)
       })
       .catch(error => {
         console.log('error => ', error)
@@ -188,7 +191,7 @@ export default function TokenSaleSection() {
       return () => clearInterval(interval);
     }
   }, []);
-  /* ------------------------------------------------------------ */
+  /* ------------------------------------------------------------------------------------- */
 
   useEffect(() => {
     if (!TOKEN_CLAIM_APPROVED) {
@@ -219,13 +222,13 @@ export default function TokenSaleSection() {
   return (
     <Box component="section">
       <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-        <SectionTitle variant="h2">Presale Stage 1</SectionTitle>
+        <SectionTitle variant="h2">Presale Stage {REACT_APP_PRESALE_STAGE_NUMBER}</SectionTitle>
 
         {!TOKEN_CLAIM_APPROVED && (
           <Stack alignItems="center" spacing={2} sx={{ color: grey[100], width: '100%' }}>
             <Stack>
               <Typography textAlign="center">1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
-              <Typography textAlign="center">USDT Raised ${balanceInUsd.toFixed(4)}</Typography>
+              <Typography textAlign="center">USDT Raised ${(balanceInUsd).toFixed(4)}</Typography>
             </Stack>
 
             <LinearProgress
@@ -236,7 +239,7 @@ export default function TokenSaleSection() {
 
             <Stack>
               <Typography textAlign="center">
-                {tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount} Tokens Remaining Until<br />
+                {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining Until<br />
                 1 SCOTTY = {TOKEN_PRICE_IN_USDT + 1} USDT
               </Typography>
             </Stack>
