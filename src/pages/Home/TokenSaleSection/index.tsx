@@ -236,7 +236,7 @@ export default function TokenSaleSection() {
 
             <Stack>
               <Typography textAlign="center">
-                {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining Until
+                {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining
               </Typography>
             </Stack>
           </Stack>
