@@ -112,7 +112,7 @@ export default function DialogClaimToken({ open, handleClose, claimableTokenInfo
           sx={{ borderRadius: 9999 }}
           disabled={claimableTokenInfo.claimableTokenAmount - Number(amount) < 0 || Number(amount) === 0}
           onClick={handleClaim}
-        >CLaim</Button>
+        >Claim</Button>
       </DialogActions>
     </Dialog>
   )
