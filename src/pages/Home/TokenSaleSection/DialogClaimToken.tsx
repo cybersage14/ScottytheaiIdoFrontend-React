@@ -3,10 +3,10 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconBut
 import { grey } from "@mui/material/colors";
 import { ChangeEvent, useState } from "react";
 import { toast } from 'react-toastify';
+import { useAccount } from "wagmi";
 import { REGEX_NUMBER_VALID } from "../../../utils/constants";
 import useLoading from "../../../hooks/useLoading";
 import api from "../../../utils/api";
-import { useAccount } from "wagmi";
 
 // ---------------------------------------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ export default function DialogClaimToken({ open, handleClose, claimableTokenInfo
       setAmount(value);
     }
   };
-  
+
   const handleClaim = () => {
     openLoading();
     api.put(`/distribute/distribute-token/${claimableTokenInfo.id}`, {
@@ -55,7 +55,7 @@ export default function DialogClaimToken({ open, handleClose, claimableTokenInfo
       closeLoading();
 
       if (error?.response?.status === 404) {
-        return toast.error("You didn't investo for SCOTTY.")
+        return toast.error("You didn't invest for SCOTTY.")
       }
       return toast.error("Error occured. not sent.")
     });

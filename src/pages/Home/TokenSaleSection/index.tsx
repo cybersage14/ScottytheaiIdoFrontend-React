@@ -1,8 +1,8 @@
-import { lazy, useEffect, useState } from "react";
-import { Box, Button, Container, LinearProgress, Stack, Typography } from "@mui/material";
-import { useWeb3Modal } from "@web3modal/react"
-import { useAccount, useDisconnect, useSwitchNetwork, useNetwork } from "wagmi"
+import { SyntheticEvent, lazy, useEffect, useState } from "react";
+import { Box, Container, LinearProgress, Stack, Tab, Typography, useTheme } from "@mui/material";
+import { useAccount } from "wagmi"
 import { grey } from "@mui/material/colors";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 import SectionTitle from "../../../components/SectionTitle";
 import api from "../../../utils/api";
 import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT } from "../../../utils/constants";
@@ -11,14 +11,18 @@ import apiOfCoinLore from "../../../utils/apiOfCoinLore";
 // --------------------------------------------------------------------------------------------------------
 
 const REACT_APP_PRESALE_STAGE_NUMBER = process.env.REACT_APP_PRESALE_STAGE_NUMBER ? process.env.REACT_APP_PRESALE_STAGE_NUMBER : '1'
+const TOKEN_CLAIM_APPROVED = process.env.REACT_APP_TOKEN_CLAIM_APPROVED ? process.env.REACT_APP_TOKEN_CLAIM_APPROVED : false;
+const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
 
 // --------------------------------------------------------------------------------------------------------
 
-const DialogWithEthereum = lazy(() => import('./DialogWithEthereum'))
-const DialogWithUsdt = lazy(() => import('./DialogWithUsdt'))
-const DialogClaimToken = lazy(() => import('./DialogClaimToken'))
+const TabEthereum = lazy(() => import('./TabEthereum'))
+const TabUsdt = lazy(() => import('./TabUsdt'))
+const ClaimToken = lazy(() => import('./ClaimToken'))
 
 // --------------------------------------------------------------------------------------------------------
+
+type TTabValue = 'ethereum' | 'usdt';
 
 interface IClaimableTokenInfo {
   id: number;
@@ -38,22 +42,10 @@ interface ITokenAmountInfo {
 
 // --------------------------------------------------------------------------------------------------------
 
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID ? Number(process.env.REACT_APP_CHAIN_ID) : 1;
-const TOKEN_CLAIM_APPROVED = process.env.REACT_APP_TOKEN_CLAIM_APPROVED ? Boolean(Number(process.env.REACT_APP_TOKEN_CLAIM_APPROVED)) : false;
-const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
-
-// --------------------------------------------------------------------------------------------------------
-
 export default function TokenSaleSection() {
-  const { open } = useWeb3Modal()
   const { isConnected, address } = useAccount()
-  const { disconnect } = useDisconnect()
-  const { switchNetwork } = useSwitchNetwork()
-  const { chain } = useNetwork()
+  const theme = useTheme()
 
-  const [dialogEthereumOpened, setDialogEthereumOpened] = useState<boolean>(false);
-  const [dialogUsdtOpened, setDialogUsdtOpened] = useState<boolean>(false);
-  const [dialogTokenClaimOpened, setDialogTokenClaimOpened] = useState<boolean>(false);
   const [balance, setBalance] = useState<ITokenAmount>({
     ethereum: 0,
     usdt: 0
@@ -73,63 +65,17 @@ export default function TokenSaleSection() {
   });
   const [balanceInUsd, setBalanceInUsd] = useState<number>(0);
   const [remainedTokenAmount, setRemainedTokenAmount] = useState<number>(0);
-  const [tokenClaimStopped, setTokenClaimStopped] = useState(false);
+  const [currentTab, setCurrentTab] = useState<TTabValue>('ethereum');
 
   /* -------------- Handle open and close of dialogs --------------- */
-  const handleDialogEthereumOpened = () => {
-    setDialogEthereumOpened(!dialogEthereumOpened);
-  };
-
-  const handleDialogUsdtOpened = () => {
-    setDialogUsdtOpened(!dialogUsdtOpened);
-  };
-
-  const handleDialogTokenClaimOpened = () => {
-    setDialogTokenClaimOpened(!dialogTokenClaimOpened);
-  };
+  const handleCurrentTab = (e: SyntheticEvent, tabValue: string) => {
+    if (tabValue === 'ethereum' || tabValue === 'usdt') {
+      setCurrentTab(tabValue);
+    }
+  }
   /* --------------------------------------------------------------- */
 
   /* ------------------ Get balance of contract --------------- */
-  // if (!TOKEN_CLAIM_APPROVED) {
-  //  Get balance of usdt
-  // useContractRead({
-  //   watch: true,
-  //   address: USDT_CONTRACT_ADDRESS,
-  //   abi: USDT_CONTRACT_ABI,
-  //   functionName: 'balances',
-  //   args: [CONTRACT_ADDRESS],
-  //   onSettled: (data, error) => {
-
-  //     if (error) {
-  //       return;
-  //     }
-
-  //     if (typeof data === 'bigint') {
-  //       setBalance({
-  //         ...balance,
-  //         usdt: Number(formatUnits(data, 6))
-  //       });
-  //     }
-  //   }
-  // });
-
-  //  Get balance of Ethereum
-  // useBalance({
-  //   watch: true,
-  //   address: CONTRACT_ADDRESS,
-  //   onSettled: (data, error) => {
-  //     if (error) {
-  //       return;
-  //     }
-  //     if (data) {
-  //       setBalance({
-  //         ...balance,
-  //         ethereum: Number(data.formatted)
-  //       });
-  //     }
-  //   }
-  // });
-  // }
 
   //  Get currencies of BNB and BUSDT hourly
   const getCurrenciesInUsd = () => {
@@ -193,12 +139,6 @@ export default function TokenSaleSection() {
   useEffect(() => {
     if (!TOKEN_CLAIM_APPROVED) {
       const remainedTokenAmount = tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount;
-      if (remainedTokenAmount <= 0) {
-        //  Update it to true in the real production
-        setTokenClaimStopped(true);
-      } else {
-        setTokenClaimStopped(false);
-      }
       setRemainedTokenAmount(remainedTokenAmount);
     }
   }, [tokenAmountInfo]);
@@ -217,82 +157,81 @@ export default function TokenSaleSection() {
   }, [isConnected]);
 
   return (
-    <Box component="section">
-      <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+    <Box component="section" border={1} borderColor={theme.palette.primary.main} borderRadius={2} py={4}>
+      <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
         <SectionTitle variant="h2">Presale Stage {REACT_APP_PRESALE_STAGE_NUMBER}</SectionTitle>
 
-        {!TOKEN_CLAIM_APPROVED && (
-          <Stack alignItems="center" spacing={2} sx={{ color: grey[100], width: '100%' }}>
-            <Stack>
-              <Typography textAlign="center">1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
-              <Typography textAlign="center">USDT Raised ${(balanceInUsd).toFixed(4)}</Typography>
-            </Stack>
-
-            <LinearProgress
-              value={tokenAmountInfo.claimedTokenAmount ? tokenAmountInfo.claimedTokenAmount / tokenAmountInfo.totalTokenAmount * 100 : 0}
-              variant="determinate"
-              sx={{ height: 32, borderRadius: 9999, width: { xs: '100%', md: '60%' } }}
-            />
-
-            <Stack>
-              <Typography textAlign="center">
-                {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining
-              </Typography>
-            </Stack>
+        <Stack alignItems="center" spacing={2} sx={{ color: grey[100], width: '100%' }}>
+          <Stack>
+            <Typography textAlign="center">1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
+            {TOKEN_CLAIM_APPROVED ? (
+              <Typography textAlign="center">USD Raised ${(balanceInUsd).toFixed(4)}</Typography>
+            ) : currentTab === 'ethereum' ? (
+              <Typography textAlign="center">Ethereum Raised {(balance.ethereum).toFixed(4)}</Typography>
+            ) : (
+              <Typography textAlign="center">USDT Raised {(balance.usdt).toFixed(2)}</Typography>
+            )}
           </Stack>
-        )}
 
-        <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="center" spacing={2} alignItems="center">
-          {isConnected ? (
-            <>
-              {chain?.id === CHAIN_ID ? TOKEN_CLAIM_APPROVED ? (
-                <Button
-                  variant="contained"
-                  sx={{ borderRadius: 9999 }}
-                  disabled={claimableTokenInfo.claimableTokenAmount <= 0}
-                  onClick={() => handleDialogTokenClaimOpened()}
-                >Claim $SCOTTY</Button>
-              ) : (
-                <>
-                  <Button variant="contained" sx={{ borderRadius: 9999 }} disabled={tokenClaimStopped} onClick={handleDialogEthereumOpened}>
-                    Buy with Ethereum
-                  </Button>
-                  <Button variant="contained" sx={{ borderRadius: 9999 }} disabled={tokenClaimStopped} onClick={handleDialogUsdtOpened}>
-                    Buy with USDT
-                  </Button>
-                </>
-              ) : (
-                <Button variant="contained" sx={{ borderRadius: 9999 }} onClick={() => switchNetwork?.(CHAIN_ID)}>
-                  Switch to Ethereum
-                </Button>
-              )}
-              <Button variant="outlined" sx={{ borderRadius: 9999 }} onClick={() => disconnect()}>
-                Disconnect
-              </Button>
-            </>
-          ) : (
-            <Button variant="contained" sx={{ borderRadius: 9999 }} onClick={() => open()}>
-              Connect Wallet
-            </Button>
-          )}
+          <LinearProgress
+            value={tokenAmountInfo.claimedTokenAmount ? tokenAmountInfo.claimedTokenAmount / tokenAmountInfo.totalTokenAmount * 100 : 0}
+            variant="determinate"
+            sx={{ height: 32, borderRadius: 9999, width: '100%' }}
+          />
+
+          <Stack>
+            <Typography textAlign="center">
+              {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining
+            </Typography>
+          </Stack>
         </Stack>
+
+        {TOKEN_CLAIM_APPROVED ? (
+          <ClaimToken
+            claimableTokenInfo={claimableTokenInfo}
+            setClaimableTokenInfo={setClaimableTokenInfo}
+          />
+        ) : (
+          <TabContext value={currentTab}>
+            <TabList onChange={handleCurrentTab}>
+              <Tab
+                label={
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Box
+                      component="img"
+                      src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
+                      alt="Ethereum"
+                      width={24}
+                    />
+                    <Typography component="span">Ethereum</Typography>
+                  </Stack>
+                }
+                value="ethereum"
+              />
+              <Tab
+                label={
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Box
+                      component="img"
+                      src="https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024"
+                      alt="Ethereum"
+                      width={24}
+                    />
+                    <Typography component="span">USDT</Typography>
+                  </Stack>
+                }
+                value="usdt"
+              />
+            </TabList>
+            <TabPanel value="ethereum">
+              <TabEthereum balance={balance.ethereum} remainedTokenAmount={remainedTokenAmount} />
+            </TabPanel>
+            <TabPanel value="usdt">
+              <TabUsdt balance={balance.usdt} remainedTokenAmount={remainedTokenAmount} />
+            </TabPanel>
+          </TabContext>
+        )}
       </Container>
-      <DialogWithEthereum
-        open={dialogEthereumOpened}
-        handleClose={handleDialogEthereumOpened}
-        remainedTokenAmount={remainedTokenAmount}
-      />
-      <DialogWithUsdt
-        open={dialogUsdtOpened}
-        handleClose={handleDialogUsdtOpened}
-        remainedTokenAmount={remainedTokenAmount}
-      />
-      <DialogClaimToken
-        open={dialogTokenClaimOpened}
-        handleClose={handleDialogTokenClaimOpened}
-        claimableTokenInfo={claimableTokenInfo}
-        setClaimableTokenInfo={setClaimableTokenInfo}
-      />
     </Box>
   )
 }
