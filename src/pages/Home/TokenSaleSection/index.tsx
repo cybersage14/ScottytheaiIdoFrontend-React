@@ -11,7 +11,7 @@ import apiOfCoinLore from "../../../utils/apiOfCoinLore";
 // --------------------------------------------------------------------------------------------------------
 
 const REACT_APP_PRESALE_STAGE_NUMBER = process.env.REACT_APP_PRESALE_STAGE_NUMBER ? process.env.REACT_APP_PRESALE_STAGE_NUMBER : '1'
-const TOKEN_CLAIM_APPROVED = process.env.REACT_APP_TOKEN_CLAIM_APPROVED ? process.env.REACT_APP_TOKEN_CLAIM_APPROVED : false;
+const TOKEN_CLAIM_APPROVED = process.env.REACT_APP_TOKEN_CLAIM_APPROVED === '1' ? true : false;
 const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
 
 // --------------------------------------------------------------------------------------------------------
