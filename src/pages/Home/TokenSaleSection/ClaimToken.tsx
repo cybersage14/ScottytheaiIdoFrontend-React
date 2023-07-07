@@ -100,12 +100,12 @@ export default function ClaimToken({ claimableTokenInfo, setClaimableTokenInfo }
         onChange={handleAmount}
       />
 
-      <Stack spacing={1} alignItems="center">
+      <Stack display="grid" spacing={1} alignItems="center">
         {isConnected ? chain?.id === CHAIN_ID ? (
           <>
             <Button
               variant="contained"
-              sx={{ borderRadius: 9999, width: '70%' }}
+              sx={{ borderRadius: 9999 }}
               disabled={claimableTokenInfo.claimableTokenAmount - Number(amount) < 0 || Number(amount) === 0}
               onClick={handleClaim}
             >Claim Now</Button>
@@ -125,7 +125,7 @@ export default function ClaimToken({ claimableTokenInfo, setClaimableTokenInfo }
         ) : (
           <Button
             variant="contained"
-            sx={{ borderRadius: 9999, width: '70%' }}
+            sx={{ borderRadius: 9999 }}
             onClick={() => open()}
           >Claim Now</Button>
         )}
