@@ -163,7 +163,7 @@ export default function TokenSaleSection() {
           <Stack>
             <Typography textAlign="center">1 SCOTTY = {TOKEN_PRICE_IN_USDT} USDT</Typography>
             {TOKEN_CLAIM_APPROVED ? (
-              <Typography textAlign="center">USD Raised ${(balanceInUsd).toFixed(4)}</Typography>
+              <Typography textAlign="center">USD Raised ${(balanceInUsd).toFixed(2)}</Typography>
             ) : currentTab === 'ethereum' ? (
               <Typography textAlign="center">Ethereum Raised {(balance.ethereum).toFixed(4)}</Typography>
             ) : (
@@ -179,7 +179,7 @@ export default function TokenSaleSection() {
 
           <Stack>
             <Typography textAlign="center">
-              {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(4)} Tokens Remaining
+              {(tokenAmountInfo.totalTokenAmount - tokenAmountInfo.claimedTokenAmount).toFixed(2)} Tokens Remaining
             </Typography>
           </Stack>
         </Stack>
