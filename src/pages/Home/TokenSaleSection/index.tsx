@@ -101,11 +101,9 @@ export default function TokenSaleSection() {
 
   //  Balance in USD is updated whenever the balance of contract is changed or currencies in usd are changed
   useEffect(() => {
-    if (!TOKEN_CLAIM_APPROVED) {
-      const balanceOfUsdtInUsd = balance.usdt * currenciesInUsd.usdt;
-      const balanceOfEthereumInUsd = balance.ethereum * currenciesInUsd.ethereum;
-      setBalanceInUsd(balanceOfUsdtInUsd + balanceOfEthereumInUsd);
-    }
+    const balanceOfUsdtInUsd = balance.usdt * currenciesInUsd.usdt;
+    const balanceOfEthereumInUsd = balance.ethereum * currenciesInUsd.ethereum;
+    setBalanceInUsd(balanceOfUsdtInUsd + balanceOfEthereumInUsd);
   }, [balance]);
   /* ------------------------------------------------------------ */
 
