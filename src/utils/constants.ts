@@ -1,3 +1,5 @@
+import { IInvestedToken } from "./interfaces";
+
 export const REGEX_NUMBER_VALID = /^[0-9]*\.?[0-9]*$/;
 export const CONTRACT_ADDRESS = "0xB9E3C5693f0B808f50410C4fd28ee7f2B88E1B18";
 export const CHAIN_ID = 1;
@@ -401,3 +403,17 @@ export const TOKEN_PRICE_IN_ETHEREUM = 0.00052;
 export const TOKEN_PRICE_IN_USDT = 0.1;
 export const PRESALE_STAGE_NUMBER = "1";
 export const TOKEN_CLAIM_APPROVED = true;
+export const INVESTED_TOKENS: Array<IInvestedToken> = [
+  {
+    id: 1,
+    token_name: "Ethereum",
+    token_symbol: "ETH",
+    img_src: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025",
+  },
+  {
+    id: 2,
+    token_name: "USDT",
+    token_symbol: "USDT",
+    img_src: "https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024",
+  },
+];

@@ -56,10 +56,10 @@ export default function Header() {
           <Stack alignItems="center" gap={{ xs: 2, md: 24 }}>
             <Box
               component="img"
-              src="/assets/images/ascii-logo.webp"
+              src="/assets/images/hero-logo.png"
               alt="ascii-logo"
               position="relative"
-              width="100%"
+              width="60%"
             />
 
             <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center" width="100%" spacing={{ xs: 2, md: 0 }}>
