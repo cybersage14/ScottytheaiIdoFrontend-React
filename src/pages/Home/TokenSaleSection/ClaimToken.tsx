@@ -6,12 +6,8 @@ import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
 import useLoading from "../../../hooks/useLoading";
 import { ChangeEvent, useState } from "react";
-import { REGEX_NUMBER_VALID } from "../../../utils/constants";
+import { CHAIN_ID, REGEX_NUMBER_VALID } from "../../../utils/constants";
 import api from "../../../utils/api";
-
-// ---------------------------------------------------------------------------------------------------------
-
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID ? Number(process.env.REACT_APP_CHAIN_ID) : 1;
 
 // ---------------------------------------------------------------------------------------------------------
 
@@ -23,14 +19,14 @@ interface IClaimableTokenInfo {
 
 interface IProps {
   claimableTokenInfo: IClaimableTokenInfo;
-  setClaimableTokenInfo: Function;
+  setClaimableTokenInfo: (claimTokenInfo: IClaimableTokenInfo) => void;
 }
 
 // --------------------------------------------------------------------------------------------------------- 
 
 export default function ClaimToken({ claimableTokenInfo, setClaimableTokenInfo }: IProps) {
   const { isConnected, address } = useAccount();
-  const { openLoading, closeLoading } = useLoading()
+  const { openLoadingAct, closeLoadingAct } = useLoading()
   const { disconnect } = useDisconnect();
   const { open } = useWeb3Modal();
   const { chain } = useNetwork();
@@ -47,19 +43,19 @@ export default function ClaimToken({ claimableTokenInfo, setClaimableTokenInfo }
   };
 
   const handleClaim = () => {
-    openLoading();
+    openLoadingAct();
     api.put(`/distribute/distribute-token/${claimableTokenInfo.id}`, {
       investor: address,
       amount: Number(amount)
     }).then(response => {
-      closeLoading();
+      closeLoadingAct();
       setClaimableTokenInfo({
         ...claimableTokenInfo,
         claimableTokenAmount: response.data
       });
       return toast.success('SCOTTY has been sent to your wallet.')
     }).catch(error => {
-      closeLoading();
+      closeLoadingAct();
 
       if (error?.response?.status === 404) {
         return toast.error("You didn't invest for SCOTTY.")

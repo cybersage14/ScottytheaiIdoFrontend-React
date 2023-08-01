@@ -6,26 +6,22 @@ import { Icon } from '@iconify/react'
 import { useAccount, usePrepareSendTransaction, useSendTransaction, useWaitForTransaction } from "wagmi";
 import { parseEther } from 'viem';
 import { toast } from "react-toastify";
-import { REGEX_NUMBER_VALID, CONTRACT_ADDRESS } from "../../../utils/constants";
+import { REGEX_NUMBER_VALID, CONTRACT_ADDRESS, TOKEN_PRICE_IN_ETHEREUM } from "../../../utils/constants";
 import useLoading from "../../../hooks/useLoading";
 import api from "../../../utils/api";
 
 // ---------------------------------------------------------------------------------------
 
-const TOKEN_PRICE_IN_ETHEREUM = process.env.REACT_APP_TOKEN_PRICE_IN_ETHEREUM ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_ETHEREUM) : 0.00052
-
-// ---------------------------------------------------------------------------------------
-
 interface IProps {
   open: boolean;
-  handleClose: Function;
+  handleClose: () => void;
   remainedTokenAmount: number;
 }
 
 // ---------------------------------------------------------------------------------------
 
 export default function DialogWithEthereum({ open, handleClose, remainedTokenAmount }: IProps) {
-  const { openLoading, closeLoading } = useLoading()
+  const { openLoadingAct, closeLoadingAct } = useLoading()
   const { address } = useAccount();
 
   const [sellAmount, setSellAmount] = useState<string>('0');
@@ -56,11 +52,13 @@ export default function DialogWithEthereum({ open, handleClose, remainedTokenAmo
         fundTypeId: 1,
         fundAmount: Number(debouncedSellAmount),
         tokenAmount: Number(buyAmount)
-      }).then(response => {
-        closeLoading();
+      }).then(res => {
+        console.log('>>>>>>>>>>> res.data => ', res.data)
+        closeLoadingAct();
         toast.success('Transaction completed.')
       }).catch(error => {
-        closeLoading();
+        console.log('>>>>>>>>> error => ', error)
+        closeLoadingAct();
         toast.error('Transaction failed.')
       });
     }
@@ -92,7 +90,7 @@ export default function DialogWithEthereum({ open, handleClose, remainedTokenAmo
 
   useEffect(() => {
     if (isLoading) {
-      openLoading();
+      openLoadingAct();
     }
   }, [isLoading]);
 

@@ -7,25 +7,19 @@ import { useWeb3Modal } from "@web3modal/react";
 import { Icon } from "@iconify/react";
 import { parseUnits } from "viem";
 import useLoading from "../../../hooks/useLoading";
-import { CONTRACT_ADDRESS, REGEX_NUMBER_VALID, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS } from "../../../utils/constants";
+import { CHAIN_ID, CONTRACT_ADDRESS, REGEX_NUMBER_VALID, TOKEN_PRICE_IN_USDT, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS } from "../../../utils/constants";
 import api from "../../../utils/api";
 
 // ---------------------------------------------------------------------------------------
 
-const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID ? Number(process.env.REACT_APP_CHAIN_ID) : 1;
-
-// ---------------------------------------------------------------------------------------
-
 interface IProps {
-  balance: number;
   remainedTokenAmount: number;
 }
 
 // ---------------------------------------------------------------------------------------
 
-export default function TabUsdt({ balance, remainedTokenAmount }: IProps) {
-  const { openLoading, closeLoading } = useLoading()
+export default function TabUsdt({ remainedTokenAmount }: IProps) {
+  const { openLoadingAct, closeLoadingAct } = useLoading()
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect();
   const { open } = useWeb3Modal();
@@ -62,22 +56,24 @@ export default function TabUsdt({ balance, remainedTokenAmount }: IProps) {
 
   const { isLoading } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: (transactionReceipt) => {
+    onSuccess: () => {
       api.post('invest/invest', {
         investor: address,
         fundTypeId: 2,
         fundAmount: Number(debouncedSellAmount),
         tokenAmount: Number(buyAmount)
       }).then(response => {
-        closeLoading();
+        console.log('>>>>>>>> response.data => ', response.data)
+        closeLoadingAct();
         toast.success('Transaction completed.')
       }).catch(error => {
-        closeLoading();
+        console.log('>>>>>>>> error => ', error)
+        closeLoadingAct();
         toast.error('Transaction failed.')
       });
     },
     onError: () => {
-      closeLoading();
+      closeLoadingAct();
     }
   });
 
@@ -108,7 +104,7 @@ export default function TabUsdt({ balance, remainedTokenAmount }: IProps) {
 
   useEffect(() => {
     if (isLoading) {
-      openLoading();
+      openLoadingAct();
     }
   }, [isLoading]);
 

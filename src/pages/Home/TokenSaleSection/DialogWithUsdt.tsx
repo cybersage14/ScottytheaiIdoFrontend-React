@@ -7,26 +7,21 @@ import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransa
 import { parseUnits } from 'viem';
 import { toast } from "react-toastify";
 import useLoading from "../../../hooks/useLoading";
-import { REGEX_NUMBER_VALID, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, CONTRACT_ADDRESS } from "../../../utils/constants";
+import { REGEX_NUMBER_VALID, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, CONTRACT_ADDRESS, CHAIN_ID, TOKEN_PRICE_IN_USDT } from "../../../utils/constants";
 import api from "../../../utils/api";
-
-// ---------------------------------------------------------------------------------------
-
-const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID ? Number(process.env.REACT_APP_CHAIN_ID) : 1;
 
 // ---------------------------------------------------------------------------------------
 
 interface IProps {
   open: boolean;
-  handleClose: Function;
+  handleClose: () => void;
   remainedTokenAmount: number;
 }
 
 // ---------------------------------------------------------------------------------------
 
 export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount }: IProps) {
-  const { openLoading, closeLoading } = useLoading()
+  const { openLoadingAct, closeLoadingAct } = useLoading()
   const { address } = useAccount();
 
   const [sellAmount, setSellAmount] = useState<string>('0');
@@ -59,22 +54,22 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
 
   const { isLoading } = useWaitForTransaction({
     hash: data?.hash,
-    onSuccess: (transactionReceipt) => {
+    onSuccess: () => {
       api.post('invest/invest', {
         investor: address,
         fundTypeId: 2,
         fundAmount: Number(debouncedSellAmount),
         tokenAmount: Number(buyAmount)
-      }).then(response => {
-        closeLoading();
+      }).then(() => {
+        closeLoadingAct();
         toast.success('Transaction completed.')
-      }).catch(error => {
-        closeLoading();
+      }).catch(() => {
+        closeLoadingAct();
         toast.error('Transaction failed.')
       });
     },
     onError: () => {
-      closeLoading();
+      closeLoadingAct();
     }
   });
 
@@ -105,7 +100,7 @@ export default function DialogWithUsdt({ open, handleClose, remainedTokenAmount 
 
   useEffect(() => {
     if (isLoading) {
-      openLoading();
+      openLoadingAct();
     }
   }, [isLoading]);
 

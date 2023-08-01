@@ -5,14 +5,8 @@ import { grey } from "@mui/material/colors";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import SectionTitle from "../../../components/SectionTitle";
 import api from "../../../utils/api";
-import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT } from "../../../utils/constants";
+import { COINLORE_ID_OF_ETHEREUM, COINLORE_ID_OF_USDT, PRESALE_STAGE_NUMBER, TOKEN_CLAIM_APPROVED, TOKEN_PRICE_IN_USDT } from "../../../utils/constants";
 import apiOfCoinLore from "../../../utils/apiOfCoinLore";
-
-// --------------------------------------------------------------------------------------------------------
-
-const REACT_APP_PRESALE_STAGE_NUMBER = process.env.REACT_APP_PRESALE_STAGE_NUMBER ? process.env.REACT_APP_PRESALE_STAGE_NUMBER : '1'
-const TOKEN_CLAIM_APPROVED = process.env.REACT_APP_TOKEN_CLAIM_APPROVED === '1' ? true : false;
-const TOKEN_PRICE_IN_USDT = process.env.REACT_APP_TOKEN_PRICE_IN_USDT ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_USDT) : 1
 
 // --------------------------------------------------------------------------------------------------------
 
@@ -86,7 +80,9 @@ export default function TokenSaleSection() {
           usdt: response.data[1]['price_usd']
         });
       })
-      .catch(error => { });
+      .catch(error => {
+        console.log('>>>>>>> error => ', error)
+      });
   };
 
   useEffect(() => {
@@ -150,14 +146,16 @@ export default function TokenSaleSection() {
             investor: address || '',
             claimableTokenAmount: response.data.claimable_token_amount
           });
-        }).catch(error => { });
+        }).catch(error => {
+          console.log('>>>>>>>>> error => ', error)
+        });
     }
   }, [isConnected]);
 
   return (
     <Box component="section" border={1} borderColor={theme.palette.primary.main} borderRadius={2} py={4}>
       <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-        <SectionTitle variant="h2">Presale Stage {REACT_APP_PRESALE_STAGE_NUMBER}</SectionTitle>
+        <SectionTitle variant="h2">Presale Stage {PRESALE_STAGE_NUMBER}</SectionTitle>
 
         <Stack alignItems="center" spacing={2} sx={{ color: grey[100], width: '100%' }}>
           <Stack>
@@ -222,10 +220,10 @@ export default function TokenSaleSection() {
               />
             </TabList>
             <TabPanel value="ethereum">
-              <TabEthereum balance={balance.ethereum} remainedTokenAmount={remainedTokenAmount} />
+              <TabEthereum remainedTokenAmount={remainedTokenAmount} />
             </TabPanel>
             <TabPanel value="usdt">
-              <TabUsdt balance={balance.usdt} remainedTokenAmount={remainedTokenAmount} />
+              <TabUsdt remainedTokenAmount={remainedTokenAmount} />
             </TabPanel>
           </TabContext>
         )}

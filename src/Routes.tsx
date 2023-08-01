@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 import { Navigate, useRoutes } from "react-router";
 import LandingLayout from "./layouts/LandingLayout";
 

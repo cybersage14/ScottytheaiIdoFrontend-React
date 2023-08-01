@@ -7,25 +7,19 @@ import { toast } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
 import useLoading from "../../../hooks/useLoading";
-import { CONTRACT_ADDRESS, REGEX_NUMBER_VALID } from "../../../utils/constants";
+import { CHAIN_ID, CONTRACT_ADDRESS, REGEX_NUMBER_VALID, TOKEN_PRICE_IN_ETHEREUM } from "../../../utils/constants";
 import api from "../../../utils/api";
 
 // ---------------------------------------------------------------------------------------
 
-const TOKEN_PRICE_IN_ETHEREUM = process.env.REACT_APP_TOKEN_PRICE_IN_ETHEREUM ? Number(process.env.REACT_APP_TOKEN_PRICE_IN_ETHEREUM) : 0.00052
-const CHAIN_ID = process.env.REACT_APP_CHAIN_ID ? Number(process.env.REACT_APP_CHAIN_ID) : 1;
-
-// ---------------------------------------------------------------------------------------
-
 interface IProps {
-  balance: number;
   remainedTokenAmount: number;
 }
 
 // ---------------------------------------------------------------------------------------
 
-export default function TabEthereum({ balance, remainedTokenAmount }: IProps) {
-  const { openLoading, closeLoading } = useLoading()
+export default function TabEthereum({ remainedTokenAmount }: IProps) {
+  const { openLoadingAct, closeLoadingAct } = useLoading()
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect()
   const { open } = useWeb3Modal()
@@ -61,10 +55,12 @@ export default function TabEthereum({ balance, remainedTokenAmount }: IProps) {
         fundAmount: Number(debouncedSellAmount),
         tokenAmount: Number(buyAmount)
       }).then(response => {
-        closeLoading();
+        console.log('>>>>>>>>> response.data => ', response.data)
+        closeLoadingAct();
         toast.success('Transaction completed.')
       }).catch(error => {
-        closeLoading();
+        console.log('>>>>>>>>>>> error => ', error)
+        closeLoadingAct();
         toast.error('Transaction failed.')
       });
     }
@@ -96,7 +92,7 @@ export default function TabEthereum({ balance, remainedTokenAmount }: IProps) {
 
   useEffect(() => {
     if (isLoading) {
-      openLoading();
+      openLoadingAct();
     }
   }, [isLoading]);
 

@@ -1,32 +1,32 @@
-import { createContext, useReducer } from 'react';
+import { ReactNode, createContext, useReducer } from 'react';
 
 /* --------------------------------------------------------------- */
 
-interface IInitialState {
+interface IState {
   isLoading: boolean
 }
 
 interface IAction {
   type: string,
-  payload: any
+  payload: boolean;
 }
 
 interface IProps {
-  children: any
+  children: ReactNode | number | string;
 }
 
 interface IHandlers {
-  [key: string]: Function,
+  [key: string]: (state: IState, action: IAction) => IState,
 }
 
 /* --------------------------------------------------------------- */
 
-const initialState: IInitialState = {
+const initialState: IState = {
   isLoading: false,
 };
 
 const handlers: IHandlers = {
-  SET_IS_LOADING: (state: object, action: IAction) => {
+  SET_IS_LOADING: (state: IState, action: IAction): IState => {
     return {
       ...state,
       isLoading: action.payload
@@ -34,28 +34,28 @@ const handlers: IHandlers = {
   }
 };
 
-const reducer = (state: object, action: IAction) =>
+const reducer = (state: IState, action: IAction) =>
   handlers[action.type] ? handlers[action.type](state, action) : state;
 
 //  Context
 const LoadingContext = createContext({
   ...initialState,
-  openLoading: () => Promise.resolve(),
-  closeLoading: () => Promise.resolve()
+  openLoadingAct: () => {},
+  closeLoadingAct: () => {}
 });
 
 //  Provider
 function LoadingProvider({ children }: IProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const openLoading = () => {
+  const openLoadingAct = () => {
     dispatch({
       type: 'SET_IS_LOADING',
       payload: true
     });
   };
 
-  const closeLoading = () => {
+  const closeLoadingAct = () => {
     dispatch({
       type: 'SET_IS_LOADING',
       payload: false
@@ -66,8 +66,8 @@ function LoadingProvider({ children }: IProps) {
     <LoadingContext.Provider
       value={{
         ...state,
-        openLoading,
-        closeLoading
+        openLoadingAct,
+        closeLoadingAct
       }}
     >
       {children}
