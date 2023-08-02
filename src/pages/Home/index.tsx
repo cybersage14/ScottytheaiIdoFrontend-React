@@ -18,9 +18,9 @@ export default function Home() {
     <Box>
       <TokenSaleSection2 />
       <AboutSection />
-      {/* <AdventureSection /> */}
-      {/* <CompanionsSection /> */}
-      {/* <HowToBuySection /> */}
+      <AdventureSection />
+      <CompanionsSection />
+      <HowToBuySection />
       {/* <PlanSection /> */}
       {/* <Box
         component="img"

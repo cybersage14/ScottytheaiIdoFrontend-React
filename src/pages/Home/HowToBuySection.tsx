@@ -159,7 +159,7 @@ export default function HowToBuySection() {
 
             <Grid item xs={12} md={6}>
               <Stack spacing={4}>
-                <SectionTitle>Tokenomics</SectionTitle>
+                <SectionTitle sx={{ textAlign: { xs: 'center', md: 'left' } }}>Tokenomics</SectionTitle>
                 <Box>
                   <Grid container spacing={4}>
                     {TOKENOMICS.map(tokenomic => (
