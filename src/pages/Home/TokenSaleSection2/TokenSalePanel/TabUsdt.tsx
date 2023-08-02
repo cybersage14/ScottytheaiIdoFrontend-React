@@ -1,16 +1,16 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { Box, Button, Grid, Stack } from "@mui/material";
-import { useAccount, useDisconnect, useNetwork, usePrepareSendTransaction, useSendTransaction, useSwitchNetwork, useWaitForTransaction } from "wagmi";
+import { useAccount, useContractWrite, useDisconnect, useNetwork, usePrepareContractWrite, useSwitchNetwork, useWaitForTransaction } from "wagmi";
 import { useDebounce } from "use-debounce";
-import { parseEther } from "viem";
 import { toast } from "react-toastify";
-import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
-import useLoading from "../../../hooks/useLoading";
-import { CHAIN_ID, CONTRACT_ADDRESS, REGEX_NUMBER_VALID, TOKEN_PRICE_IN_ETHEREUM } from "../../../utils/constants";
-import api from "../../../utils/api";
-import { TextField } from "../../../components/styledComponents";
+import { Icon } from "@iconify/react";
+import { parseUnits } from "viem";
 import { grey } from "@mui/material/colors";
+import { TextField } from "../../../../components/styledComponents";
+import useLoading from "../../../../hooks/useLoading";
+import { CHAIN_ID, CONTRACT_ADDRESS, REGEX_NUMBER_VALID, TOKEN_PRICE_IN_USDT, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS } from "../../../../utils/constants";
+import api from "../../../../utils/api";
 
 // ---------------------------------------------------------------------------------------
 
@@ -20,13 +20,13 @@ interface IProps {
 
 // ---------------------------------------------------------------------------------------
 
-export default function TabEthereum({ remainedTokenAmount }: IProps) {
+export default function TabUsdt({ remainedTokenAmount }: IProps) {
   const { openLoadingAct, closeLoadingAct } = useLoading()
   const { isConnected, address } = useAccount();
-  const { disconnect } = useDisconnect()
-  const { open } = useWeb3Modal()
-  const { chain } = useNetwork()
-  const { switchNetwork } = useSwitchNetwork()
+  const { disconnect } = useDisconnect();
+  const { open } = useWeb3Modal();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
 
   const [sellAmount, setSellAmount] = useState<string>('0');
   const [buyAmount, setBuyAmount] = useState<string>('0');
@@ -34,43 +34,55 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
 
   const claimStopped = useMemo<boolean>(() => {
     const _buyAmount = Number(buyAmount || '0');
+
     if (remainedTokenAmount >= _buyAmount) {
       return false;
     }
     return true;
   }, [buyAmount, remainedTokenAmount]);
 
-  /* ----------------- Send Ethereum from the wallet to the contract ------------------ */
-  const { config } = usePrepareSendTransaction({
-    to: CONTRACT_ADDRESS,
-    value: debouncedSellAmount ? parseEther(`${Number(debouncedSellAmount)}`) : undefined
+  /* ------------------ Send USDT from the wallet to the contract --------------- */
+  const { config, error: errorOfUsePrepareContractWrite } = usePrepareContractWrite({
+    address: USDT_CONTRACT_ADDRESS,
+    abi: USDT_CONTRACT_ABI,
+    functionName: 'transfer',
+    args: [CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, 6)],
+    // args: [CONTRACT_ADDRESS, Number(parseUnits(`${Number(debouncedSellAmount)}`, 6))],
+    // args: [CONTRACT_ADDRESS, Number(debouncedSellAmount) * 10 ** 6],
+    chainId: CHAIN_ID,
   });
 
-  const { data, sendTransaction } = useSendTransaction(config);
+  console.log('>>>>>>> errorOfUsePrepareContractWrite => ', errorOfUsePrepareContractWrite)
+
+  const { data, write } = useContractWrite(config);
 
   const { isLoading } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess: () => {
       api.post('invest/invest', {
         investor: address,
-        fundTypeId: 1,
+        fundTypeId: 2,
         fundAmount: Number(debouncedSellAmount),
         tokenAmount: Number(buyAmount)
       }).then(response => {
-        console.log('>>>>>>>>> response.data => ', response.data)
+        console.log('>>>>>>>> response.data => ', response.data)
         closeLoadingAct();
         toast.success('Transaction completed.')
       }).catch(error => {
-        console.log('>>>>>>>>>>> error => ', error)
+        console.log('>>>>>>>> error => ', error)
         closeLoadingAct();
         toast.error('Transaction failed.')
       });
+    },
+    onError: () => {
+      closeLoadingAct();
     }
   });
+
   const handlePurchase = () => {
-    sendTransaction?.();
+    write?.();
   };
-  /* --------------------------------------------------------------------------------- */
+  /* ------------------------------------------------------------------------------ */
 
   //  Input sell amount
   const handleSellAmount = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,7 +90,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
 
     if (value.match(REGEX_NUMBER_VALID)) {
       setSellAmount(value);
-      setBuyAmount(String(Number(value) / TOKEN_PRICE_IN_ETHEREUM));
+      setBuyAmount(String(Number(value) / TOKEN_PRICE_IN_USDT));
     }
   };
 
@@ -88,7 +100,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
 
     if (value.match(REGEX_NUMBER_VALID)) {
       setBuyAmount(value);
-      setSellAmount(String(Number(value) * TOKEN_PRICE_IN_ETHEREUM));
+      setSellAmount(String(Number(value) * TOKEN_PRICE_IN_USDT));
     }
   };
 
@@ -100,10 +112,10 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
 
   return (
     <Stack alignItems="center" spacing={4}>
-      {/* <Typography color={grey[100]}>ETH balance: <Typography component="span" fontWeight={700}>{balance.toFixed(4)}</Typography></Typography> */}
+      {/* <Typography color={grey[100]}>USDT balance: <Typography component="span" fontWeight={700}>{balance.toFixed(2)}</Typography></Typography> */}
       <Box>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Selling"
               id="sellAmount"
@@ -113,8 +125,8 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
                 endAdornment: (
                   <Box
                     component="img"
-                    src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
-                    alt="Ethereum"
+                    src="https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024"
+                    alt="USDT"
                     width={32}
                   />
                 )
@@ -123,7 +135,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
               onChange={handleSellAmount}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               label="Buying"
               id="buyAmount"
@@ -151,12 +163,12 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
             <Button
               variant="contained"
               sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
-              disabled={!sendTransaction || claimStopped}
+              disabled={!write || claimStopped}
               onClick={handlePurchase}
             >Buy Now</Button>
             <Button
               variant="outlined"
-              sx={{ borderRadius: 9999, bgcolor: grey[900] }}
+              sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
               onClick={() => disconnect()}
               endIcon={<Icon icon="heroicons-outline:logout" />}
             >

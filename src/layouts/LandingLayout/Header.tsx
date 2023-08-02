@@ -59,16 +59,16 @@ export default function Header() {
               src="/assets/images/hero-logo.png"
               alt="ascii-logo"
               position="relative"
-              width="60%"
+              width={{ xs: '90%', md: '60%' }}
             />
 
             <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center" width="100%" spacing={{ xs: 2, md: 0 }}>
               {isMobile ? (
-                <Grid container spacing={6} direction="row-reverse">
+                <Grid container spacing={3} direction="row-reverse">
                   <Grid item xs={6}>
-                    <Stack alignItems="start" gap={1}>
+                    <Stack alignItems="start">
                       {SCROLL_LINKS.slice(0, 2).map(scrollLink => (
-                        <Button key={scrollLink.id} variant="text" sx={{ fontWeight: 500 }}>
+                        <Button key={scrollLink.id} variant="text" sx={{ fontWeight: 500, fontSize: 16 }}>
                           <ScrollLink
                             to={scrollLink.to}
                             spy={true}
@@ -84,9 +84,9 @@ export default function Header() {
                   </Grid>
 
                   <Grid item xs={6}>
-                    <Stack alignItems="end" gap={1}>
+                    <Stack alignItems="end">
                       {SCROLL_LINKS.reverse().slice(0, 2).map(scrollLink => (
-                        <Button key={scrollLink.id} variant="text" sx={{ fontWeight: 500 }}>
+                        <Button key={scrollLink.id} variant="text" sx={{ fontWeight: 500, fontSize: 16 }}>
                           <ScrollLink
                             to={scrollLink.to}
                             spy={true}
@@ -119,7 +119,7 @@ export default function Header() {
                 </Stack>
               )}
 
-              <Button variant="contained" sx={{ borderRadius: 9999, px: 4 }}>Header</Button>
+              <Button variant="contained" sx={{ borderRadius: 9999, px: 4, fontSize: { xs: 14, md: 18 } }}>Connect Wallet</Button>
             </Stack>
           </Stack>
         </Container>

@@ -15,10 +15,10 @@ export default function TimePiece({ timeValue, timeUnit }: IProps) {
         border={`1px solid ${grey[100]}`}
         borderRadius={2}
         borderBottom="none"
-        width={56}
-        height={56}
+        width={{ xs: 48, md: 56 }}
+        height={{ xs: 48, md: 56 }}
       >
-        <Typography component="span" fontWeight={700} color={grey[100]} fontSize={28}>{timeValue}</Typography>
+        <Typography component="span" fontWeight={700} color={grey[100]} fontSize={{ xs: 20, md: 28 }}>{timeValue}</Typography>
       </Stack>
       <Stack
         position="absolute"

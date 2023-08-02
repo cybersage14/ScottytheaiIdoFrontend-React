@@ -17,17 +17,17 @@ export default function Home() {
   return (
     <Box>
       <TokenSaleSection2 />
-      <AboutSection />
-      <AdventureSection />
-      <CompanionsSection />
-      <HowToBuySection />
-      <PlanSection />
-      <Box
+      {/* <AboutSection /> */}
+      {/* <AdventureSection /> */}
+      {/* <CompanionsSection /> */}
+      {/* <HowToBuySection /> */}
+      {/* <PlanSection /> */}
+      {/* <Box
         component="img"
         src="/assets/images/rockets.png"
         width="100%"
-      />
-      <CommunitySection />
+      /> */}
+      {/* <CommunitySection /> */}
     </Box>
   )
 }
