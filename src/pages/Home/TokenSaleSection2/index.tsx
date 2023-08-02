@@ -54,7 +54,7 @@ export default function TokenSaleSection2() {
             <Typography textAlign="center" color={grey[100]} fontSize={16}>
               Join the future of AI-powered technology today and sign up for Scotty.
             </Typography>
-            <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16 }}>
+            <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 14 }}>
               Learn More
             </Button>
           </Stack>

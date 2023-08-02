@@ -5,7 +5,7 @@ import { PY_OF_SECTION } from "../../utils/constants";
 
 export default function CommunitySection() {
   return (
-    <Box component="section" py={PY_OF_SECTION}>
+    <Box component="section" py={PY_OF_SECTION} id="community">
       <Container maxWidth="md">
         <Typography component="h2" fontSize={{ xs: 20, md: 32 }} color={grey[100]} textAlign="center">
           Unleash the Scotty Army! Join the Crypto Revolution!
@@ -14,7 +14,7 @@ export default function CommunitySection() {
           The team actively engages with the community through social media and other channels, making it a truly community-driven project.
         </Typography>
         <Stack direction="row" justifyContent="center" mt={{ xs: 4, md: 8 }}>
-          <Button variant="contained" sx={{ borderRadius: 9999 }} component={Link} href="https://t.me/Scotty_The_Ai" target="_blank">
+          <Button variant="contained" sx={{ borderRadius: 9999, fontSize: { xs: 14, md: 18 } }} component={Link} href="https://t.me/Scotty_The_Ai" target="_blank">
             Click Here to Join
           </Button>
         </Stack>

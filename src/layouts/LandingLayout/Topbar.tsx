@@ -19,8 +19,8 @@ export default function Topbar() {
         <Stack direction="row" alignItems="center" spacing={4}>
           {INDEXES.map(index => (
             <Fragment key={index}>
-              <Typography component="span" color={grey[100]}>{index % 2 === 1 ? 'Scotty' : 'Private Sale'}</Typography>
-              <Box component={Icon} icon="ph:star" color={grey[100]} fontSize={18} pr={index === INDEXES.length - 1 ? 4 : 0} />
+              <Typography component="span" color={grey[100]} fontSize={{ xs: 14, md: 18 }}>{index % 2 === 1 ? 'Scotty' : 'Private Sale'}</Typography>
+              <Box component={Icon} icon="ph:star" color={grey[100]} fontSize={{ xs: 14, md: 18 }} pr={index === INDEXES.length - 1 ? 4 : 0} />
             </Fragment>
           ))}
         </Stack>
