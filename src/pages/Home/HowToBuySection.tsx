@@ -149,12 +149,14 @@ export default function HowToBuySection() {
         <Box>
           <Grid container alignItems="center" spacing={8}>
             <Grid item xs={12} md={6}>
-              <Box
-                component="img"
-                src="/assets/images/tokenomics.png"
-                alt="Tokenomics"
-                width="70%"
-              />
+              <Stack direction="row" justifyContent={{ xs: 'center', md: 'start' }}>
+                <Box
+                  component="img"
+                  src="/assets/images/tokenomics.png"
+                  alt="Tokenomics"
+                  width="70%"
+                />
+              </Stack>
             </Grid>
 
             <Grid item xs={12} md={6}>

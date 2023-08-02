@@ -21,13 +21,13 @@ export default function Home() {
       <AdventureSection />
       <CompanionsSection />
       <HowToBuySection />
-      {/* <PlanSection /> */}
-      {/* <Box
+      <PlanSection />
+      <Box
         component="img"
         src="/assets/images/rockets.png"
         width="100%"
-      /> */}
-      {/* <CommunitySection /> */}
+      />
+      <CommunitySection />
     </Box>
   )
 }
