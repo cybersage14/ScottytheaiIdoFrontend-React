@@ -17,7 +17,7 @@ export default function AboutSection() {
               guardian of the crypto universe
             </SectionTitle>
 
-            <Typography textAlign="center" color={grey[100]} fontSize={16}>
+            <Typography textAlign={{ xs: 'left', md: 'center' }} color={grey[100]} fontSize={16}>
               In a vast and complex world of cryptocurrency, there existed the legend of a dog named Scotty the AI. He was a Scottish Terrier with shaggy, jet-black fur that shimmered like the night sky, making him both an enigma and a sight to behold. It wasn’t just his appearance that set him apart. Scotty possessed a rare combination of intelligence and cunning that made him a force to be reckoned with. Many believed that he was a guardian of sorts, a protector of the secrets of the crypto universe. With his advanced AI capabilities, he roamed the endless expanse of code and algorithms that made up the digital world, always staying one step ahead of those who sought to catch him.
             </Typography>
           </Stack>
@@ -28,8 +28,8 @@ export default function AboutSection() {
             {/* What is $Scotty */}
             <Grid item xs={12} md={12}>
               <Stack
-                p={5}
-                direction="row"
+                p={{ xs: 3, md: 5 }}
+                direction={{ xs: 'column-reverse', md: 'row' }}
                 alignItems="center"
                 spacing={2}
                 border={`1px solid ${theme.palette.primary.main}`}
@@ -52,6 +52,7 @@ export default function AboutSection() {
                   component="img"
                   src="/assets/images/what-is-scotty.png"
                   alt="$Scotty"
+                  width="100%"
                 />
               </Stack>
             </Grid>
@@ -60,15 +61,15 @@ export default function AboutSection() {
             <Grid item xs={12} md={6}>
               <Stack
                 py={4}
-                pl={5}
-                direction="row"
+                pl={{ xs: 0, md: 5 }}
+                direction={{ xs: 'column-reverse', md: 'row' }}
                 alignItems="center"
                 spacing={2}
                 border={`1px solid ${theme.palette.primary.main}`}
                 borderRadius={4}
                 bgcolor={grey[900]}
               >
-                <Stack flexGrow={1} spacing={3}>
+                <Stack flexGrow={1} spacing={3} px={{ xs: 3, md: 0 }}>
                   <Typography component="h2" textTransform="capitalize" fontSize={{ xs: 28, md: 40 }} color={grey[100]}>
                     Scotty Swap
                   </Typography>
@@ -84,7 +85,7 @@ export default function AboutSection() {
                   component="img"
                   src="/assets/images/swap.png"
                   alt="Swap"
-                  width="40%"
+                  width={{ xs: '100%', md: '40%' }}
                 />
               </Stack>
             </Grid>
@@ -92,14 +93,15 @@ export default function AboutSection() {
             {/* Scotty chat */}
             <Grid item xs={12} md={6}>
               <Stack
-                px={5}
-                direction="row"
+                px={{ xs: 3, md: 5 }}
+                py={{ xs: 4, md: 0 }}
+                direction={{ xs: 'column-reverse', md: 'row' }}
                 alignItems="center"
                 spacing={2}
                 border={`1px solid ${theme.palette.primary.main}`}
                 borderRadius={4}
                 bgcolor={grey[900]}
-                height="100%"
+                height={{ xs: 'none', md: '100%' }}
               >
                 <Stack flexGrow={1} spacing={3}>
                   <Typography component="h2" textTransform="capitalize" fontSize={{ xs: 28, md: 40 }} color={grey[100]}>
@@ -117,7 +119,7 @@ export default function AboutSection() {
                   component="img"
                   src="/assets/images/scottychat.png"
                   alt="ScottyChat"
-                  width="30%"
+                  width={{ xs: '50%', md: '30%' }}
                 />
               </Stack>
             </Grid>

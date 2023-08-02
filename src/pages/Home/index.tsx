@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <Box>
       <TokenSaleSection2 />
-      {/* <AboutSection /> */}
+      <AboutSection />
       {/* <AdventureSection /> */}
       {/* <CompanionsSection /> */}
       {/* <HowToBuySection /> */}
