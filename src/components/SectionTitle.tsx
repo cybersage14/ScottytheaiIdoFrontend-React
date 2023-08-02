@@ -8,7 +8,7 @@ interface IProps extends TypographyProps {
 
 export default function SectionTitle({ children, sx }: IProps) {
   return (
-    <Typography component="h2" fontSize={{ xs: 32, md: 48 }} color={grey[100]} sx={sx}>
+    <Typography component="h2" fontSize={{ xs: 28, md: 40 }} color={grey[100]} sx={sx}>
       {children}
     </Typography>
   )

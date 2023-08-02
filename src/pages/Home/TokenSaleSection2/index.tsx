@@ -4,9 +4,10 @@ import { grey } from "@mui/material/colors";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import TimePiece from "./TimePiece";
 import ProgressBar from "../../../components/ProgressBar";
-import { INVESTED_TOKENS } from "../../../utils/constants";
+import { INVESTED_TOKENS, PY_OF_SECTION } from "../../../utils/constants";
 import TabEthereum from "./TabEthereum";
 import TabUsdt from "./TabUsdt";
+import SectionTitle from "../../../components/SectionTitle";
 
 //  ---------------------------------------------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ export default function TokenSaleSection2() {
   }
 
   return (
-    <Box component="section" py={12} bgcolor={grey[900]}>
+    <Box component="section" py={PY_OF_SECTION} bgcolor={grey[900]}>
       <Container maxWidth="xl">
         <Grid container alignItems="center">
           <Grid item md={7}>
@@ -44,7 +45,9 @@ export default function TokenSaleSection2() {
               <Stack alignItems="center" spacing={3}>
                 <Stack alignItems="center" spacing={3} width="100%">
                   {/* Title */}
-                  <Typography component="h3" color={grey[900]} fontSize={44} fontWeight={600}>Presale Stage 3</Typography>
+                  <SectionTitle sx={{ color: grey[900], fontWeight: 700 }}>
+                    Presale Stage 3
+                  </SectionTitle>
 
                   {/* Time */}
                   <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">

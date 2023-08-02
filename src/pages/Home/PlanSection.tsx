@@ -15,62 +15,62 @@ interface IText {
 const TEXTS_OF_PHASE_1: Array<IText> = [
   {
     id: 1,
-    text: 'Launch'
+    text: 'Presale & Initial Token Audit'
   },
   {
     id: 2,
-    text: 'CoinGecko/Coinmarketcap Listings'
+    text: 'Scotty AI Contract Audit'
   },
   {
     id: 3,
-    text: '1,000+ Holders'
+    text: 'Token Generation'
   },
   {
     id: 4,
-    text: 'Get $SCOTTY Trending on twitter with our mememic power'
+    text: 'Marketing Begins - Taking $Scotty on the high road with our robust marketing campaign.'
+  },
+  {
+    id: 5,
+    text: 'Presale Launch'
   }
 ]
 
 const TEXTS_OF_PHASE_2: Array<IText> = [
   {
     id: 1,
-    text: '5,000+ Holders'
+    text: 'Token Listings: Launch $Scotty token on popular DEXs with ample liquidity and accessibility. Public Launch of $Scotty'
   },
   {
     id: 2,
-    text: 'Community Partnerships Scotty Times digital newsletter'
+    text: 'CEX Listings'
   },
   {
     id: 3,
-    text: 'Formation of token gated discord group, for holders'
+    text: 'Community Partnerships Scotty Times digital newsletter'
   },
   {
     id: 4,
-    text: 'CEX Listings 10,000+holders'
+    text: 'CoinGecko/Coinmarketcap Listings'
+  },
+  {
+    id: 5,
+    text: 'Uniswap & Bitmart Listing'
   }
 ]
 
 const TEXTS_OF_PHASE_3: Array<IText> = [
   {
     id: 1,
-    text: '$SCOTTY Merch'
+    text: 'Scotty Swap Tool'
   },
   {
     id: 2,
-    text: '$SCOTTY Academy'
+    text: 'Chat With Scotty'
   },
   {
     id: 3,
-    text: '$SCOTTY Tools'
-  },
-  {
-    id: 4,
-    text: 'T1 Exchange Listings 100,000+ holders'
-  },
-  {
-    id: 5,
     text: 'Blockchain Takeover'
-  }
+  },
 ]
 
 // ----------------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ export default function PlanSection() {
                 {TEXTS_OF_PHASE_1.map(textItem => (
                   <Stack key={textItem.id} direction="row" spacing={2}>
                     <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 1 }} />
-                    <Typography fontSize={{ xs: 16, md: 20 }} color={grey[100]}>{textItem.text}</Typography>
+                    <Typography fontSize={{ xs: 16, md: 18 }} color={grey[100]}>{textItem.text}</Typography>
                   </Stack>
                 ))}
               </Stack>
@@ -103,7 +103,7 @@ export default function PlanSection() {
                 {TEXTS_OF_PHASE_2.map(textItem => (
                   <Stack key={textItem.id} direction="row" spacing={2}>
                     <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: grey[100], mt: 1 }} />
-                    <Typography fontSize={{ xs: 16, md: 20 }}>{textItem.text}</Typography>
+                    <Typography fontSize={{ xs: 16, md: 18 }}>{textItem.text}</Typography>
                   </Stack>
                 ))}
               </Stack>
@@ -115,7 +115,7 @@ export default function PlanSection() {
                 {TEXTS_OF_PHASE_3.map(textItem => (
                   <Stack key={textItem.id} direction="row" spacing={2}>
                     <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 1 }} />
-                    <Typography fontSize={{ xs: 16, md: 20 }} color={grey[100]}>{textItem.text}</Typography>
+                    <Typography fontSize={{ xs: 16, md: 18 }} color={grey[100]}>{textItem.text}</Typography>
                   </Stack>
                 ))}
               </Stack>

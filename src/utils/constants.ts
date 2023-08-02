@@ -13,7 +13,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "string" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -22,19 +22,19 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
     inputs: [
       { name: "_spender", type: "address" },
-      { name: "_value", type: "uint256" },
+      { name: "_value", type: "uint256" }
     ],
     name: "approve",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -43,7 +43,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "bool" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -52,7 +52,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -61,20 +61,20 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
     inputs: [
       { name: "_from", type: "address" },
       { name: "_to", type: "address" },
-      { name: "_value", type: "uint256" },
+      { name: "_value", type: "uint256" }
     ],
     name: "transferFrom",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -83,7 +83,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "address" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -92,7 +92,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -101,7 +101,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -110,7 +110,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -119,7 +119,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -128,7 +128,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -137,19 +137,19 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "bool" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
     inputs: [
       { name: "", type: "address" },
-      { name: "", type: "address" },
+      { name: "", type: "address" }
     ],
     name: "allowed",
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -158,7 +158,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "bool" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -167,7 +167,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -176,7 +176,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -185,7 +185,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "address" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -194,7 +194,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "address" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -203,31 +203,31 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "string" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
     inputs: [
       { name: "_to", type: "address" },
-      { name: "_value", type: "uint256" },
+      { name: "_value", type: "uint256" }
     ],
     name: "transfer",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
     inputs: [
       { name: "newBasisPoints", type: "uint256" },
-      { name: "newMaxFee", type: "uint256" },
+      { name: "newMaxFee", type: "uint256" }
     ],
     name: "setParams",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -236,7 +236,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -245,19 +245,19 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
     inputs: [
       { name: "_owner", type: "address" },
-      { name: "_spender", type: "address" },
+      { name: "_spender", type: "address" }
     ],
     name: "allowance",
     outputs: [{ name: "remaining", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -266,7 +266,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -275,7 +275,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "bool" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -284,7 +284,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: true,
@@ -293,7 +293,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [{ name: "", type: "uint256" }],
     payable: false,
     stateMutability: "view",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -302,7 +302,7 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     constant: false,
@@ -311,89 +311,89 @@ export const USDT_CONTRACT_ABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
-    type: "function",
+    type: "function"
   },
   {
     inputs: [
       { name: "_initialSupply", type: "uint256" },
       { name: "_name", type: "string" },
       { name: "_symbol", type: "string" },
-      { name: "_decimals", type: "uint256" },
+      { name: "_decimals", type: "uint256" }
     ],
     payable: false,
     stateMutability: "nonpayable",
-    type: "constructor",
+    type: "constructor"
   },
   {
     anonymous: false,
     inputs: [{ indexed: false, name: "amount", type: "uint256" }],
     name: "Issue",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [{ indexed: false, name: "amount", type: "uint256" }],
     name: "Redeem",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [{ indexed: false, name: "newAddress", type: "address" }],
     name: "Deprecate",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [
       { indexed: false, name: "feeBasisPoints", type: "uint256" },
-      { indexed: false, name: "maxFee", type: "uint256" },
+      { indexed: false, name: "maxFee", type: "uint256" }
     ],
     name: "Params",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [
       { indexed: false, name: "_blackListedUser", type: "address" },
-      { indexed: false, name: "_balance", type: "uint256" },
+      { indexed: false, name: "_balance", type: "uint256" }
     ],
     name: "DestroyedBlackFunds",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [{ indexed: false, name: "_user", type: "address" }],
     name: "AddedBlackList",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [{ indexed: false, name: "_user", type: "address" }],
     name: "RemovedBlackList",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [
       { indexed: true, name: "owner", type: "address" },
       { indexed: true, name: "spender", type: "address" },
-      { indexed: false, name: "value", type: "uint256" },
+      { indexed: false, name: "value", type: "uint256" }
     ],
     name: "Approval",
-    type: "event",
+    type: "event"
   },
   {
     anonymous: false,
     inputs: [
       { indexed: true, name: "from", type: "address" },
       { indexed: true, name: "to", type: "address" },
-      { indexed: false, name: "value", type: "uint256" },
+      { indexed: false, name: "value", type: "uint256" }
     ],
     name: "Transfer",
-    type: "event",
+    type: "event"
   },
   { anonymous: false, inputs: [], name: "Pause", type: "event" },
-  { anonymous: false, inputs: [], name: "Unpause", type: "event" },
+  { anonymous: false, inputs: [], name: "Unpause", type: "event" }
 ];
 export const COINLORE_ID_OF_ETHEREUM = 80;
 export const COINLORE_ID_OF_USDT = 518;
@@ -408,12 +408,13 @@ export const INVESTED_TOKENS: Array<IInvestedToken> = [
     id: 1,
     token_name: "Ethereum",
     token_symbol: "ETH",
-    img_src: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025",
+    img_src: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
   },
   {
     id: 2,
     token_name: "USDT",
     token_symbol: "USDT",
-    img_src: "https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024",
-  },
+    img_src: "https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024"
+  }
 ];
+export const PY_OF_SECTION = { xs: 6, md: 12 };

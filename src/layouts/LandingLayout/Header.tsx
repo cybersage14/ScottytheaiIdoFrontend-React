@@ -41,7 +41,7 @@ export default function Header() {
         muted
         loop
         playsInline
-        src="https://scottytheai.com/wp-content/uploads/2023/05/scotty_bg.mp4"
+        src="/assets/videos/scotty_bg.mp4"
         position="absolute"
         right={0}
         bottom={0}
@@ -119,7 +119,7 @@ export default function Header() {
                 </Stack>
               )}
 
-              <Button variant="contained" sx={{ borderRadius: 9999, px: 4 }}>Buy $SCOTTY</Button>
+              <Button variant="contained" sx={{ borderRadius: 9999, px: 4 }}>Header</Button>
             </Stack>
           </Stack>
         </Container>

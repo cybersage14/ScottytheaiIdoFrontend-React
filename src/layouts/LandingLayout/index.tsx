@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 // --------------------------------------------------------------------------------------------------
 
-const Navbar = lazy(() => import('./Navbar'))
+const Topbar = lazy(() => import('./Topbar'))
 const Header = lazy(() => import('./Header'))
 const Footer = lazy(() => import('./Footer'))
 
@@ -15,7 +15,7 @@ export default function LandingLayout() {
 
   return (
     <Stack sx={{ minHeight: '100vh' }} bgcolor={theme.palette.background.default}>
-      <Navbar />
+      <Topbar />
       <Header />
       <Box flexGrow={1}>
         <Outlet />

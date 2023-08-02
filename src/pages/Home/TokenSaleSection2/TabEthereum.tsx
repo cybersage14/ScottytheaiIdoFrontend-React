@@ -102,7 +102,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
     <Stack alignItems="center" spacing={4}>
       {/* <Typography color={grey[100]}>ETH balance: <Typography component="span" fontWeight={700}>{balance.toFixed(4)}</Typography></Typography> */}
       <Box>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <TextField
               label="Selling"
@@ -150,13 +150,13 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
           <>
             <Button
               variant="contained"
-              sx={{ borderRadius: 9999 }}
+              sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
               disabled={!sendTransaction || claimStopped}
               onClick={handlePurchase}
             >Buy Now</Button>
             <Button
               variant="outlined"
-              sx={{ borderRadius: 9999 }}
+              sx={{ borderRadius: 9999, bgcolor: grey[900] }}
               onClick={() => disconnect()}
               endIcon={<Icon icon="heroicons-outline:logout" />}
             >
@@ -164,7 +164,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
             </Button>
           </>
         ) : (
-          <Button variant="contained" sx={{ borderRadius: 9999 }} onClick={() => switchNetwork?.(CHAIN_ID)}>
+          <Button variant="contained" sx={{ borderRadius: 9999, bgcolor: grey[900] }} onClick={() => switchNetwork?.(CHAIN_ID)}>
             Switch to Ethereum
           </Button>
         ) : (

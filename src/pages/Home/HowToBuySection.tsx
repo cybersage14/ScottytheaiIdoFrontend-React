@@ -1,5 +1,6 @@
-import { Box, Container, Grid, LinearProgress, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Container, Grid, LinearProgress, Stack, Typography, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { Icon } from "@iconify/react";
 import SectionTitle from "../../components/SectionTitle";
 
 // -------------------------------------------------------------------------------------------------------
@@ -37,9 +38,63 @@ const FAQS: Array<IFaq> = [
 
 // -------------------------------------------------------------------------------------------------------
 
+const TOKENOMICS = [
+  {
+    id: 1,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 2,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 3,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 4,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 5,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 6,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 7,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 8,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 9,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  },
+  {
+    id: 10,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000'
+  }
+]
+
+// -------------------------------------------------------------------------------------------------------
+
 export default function HowToBuySection() {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <Box component="section" py={{ xs: 6, md: 12 }}>
@@ -91,37 +146,39 @@ export default function HowToBuySection() {
           </Box>
         </Stack>
 
-        {isMobile ? (
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700} textAlign="center">Contract Renounced</Typography>
+        <Box>
+          <Grid container alignItems="center" spacing={8}>
+            <Grid item xs={12} md={6}>
+              <Box
+                component="img"
+                src="/assets/images/tokenomics.png"
+                alt="Tokenomics"
+                width="70%"
+              />
             </Grid>
-            <Grid item xs={12}>
-              <Typography color={grey[100]} fontSize={28} fontWeight={700} textAlign="center">Liquidity Keys Burned Forever</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700} textAlign="center">ERC20</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography color={grey[100]} fontSize={28} fontWeight={700} textAlign="center">No Team Tokens</Typography>
-            </Grid>
-          </Grid>
-        ) : (
-          <Grid container>
-            <Grid item md={6}>
-              <Stack alignItems="center" spacing={4}>
-                <Typography color={grey[100]} fontSize={28} fontWeight={700}>Liquidity Keys Burned Forever</Typography>
-                <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700}>ERC20</Typography>
+
+            <Grid item xs={12} md={6}>
+              <Stack spacing={4}>
+                <SectionTitle>Tokenomics</SectionTitle>
+                <Box>
+                  <Grid container spacing={4}>
+                    {TOKENOMICS.map(tokenomic => (
+                      <Grid key={tokenomic.id} item xs={12} md={6}>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Box component={Icon} icon="mdi:paw" sx={{ fontSize: 36, color: theme.palette.primary.main }} />
+                          <Stack>
+                            <Typography component="span" color={grey[100]} fontSize={16}>{tokenomic.label}</Typography>
+                            <Typography component="span" color={theme.palette.primary.main} fontSize={16}>{tokenomic.tokenAmount}</Typography>
+                          </Stack>
+                        </Stack>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
               </Stack>
             </Grid>
-            <Grid item md={6}>
-              <Stack alignItems="center" spacing={4}>
-                <Typography color={theme.palette.primary.main} fontSize={28} fontWeight={700}>Contract Renounced</Typography>
-                <Typography color={grey[100]} fontSize={28} fontWeight={700}>No Team Tokens</Typography>
-              </Stack>
-            </Grid>
           </Grid>
-        )}
+        </Box>
       </Container>
     </Box>
   )

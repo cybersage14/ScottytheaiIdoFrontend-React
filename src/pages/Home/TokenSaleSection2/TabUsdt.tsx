@@ -114,7 +114,7 @@ export default function TabUsdt({ remainedTokenAmount }: IProps) {
     <Stack alignItems="center" spacing={4}>
       {/* <Typography color={grey[100]}>USDT balance: <Typography component="span" fontWeight={700}>{balance.toFixed(2)}</Typography></Typography> */}
       <Box>
-        <Grid container spacing={6}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <TextField
               label="Selling"
@@ -162,13 +162,13 @@ export default function TabUsdt({ remainedTokenAmount }: IProps) {
           <>
             <Button
               variant="contained"
-              sx={{ borderRadius: 9999 }}
+              sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
               disabled={!write || claimStopped}
               onClick={handlePurchase}
             >Buy Now</Button>
             <Button
               variant="outlined"
-              sx={{ borderRadius: 9999 }}
+              sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
               onClick={() => disconnect()}
               endIcon={<Icon icon="heroicons-outline:logout" />}
             >
@@ -176,7 +176,7 @@ export default function TabUsdt({ remainedTokenAmount }: IProps) {
             </Button>
           </>
         ) : (
-          <Button variant="contained" sx={{ borderRadius: 9999 }} onClick={() => switchNetwork?.(CHAIN_ID)}>
+          <Button variant="contained" sx={{ borderRadius: 9999, bgcolor: grey[900] }} onClick={() => switchNetwork?.(CHAIN_ID)}>
             Switch to Ethereum
           </Button>
         ) : (

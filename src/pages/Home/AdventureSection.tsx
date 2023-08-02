@@ -2,6 +2,7 @@ import { Box, Button, Container, Grid, Icon as MuiIcon, Stack, Typography, useTh
 import { Icon } from "@iconify/react";
 import { grey } from "@mui/material/colors";
 import SectionTitle from "../../components/SectionTitle";
+import { PY_OF_SECTION } from "../../utils/constants";
 
 // --------------------------------------------------------------------------------------------------
 
@@ -37,34 +38,47 @@ export default function AdventureSection() {
   const theme = useTheme()
 
   return (
-    <Box component="section" py={12}>
+    <Box component="section" py={PY_OF_SECTION}>
       <Container id="adventures">
-        <Grid container spacing={4} flexDirection={{ xs: 'column-reverse', md: 'row' }}>
-          <Grid item md={6} sx={{ display: 'flex' }}>
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
             <Box
               component="img"
-              src="/assets/images/image4.png"
+              src="/assets/images/scotty-adventure.png"
               alt=""
               width="100%"
-              height={{ xs: 'none', md:'fit-content' }}
+              height={{ xs: 'none', md: 'fit-content' }}
             />
           </Grid>
 
-          <Grid item md={6}>
-            <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={{ xs: 0, md: 2 }}>JOIN SCOTTY’S QUEST FOR KNOWLEDGE</Typography>
-            <SectionTitle sx={{ my: 1 }}>Scotty's Adventures</SectionTitle>
-            <Stack spacing={{ xs: 1, md: 2 }}>
-              {TEXTS.map(textItem => (
-                <Stack key={textItem.id} direction="row" spacing={2}>
-                  <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 0.5 }} />
-                  <Typography fontSize={16} color={grey[100]}>{textItem.text}</Typography>
+          <Grid item xs={12} md={6}>
+            <Stack spacing={4}>
+              <Stack>
+                <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={{ xs: 0, md: 2 }}>
+                  JOIN SCOTTY’S QUEST FOR KNOWLEDGE
+                </Typography>
+                <SectionTitle>
+                  Scotty's Adventures
+                </SectionTitle>
+              </Stack>
+
+              <Stack spacing={{ xs: 2, mt: 4 }}>
+                <Stack spacing={{ xs: 1, md: 2 }}>
+                  {TEXTS.map(textItem => (
+                    <Stack key={textItem.id} direction="row" spacing={2}>
+                      <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 0.5 }} />
+                      <Typography fontSize={14} color={grey[100]}>{textItem.text}</Typography>
+                    </Stack>
+                  ))}
                 </Stack>
-              ))}
+                <Typography fontSize={14} color={grey[100]}>
+                  It is these powers that made Scotty the AI such a force to be reckoned with in the cryptocurrency world. He is a protector, a guardian, and a champion of the people.
+                </Typography>
+              </Stack>
+              <Box>
+                <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4 }}>Learn More</Button>
+              </Box>
             </Stack>
-            <Typography fontSize={16} color={grey[100]} mt={{ xs: 2, md: 4 }}>
-              It is these powers that made Scotty the AI such a force to be reckoned with in the cryptocurrency world. He is a protector, a guardian, and a champion of the people.
-            </Typography>
-            <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4, mt: { xs: 2, md: 4 } }}>Learn More</Button>
           </Grid>
         </Grid>
       </Container>

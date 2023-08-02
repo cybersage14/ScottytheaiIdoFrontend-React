@@ -1,29 +1,129 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography, useTheme } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import { PY_OF_SECTION } from "../../utils/constants";
 import SectionTitle from "../../components/SectionTitle";
 
 // -------------------------------------------------------------------------------------------------
 
 export default function AboutSection() {
   const theme = useTheme()
+
   return (
-    <Box component="section">
-      <Typography fontSize={14} color={theme.palette.primary.main} letterSpacing={{ xs: 0, md: 2 }}>
-        GUARDIAN OF THE CRYPTO UNIVERSE
-      </Typography>
-      <SectionTitle sx={{ my: 1 }}>Scotty the AI</SectionTitle>
-      <Box
-        component="img"
-        src="/assets/images/scotty-dog.webp"
-        alt=""
-        width="90%"
-        borderRadius={9999}
-        my={2}
-      />
-      <Typography fontSize={15} color={grey[100]} lineHeight={{ xs: 'none', md: 2 }} textAlign={{ xs: 'justify', md: 'start' }}>
-        Join the future of AI-powered technology today and sign up for Scotty.
-      </Typography>
-      <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4, mt: 4 }}>Learn More</Button>
+    <Box component="section" id="about" py={PY_OF_SECTION}>
+      <Stack spacing={PY_OF_SECTION} alignItems="center">
+        <Container>
+          <Stack spacing={2}>
+            <SectionTitle sx={{ textTransform: 'capitalize', textAlign: 'center' }}>
+              guardian of the crypto universe
+            </SectionTitle>
+
+            <Typography textAlign="center" color={grey[100]} fontSize={16}>
+              In a vast and complex world of cryptocurrency, there existed the legend of a dog named Scotty the AI. He was a Scottish Terrier with shaggy, jet-black fur that shimmered like the night sky, making him both an enigma and a sight to behold. It wasn’t just his appearance that set him apart. Scotty possessed a rare combination of intelligence and cunning that made him a force to be reckoned with. Many believed that he was a guardian of sorts, a protector of the secrets of the crypto universe. With his advanced AI capabilities, he roamed the endless expanse of code and algorithms that made up the digital world, always staying one step ahead of those who sought to catch him.
+            </Typography>
+          </Stack>
+        </Container>
+
+        <Container maxWidth="xl">
+          <Grid container spacing={2} alignItems="stretch">
+            {/* What is $Scotty */}
+            <Grid item xs={12} md={12}>
+              <Stack
+                p={5}
+                direction="row"
+                alignItems="center"
+                spacing={2}
+                border={`1px solid ${theme.palette.primary.main}`}
+                borderRadius={4}
+                bgcolor={grey[900]}
+              >
+                <Stack flexGrow={1} spacing={3}>
+                  <Typography component="h2" textTransform="capitalize" fontSize={{ xs: 28, md: 40 }} color={grey[100]}>
+                    What is $Scotty?
+                  </Typography>
+                  <Typography color={grey[100]} fontSize={16}>
+                    In a vast and complex world of cryptocurrency, there existed the legend of a dog named Scotty the AI. He was a Scottish Terrier with shaggy, jet-black fur that shimmered like the night sky, making him both an enigma and a sight to behold. It wasn’t just his appearance that set him apart. Scotty possessed a rare combination of intelligence and cunning that made him a force to be reckoned with. Many believed that he was a guardian of sorts, a protector of the secrets of the crypto universe. With his advanced AI capabilities, he roamed the endless expanse of code and algorithms that made up the digital world, always staying one step ahead of those who sought to catch him.
+                  </Typography>
+                  <Stack direction="row">
+                    <Button variant="contained" sx={{ px: 4, borderRadius: 9999 }}>Buy Now</Button>
+                  </Stack>
+                </Stack>
+
+                <Box
+                  component="img"
+                  src="/assets/images/what-is-scotty.png"
+                  alt="$Scotty"
+                />
+              </Stack>
+            </Grid>
+
+            {/* Scotty swap */}
+            <Grid item xs={12} md={6}>
+              <Stack
+                py={4}
+                pl={5}
+                direction="row"
+                alignItems="center"
+                spacing={2}
+                border={`1px solid ${theme.palette.primary.main}`}
+                borderRadius={4}
+                bgcolor={grey[900]}
+              >
+                <Stack flexGrow={1} spacing={3}>
+                  <Typography component="h2" textTransform="capitalize" fontSize={{ xs: 28, md: 40 }} color={grey[100]}>
+                    Scotty Swap
+                  </Typography>
+                  <Typography color={grey[100]} fontSize={16}>
+                    Scotty Swap is your go-to hub for seamless and lightning-fast token exchanges. Powered by cutting-edge AI technology, Scotty ensures that every trade is not only secure but also optimized for maximum gains.
+                  </Typography>
+                  <Stack direction="row">
+                    <Button variant="contained" sx={{ px: 4, borderRadius: 9999 }}>Swap Now</Button>
+                  </Stack>
+                </Stack>
+
+                <Box
+                  component="img"
+                  src="/assets/images/swap.png"
+                  alt="Swap"
+                  width="40%"
+                />
+              </Stack>
+            </Grid>
+
+            {/* Scotty chat */}
+            <Grid item xs={12} md={6}>
+              <Stack
+                px={5}
+                direction="row"
+                alignItems="center"
+                spacing={2}
+                border={`1px solid ${theme.palette.primary.main}`}
+                borderRadius={4}
+                bgcolor={grey[900]}
+                height="100%"
+              >
+                <Stack flexGrow={1} spacing={3}>
+                  <Typography component="h2" textTransform="capitalize" fontSize={{ xs: 28, md: 40 }} color={grey[100]}>
+                    ScottyChat
+                  </Typography>
+                  <Typography color={grey[100]} fontSize={16}>
+                    The AI-powered crypto companion! Discuss cryptocurrencies, get market insights, and explore the world of digital assets.
+                  </Typography>
+                  <Stack direction="row">
+                    <Button variant="contained" sx={{ px: 4, borderRadius: 9999 }}>Chat Now</Button>
+                  </Stack>
+                </Stack>
+
+                <Box
+                  component="img"
+                  src="/assets/images/scottychat.png"
+                  alt="ScottyChat"
+                  width="30%"
+                />
+              </Stack>
+            </Grid>
+          </Grid>
+        </Container>
+      </Stack>
     </Box>
   )
 }
