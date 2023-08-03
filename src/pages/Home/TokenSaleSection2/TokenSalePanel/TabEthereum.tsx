@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { Box, Button, Grid, Stack } from "@mui/material";
+import { ChangeEvent, useMemo, useState } from "react";
+import { Box, Button, CircularProgress, Grid, Stack } from "@mui/material";
 import { useAccount, useDisconnect, useNetwork, usePrepareSendTransaction, useSendTransaction, useSwitchNetwork, useWaitForTransaction } from "wagmi";
 import { useDebounce } from "use-debounce";
 import { parseEther } from "viem";
@@ -7,30 +7,38 @@ import { toast } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
 import { grey } from "@mui/material/colors";
-import useLoading from "../../../../hooks/useLoading";
-import { CHAIN_ID, CONTRACT_ADDRESS, REGEX_NUMBER_VALID, TOKEN_PRICE_IN_ETHEREUM } from "../../../../utils/constants";
+import { CHAIN_ID, CONTRACT_ADDRESS, IN_PROGRESS, REGEX_NUMBER_VALID } from "../../../../utils/constants";
 import api from "../../../../utils/api";
 import { TextField } from "../../../../components/styledComponents";
+import { ISaleStage } from "../../../../utils/interfaces";
 
 // ---------------------------------------------------------------------------------------
 
 interface IProps {
   remainedTokenAmount: number;
+  scottyPriceInToken: number;
+  investedTokenId: number;
+  currentSaleStage: ISaleStage
 }
 
 // ---------------------------------------------------------------------------------------
 
-export default function TabEthereum({ remainedTokenAmount }: IProps) {
-  const { openLoadingAct, closeLoadingAct } = useLoading()
+export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, currentSaleStage, investedTokenId }: IProps) {
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect()
   const { open } = useWeb3Modal()
   const { chain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
 
+  //  ------------------------------------------------------------------------
+
   const [sellAmount, setSellAmount] = useState<string>('0');
   const [buyAmount, setBuyAmount] = useState<string>('0');
   const [debouncedSellAmount] = useDebounce<string>(sellAmount, 500);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  //  ------------------------------------------------------------------------
 
   const claimStopped = useMemo<boolean>(() => {
     const _buyAmount = Number(buyAmount || '0');
@@ -40,36 +48,63 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
     return true;
   }, [buyAmount, remainedTokenAmount]);
 
+  const sellAmountInNumberType = useMemo<string>(() => {
+    if (sellAmount[0] === '0') {
+      if (sellAmount[1] !== '.')
+        return `${Number(sellAmount)}`
+    }
+    return sellAmount
+  }, [sellAmount])
+
+  const buyAmountInNumberType = useMemo<string>(() => {
+    if (buyAmount[0] === '0') {
+      if (buyAmount[1] !== '.')
+        return `${Number(buyAmount)}`
+    }
+    return buyAmount
+  }, [buyAmount])
+
   /* ----------------- Send Ethereum from the wallet to the contract ------------------ */
   const { config } = usePrepareSendTransaction({
     to: CONTRACT_ADDRESS,
-    value: debouncedSellAmount ? parseEther(`${Number(debouncedSellAmount)}`) : undefined
-  });
-
-  const { data, sendTransaction } = useSendTransaction(config);
-
-  const { isLoading } = useWaitForTransaction({
-    hash: data?.hash,
-    onSuccess: () => {
-      api.post('invest/invest', {
-        investor: address,
-        fundTypeId: 1,
-        fundAmount: Number(debouncedSellAmount),
-        tokenAmount: Number(buyAmount)
-      }).then(response => {
-        console.log('>>>>>>>>> response.data => ', response.data)
-        closeLoadingAct();
-        toast.success('Transaction completed.')
-      }).catch(error => {
-        console.log('>>>>>>>>>>> error => ', error)
-        closeLoadingAct();
-        toast.error('Transaction failed.')
-      });
+    value: debouncedSellAmount ? parseEther(`${Number(debouncedSellAmount)}`) : undefined,
+    onError: (error) => {
+      const errorObject = JSON.parse(JSON.stringify(error))
+      setErrorMessage(errorObject.cause.reason)
     }
   });
-  const handlePurchase = () => {
-    sendTransaction?.();
-  };
+  const { data, sendTransaction: buy } = useSendTransaction({
+    ...config, onError: () => {
+      setLoading(false)
+    }
+  });
+  useWaitForTransaction({
+    hash: data?.hash,
+    onSuccess: () => {
+      api.post('/ido/invest', {
+        investorWalletAddress: address,
+        investedTokenId,
+        investedTokenAmount: Number(debouncedSellAmount),
+        scottyAmount: Number(buyAmount),
+        saleStageId: currentSaleStage.id
+      }).then(() => {
+        toast.success('Transaction completed.')
+        setLoading(false)
+      }).catch(error => {
+        const errorObject = JSON.parse(JSON.stringify(error))
+        console.log('>>>>>>>>>> errorObject => ', errorObject)
+        setLoading(false)
+        toast.error('Transaction failed.')
+      });
+    },
+    onError: (error) => {
+      const errorObject = JSON.parse(JSON.stringify(error))
+      setErrorMessage(errorObject.cause.reason)
+      setLoading(false)
+      toast.error(errorObject.cause.reason)
+    }
+  });
+
   /* --------------------------------------------------------------------------------- */
 
   //  Input sell amount
@@ -78,7 +113,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
 
     if (value.match(REGEX_NUMBER_VALID)) {
       setSellAmount(value);
-      setBuyAmount(String(Number(value) / TOKEN_PRICE_IN_ETHEREUM));
+      setBuyAmount(String(Number(value) / scottyPriceInToken));
     }
   };
 
@@ -88,15 +123,20 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
 
     if (value.match(REGEX_NUMBER_VALID)) {
       setBuyAmount(value);
-      setSellAmount(String(Number(value) * TOKEN_PRICE_IN_ETHEREUM));
+      setSellAmount(String(Number(value) * scottyPriceInToken));
     }
   };
 
-  useEffect(() => {
-    if (isLoading) {
-      openLoadingAct();
+  const handleBuy = () => {
+    if (buy) {
+      setLoading(true)
+      buy()
+    } else {
+      toast.error(errorMessage)
     }
-  }, [isLoading]);
+  }
+
+  //  ------------------------------------------------------------------------
 
   return (
     <Stack alignItems="center" spacing={4}>
@@ -119,7 +159,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
                   />
                 )
               }}
-              value={sellAmount}
+              value={sellAmountInNumberType}
               onChange={handleSellAmount}
             />
           </Grid>
@@ -139,7 +179,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
                   />
                 )
               }}
-              value={buyAmount}
+              value={buyAmountInNumberType}
               onChange={handleBuyAmount}
             />
           </Grid>
@@ -151,11 +191,14 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
             <Button
               variant="contained"
               sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
-              disabled={!sendTransaction || claimStopped}
-              onClick={handlePurchase}
-            >Buy Now</Button>
+              disabled={loading || claimStopped}
+              onClick={handleBuy}
+              endIcon={loading ? <CircularProgress /> : <></>}
+            >
+              {loading ? IN_PROGRESS : 'Buy Now'}
+            </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{ borderRadius: 9999, bgcolor: grey[900] }}
               onClick={() => disconnect()}
               endIcon={<Icon icon="heroicons-outline:logout" />}
@@ -172,7 +215,7 @@ export default function TabEthereum({ remainedTokenAmount }: IProps) {
             variant="contained"
             sx={{ borderRadius: 9999, bgcolor: grey[900], px: 4 }}
             onClick={() => open()}
-          >Buy Now</Button>
+          >Connect Wallet</Button>
         )}
       </Stack>
     </Stack>
