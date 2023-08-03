@@ -418,3 +418,4 @@ export const INVESTED_TOKENS: Array<IInvestedToken> = [
   }
 ];
 export const PY_OF_SECTION = { xs: 6, md: 12 };
+export const INTERVAL_TIME = 2000; 

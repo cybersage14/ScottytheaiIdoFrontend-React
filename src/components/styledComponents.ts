@@ -1,4 +1,8 @@
-import { styled, TextField as MuiTextField } from "@mui/material";
+import {
+  styled,
+  TextField as MuiTextField,
+  Tabs as MuiTabs
+} from "@mui/material";
 import { grey } from "@mui/material/colors";
 
 export const TextField = styled(MuiTextField)({
@@ -16,5 +20,11 @@ export const TextField = styled(MuiTextField)({
   },
   "& .MuiInputBase-input": {
     color: grey[900]
+  }
+});
+
+export const Tabs = styled(MuiTabs)({
+  "& .MuiTabs-indicator": {
+    borderBottom: `2px solid ${grey[900]}`
   }
 });
