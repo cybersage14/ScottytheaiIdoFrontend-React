@@ -6,11 +6,11 @@ import { parseEther } from "viem";
 import { toast } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
+import { grey } from "@mui/material/colors";
 import useLoading from "../../../../hooks/useLoading";
 import { CHAIN_ID, CONTRACT_ADDRESS, REGEX_NUMBER_VALID, TOKEN_PRICE_IN_ETHEREUM } from "../../../../utils/constants";
 import api from "../../../../utils/api";
 import { TextField } from "../../../../components/styledComponents";
-import { grey } from "@mui/material/colors";
 
 // ---------------------------------------------------------------------------------------
 

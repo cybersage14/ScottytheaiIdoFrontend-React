@@ -10,8 +10,6 @@ const TokenSalePanel = lazy(() => import('./TokenSalePanel'))
 //  ---------------------------------------------------------------------------------------------------------
 
 export default function TokenSaleSection2() {
-
-
   return (
     <Box component="section" py={PY_OF_SECTION} bgcolor={grey[900]}>
       {/* Desktop */}

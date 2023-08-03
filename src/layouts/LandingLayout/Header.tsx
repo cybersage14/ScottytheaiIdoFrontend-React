@@ -1,6 +1,10 @@
 import { Box, Button, Container, Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Link as ScrollLink } from 'react-scroll';
+import { Icon } from "@iconify/react";
+import { useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { useWeb3Modal } from "@web3modal/react";
 import { IScrollLink } from "../../utils/interfaces";
+import { CHAIN_ID } from "../../utils/constants";
 
 // ---------------------------------------------------------------------------------------------
 
@@ -32,6 +36,11 @@ const SCROLL_LINKS: Array<IScrollLink> = [
 export default function Header() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { isConnected, address } = useAccount()
+  const { open } = useWeb3Modal()
+  const { chain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
+  const { disconnect } = useDisconnect()
 
   return (
     <Box component="header" position="relative">
@@ -51,7 +60,7 @@ export default function Header() {
         sx={{ objectFit: 'cover' }}
       />
 
-      <Box sx={{ background: 'rgba(0, 0, 0, 0.7)' }} pt={{ xs: 16, md: 24 }} pb={4} position="relative" zIndex={99}>
+      <Box sx={{ background: 'rgba(0, 0, 0, 0.7)' }} pt={{ xs: 16, md: 24 }} pb={4} position="relative" zIndex={10}>
         <Container maxWidth="lg">
           <Stack alignItems="center" gap={{ xs: 2, md: 24 }}>
             <Box
@@ -118,8 +127,27 @@ export default function Header() {
                   ))}
                 </Stack>
               )}
+              {isConnected ? chain?.id === CHAIN_ID ? (
+                <Button
+                  variant="contained"
+                  sx={{ borderRadius: 9999, px: 4, fontSize: { xs: 14, md: 18 } }}
+                  endIcon={<Icon icon="heroicons-outline:logout" />}
+                  onClick={() => disconnect?.()}
+                >{address?.slice(0, 7)}...{address?.slice(-5)}</Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{ borderRadius: 9999, px: 4, fontSize: { xs: 14, md: 18 } }}
+                  onClick={() => switchNetwork?.()}
+                >Switch to Ethereum</Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{ borderRadius: 9999, px: 4, fontSize: { xs: 14, md: 18 } }}
+                  onClick={() => open?.()}
+                >Connect Wallet</Button>
+              )}
 
-              <Button variant="contained" sx={{ borderRadius: 9999, px: 4, fontSize: { xs: 14, md: 18 } }}>Connect Wallet</Button>
             </Stack>
           </Stack>
         </Container>
