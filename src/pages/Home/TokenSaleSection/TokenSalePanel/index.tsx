@@ -43,6 +43,7 @@ export default function TokenSalePanel() {
   //  ------------------------------------------------------------------------------------------------
 
   const handleCurrentTab = (e: SyntheticEvent, newTabValue: string) => {
+    e.preventDefault()
     setCurrentTab(Number(newTabValue))
   }
 
