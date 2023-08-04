@@ -18,6 +18,6 @@ export interface ISaleStage {
   scotty_price_in_usd: number;
   hard_cap: number;
   claimed_scotty_amount: number;
-  start_at: string;
-  end_at: string;
+  start_at: number;
+  end_at: number;
 }

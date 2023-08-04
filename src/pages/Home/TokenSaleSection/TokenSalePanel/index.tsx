@@ -1,6 +1,7 @@
 import { useState, SyntheticEvent, useMemo, useEffect, useRef } from 'react'
-import { Box, CircularProgress, Paper, Stack, Tab, Typography, useTheme } from "@mui/material"
+import { Box, Paper, Stack, Tab, Typography, useTheme } from "@mui/material"
 import { grey } from "@mui/material/colors"
+import { toast } from 'react-toastify'
 import SectionTitle from "../../../../components/SectionTitle"
 import TimePiece from "./TimePiece"
 import ProgressBar from "../../../../components/ProgressBar"
@@ -11,11 +12,11 @@ import api from '../../../../utils/api'
 import { IInvestedToken, ISaleStage } from '../../../../utils/interfaces'
 import { Tabs } from '../../../../components/styledComponents'
 import apiOfCoinLore from '../../../../utils/apiOfCoinLore'
+import ClaimScotty from './ClaimScotty'
 
 //  ----------------------------------------------------------------------------------------------------------
 
 let reloadTimeForInvestedTokens = 0;
-let reloadTimeForCoinLore = 0;
 
 //  ----------------------------------------------------------------------------------------------------------
 
@@ -23,11 +24,16 @@ export default function TokenSalePanel() {
   const theme = useTheme()
 
   const [currentTab, setCurrentTab] = useState<number>(1)
-  const [currentSaleStage, setCurrentSaleStage] = useState<ISaleStage>()
+  const [currentSaleStage, setCurrentSaleStage] = useState<ISaleStage | null>()
   const [investedTokens, setInvestedTokens] = useState<Array<IInvestedToken>>([])
   const [tokenRaised, setTokenRaised] = useState<number>(0)
   const [ethPriceInUsd, setEthPriceInUsd] = useState<number>(0)
   const [claimScottyEnabled, setClaimScottyEnabled] = useState<boolean>(false)
+  const [timeOffset, setTimeOffset] = useState<number>(0)
+  const [days, setDays] = useState<number>(0)
+  const [hours, setHours] = useState<number>(0)
+  const [minutes, setMinutes] = useState<number>(0)
+  const [seconds, setSeconds] = useState<number>(0)
 
   /**
    * It's needed to create ref of currentTab since it's used in setInterval.
@@ -39,34 +45,6 @@ export default function TokenSalePanel() {
   const handleCurrentTab = (e: SyntheticEvent, newTabValue: string) => {
     setCurrentTab(Number(newTabValue))
   }
-
-  // const getCurrentSaleStage = () => {
-  //   api.get('/ido/get-enabled-sale-stage')
-  //     .then(res => {
-  //       setCurrentSaleStage({
-  //         ...res.data,
-  //         enabled: res.data.enabled === 'true' ? true : false,
-  //         scotty_price_in_usd: Number(res.data.scotty_price_in_usd),
-  //         hard_cap: Number(res.data.hard_cap),
-  //         claimed_scotty_amount: Number(res.data.claimed_scotty_amount),
-  //       })
-  //     })
-  //     .catch(error => {
-  //       const errorObject = JSON.parse(JSON.stringify(error))
-  //       console.log('>>>>>>>>>>>> errorObject of getCurrentSaleStage => ', errorObject)
-  //     })
-  // }
-
-  // const getClaimScottyStatus = () => {
-  //   api.get('/ido/claim-scotty-status')
-  //     .then(res => {
-  //       setClaimScottyEnabled(res.data.claim_scotty_enabled === 'true' ? true : false)
-  //     })
-  //     .catch(error => {
-  //       const errorObject = JSON.parse(JSON.stringify(error))
-  //       console.log('>>>>>>>>>>>> errorObject of getClaimScottyStatus => ', errorObject)
-  //     })
-  // }
 
   const getInvestedTokens = () => {
     api.get('/ido/get-invested-tokens')
@@ -106,14 +84,33 @@ export default function TokenSalePanel() {
       .then(res => {
         const { raisedAmount, enabledSaleStage, claimScottyStatusData } = res.data
         setTokenRaised(raisedAmount)
-        setCurrentSaleStage({
-          ...enabledSaleStage,
-          enabled: enabledSaleStage.enabled === 'true' ? true : false,
-          scotty_price_in_usd: Number(enabledSaleStage.scotty_price_in_usd),
-          hard_cap: Number(enabledSaleStage.hard_cap),
-          claimed_scotty_amount: Number(enabledSaleStage.claimed_scotty_amount)
-        })
+
+        if (enabledSaleStage) {
+          setCurrentSaleStage({
+            ...enabledSaleStage,
+            enabled: enabledSaleStage.enabled === 'true' ? true : false,
+            scotty_price_in_usd: Number(enabledSaleStage.scotty_price_in_usd),
+            hard_cap: Number(enabledSaleStage.hard_cap),
+            claimed_scotty_amount: Number(enabledSaleStage.claimed_scotty_amount),
+            start_at: Number(enabledSaleStage.start_at),
+            end_at: Number(enabledSaleStage.end_at)
+          })
+        } else {
+          setCurrentSaleStage(null)
+        }
+
         setClaimScottyEnabled(claimScottyStatusData.claim_scotty_enabled === 'true' ? true : false)
+      })
+      .catch(error => {
+        const errorObject = JSON.parse(JSON.stringify(error))
+        console.log('>>>>>>>>>>>> errorObject of getSaleData => ', errorObject)
+      })
+  }
+
+  const disableCurrentSaleStage = () => {
+    api.put(`/ido/disable-sale-stage/${currentSaleStage?.id}`)
+      .then(() => {
+        toast.info('Current sale has been finished.')
       })
       .catch(error => {
         const errorObject = JSON.parse(JSON.stringify(error))
@@ -153,6 +150,8 @@ export default function TokenSalePanel() {
     return 0
   }, [currentSaleStage])
 
+
+
   //  ------------------------------------------------------------------------------------------------
 
   /**
@@ -174,6 +173,7 @@ export default function TokenSalePanel() {
    * In setInterval, the ref of currentTab is used insetad of currentTab itself.
    */
   useEffect(() => {
+    getSaleData()
     const intervalId = setInterval(() => {
       getSaleData()
     }, INTERVAL_TIME)
@@ -181,15 +181,49 @@ export default function TokenSalePanel() {
   }, [])
 
   useEffect(() => {
-    if (reloadTimeForCoinLore === 0) {
+    getEthPriceInUsd();
+    const intervalId = setInterval(() => {
       getEthPriceInUsd();
-      const intervalId = setInterval(() => {
-        getEthPriceInUsd();
-      }, INTERVAL_TIME_FOR_COINLORE);
-      reloadTimeForCoinLore += 1
-      return () => clearInterval(intervalId);
-    }
+    }, INTERVAL_TIME_FOR_COINLORE);
+    return () => clearInterval(intervalId);
   }, [])
+
+  useEffect(() => {
+    if (currentSaleStage) {
+      const currentDateTimeInMs = new Date().getTime()
+      console.log('>>>>>>>>>> currentDateTimeInMs => ', currentDateTimeInMs)
+      console.log('>>>>>>>>>> currentSaleStage.end_at => ', currentSaleStage.end_at)
+      console.log('>>>>>>>>>> offset => ', currentSaleStage.end_at - currentDateTimeInMs)
+      setTimeOffset(currentSaleStage.end_at - currentDateTimeInMs);
+    }
+  }, [currentSaleStage])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTimeOffset(timeOffset => timeOffset - 1000)
+    }, 1000)
+    return () => clearInterval(intervalId)
+  }, [])
+
+  useEffect(() => {
+    console.log('>>>>>>>>>>>>>>> timeOffset => ', timeOffset)
+    if (timeOffset > 0) {
+      const oneSecond = 1000;
+      const oneMinute = 60 * oneSecond;
+      const oneHour = 60 * oneMinute;
+      const oneDay = 24 * oneHour;
+
+      setDays(Math.floor(timeOffset / oneDay))
+      setHours(Math.floor((timeOffset % oneDay) / oneHour))
+      setMinutes(Math.floor((timeOffset % oneDay % oneHour) / oneMinute))
+      setSeconds(Math.floor((timeOffset % oneDay % oneHour % oneMinute) / oneSecond))
+    } else if (timeOffset < 0) {
+      if (currentSaleStage) {
+        disableCurrentSaleStage()
+      }
+    }
+  }, [timeOffset, currentSaleStage])
+
   //  ------------------------------------------------------------------------------------------------
 
   return (
@@ -204,13 +238,13 @@ export default function TokenSalePanel() {
 
             {/* Time */}
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-              <TimePiece timeValue={14} timeUnit="Days" />
+              <TimePiece timeValue={days} timeUnit="Days" />
               <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
-              <TimePiece timeValue={14} timeUnit="Hours" />
+              <TimePiece timeValue={hours} timeUnit="Hours" />
               <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
-              <TimePiece timeValue={14} timeUnit="Minutes" />
+              <TimePiece timeValue={minutes} timeUnit="Minutes" />
               <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
-              <TimePiece timeValue={14} timeUnit="Seconds" />
+              <TimePiece timeValue={seconds} timeUnit="Seconds" />
             </Stack>
 
             {/* Price */}
@@ -237,7 +271,9 @@ export default function TokenSalePanel() {
               <Typography color={grey[100]} component="span" fontSize={{ xs: 16, md: 24 }}>Tokens Remaining</Typography>
             </Typography>
 
-            {claimScottyEnabled ? (<></>) : (
+            {claimScottyEnabled ? (
+              <ClaimScotty />
+            ) : (
               <Stack alignItems="center" spacing={2}>
                 <Tabs onChange={handleCurrentTab} value={currentTab}>
                   {investedTokens?.map(token => (
@@ -283,10 +319,11 @@ export default function TokenSalePanel() {
           </Stack>
         </Stack>
       ) : (
-        <Stack alignItems="center" justifyContent="center" minHeight={600}>
-          <CircularProgress
-            sx={{ color: grey[900] }}
-          />
+        <Stack alignItems="center" justifyContent="center" minHeight={600} spacing={4}>
+          <SectionTitle sx={{ color: grey[900] }}>No Sale Stage</SectionTitle>
+          {claimScottyEnabled && (
+            <ClaimScotty />
+          )}
         </Stack>
       )}
     </Paper>
