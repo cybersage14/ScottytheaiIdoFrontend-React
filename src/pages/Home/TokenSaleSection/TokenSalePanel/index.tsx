@@ -1,7 +1,6 @@
 import { useState, SyntheticEvent, useMemo, useEffect, useRef } from 'react'
 import { Box, Paper, Stack, Tab, Typography, useTheme } from "@mui/material"
 import { grey } from "@mui/material/colors"
-import { toast } from 'react-toastify'
 import SectionTitle from "../../../../components/SectionTitle"
 import TimePiece from "./TimePiece"
 import ProgressBar from "../../../../components/ProgressBar"
@@ -108,16 +107,16 @@ export default function TokenSalePanel() {
       })
   }
 
-  const disableCurrentSaleStage = () => {
-    api.put(`/ido/disable-sale-stage/${currentSaleStage?.id}`)
-      .then(() => {
-        toast.info('Current sale has been finished.')
-      })
-      .catch(error => {
-        const errorObject = JSON.parse(JSON.stringify(error))
-        console.log('>>>>>>>>>>>> errorObject of getSaleData => ', errorObject)
-      })
-  }
+  // const disableCurrentSaleStage = () => {
+  //   api.put(`/ido/disable-sale-stage/${currentSaleStage?.id}`)
+  //     .then(() => {
+  //       toast.info('Current sale has been finished.')
+  //     })
+  //     .catch(error => {
+  //       const errorObject = JSON.parse(JSON.stringify(error))
+  //       console.log('>>>>>>>>>>>> errorObject of getSaleData => ', errorObject)
+  //     })
+  // }
 
   //  ------------------------------------------------------------------------------------------------
 
@@ -150,8 +149,6 @@ export default function TokenSalePanel() {
     }
     return 0
   }, [currentSaleStage])
-
-
 
   //  ------------------------------------------------------------------------------------------------
 
@@ -218,10 +215,6 @@ export default function TokenSalePanel() {
       setHours(Math.floor((timeOffset % oneDay) / oneHour))
       setMinutes(Math.floor((timeOffset % oneDay % oneHour) / oneMinute))
       setSeconds(Math.floor((timeOffset % oneDay % oneHour % oneMinute) / oneSecond))
-    } else if (timeOffset < 0) {
-      if (currentSaleStage) {
-        disableCurrentSaleStage()
-      }
     }
   }, [timeOffset, currentSaleStage])
 
