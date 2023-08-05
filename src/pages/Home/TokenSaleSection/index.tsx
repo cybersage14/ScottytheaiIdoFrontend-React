@@ -1,11 +1,7 @@
-import { lazy } from "react";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { PY_OF_SECTION } from "../../../utils/constants";
-
-//  ---------------------------------------------------------------------------------------------------------
-
-const TokenSalePanel = lazy(() => import('./TokenSalePanel'))
+import TokenSalePanel from "./TokenSalePanel";
 
 //  ---------------------------------------------------------------------------------------------------------
 

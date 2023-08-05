@@ -1,10 +1,6 @@
-import { lazy } from "react";
 import { Navigate, useRoutes } from "react-router";
 import LandingLayout from "./layouts/LandingLayout";
-
-// -------------------------------------------------------------------------------------------
-
-const Home = lazy(() => import('./pages/Home'))
+import Home from "./pages/Home";
 
 // -------------------------------------------------------------------------------------------
 

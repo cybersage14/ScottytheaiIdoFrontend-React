@@ -314,7 +314,9 @@ export default function TokenSalePanel() {
         </Stack>
       ) : (
         <Stack alignItems="center" justifyContent="center" minHeight={600} spacing={4}>
-          <SectionTitle sx={{ color: grey[900] }}>No Sale Stage</SectionTitle>
+          <SectionTitle sx={{ color: grey[900] }}>
+            {claimScottyEnabled ? 'Claim $Scotty now.' : 'No Sale Stage'}
+          </SectionTitle>
           {claimScottyEnabled && (
             <ClaimScotty />
           )}

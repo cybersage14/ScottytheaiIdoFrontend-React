@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material'
 import { WagmiConfig, createConfig, mainnet } from 'wagmi'
 import { EthereumClient, w3mConnectors } from '@web3modal/ethereum'
@@ -9,6 +8,7 @@ import { Web3Modal } from '@web3modal/react'
 import Routes from './Routes'
 import { LoadingProvider } from './contexts/LoadingContext'
 import Loading from './components/Loading'
+import { InitLoadingProvider } from './contexts/InitLoadingContext'
 
 //  -----------------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains)
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Suspense fallback={<Loading />}>
+      <InitLoadingProvider>
         <LoadingProvider>
           <WagmiConfig config={wagmiConfig}>
             <BrowserRouter>
@@ -73,8 +73,8 @@ function App() {
             </BrowserRouter>
           </WagmiConfig>
         </LoadingProvider>
-        <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
-      </Suspense>
+      </InitLoadingProvider>
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </ThemeProvider>
   )
 }
