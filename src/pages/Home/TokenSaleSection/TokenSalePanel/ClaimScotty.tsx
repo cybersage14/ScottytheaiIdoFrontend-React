@@ -53,7 +53,9 @@ export default function ClaimScotty() {
   const getClaimableScottyAmount = () => {
     api.get(`/ido/get-claimable-scotty-amount-of-investor/${address}`)
       .then(res => {
-        setClaimableScottyAmount(Number(res.data.claimable_scotty_amount))
+        if (res.data.claimable_scotty_amount) {
+          setClaimableScottyAmount(Number(res.data.claimable_scotty_amount))
+        }
       })
       .catch(error => {
         const errorObject = JSON.parse(JSON.stringify(error))
@@ -96,7 +98,7 @@ export default function ClaimScotty() {
               </Stack>
               <Button
                 variant="contained"
-                disabled={claimableScottyAmount === Number(amount)}
+                disabled={claimableScottyAmount === Number(amount) || claimableScottyAmount === 0}
                 sx={{ borderRadius: 9999 }}
                 onClick={() => setAmount(`${claimableScottyAmount}`)}
               >Max</Button>

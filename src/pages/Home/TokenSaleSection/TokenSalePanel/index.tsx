@@ -15,10 +15,6 @@ import ClaimScotty from './ClaimScotty'
 
 //  ----------------------------------------------------------------------------------------------------------
 
-let reloadTimeForInvestedTokens = 0;
-
-//  ----------------------------------------------------------------------------------------------------------
-
 export default function TokenSalePanel() {
   const theme = useTheme()
 
@@ -84,7 +80,6 @@ export default function TokenSalePanel() {
       .then(res => {
         const { raisedAmount, enabledSaleStage, claimScottyStatusData } = res.data
         setTokenRaised(raisedAmount)
-
         if (enabledSaleStage) {
           setCurrentSaleStage({
             ...enabledSaleStage,
@@ -107,17 +102,6 @@ export default function TokenSalePanel() {
       })
   }
 
-  // const disableCurrentSaleStage = () => {
-  //   api.put(`/ido/disable-sale-stage/${currentSaleStage?.id}`)
-  //     .then(() => {
-  //       toast.info('Current sale has been finished.')
-  //     })
-  //     .catch(error => {
-  //       const errorObject = JSON.parse(JSON.stringify(error))
-  //       console.log('>>>>>>>>>>>> errorObject of getSaleData => ', errorObject)
-  //     })
-  // }
-
   //  ------------------------------------------------------------------------------------------------
 
   const saleProgressInPercentage = useMemo<number>(() => {
@@ -134,7 +118,6 @@ export default function TokenSalePanel() {
       if (currentTab === 1) {
         return currentSaleStage.scotty_price_in_usd / ethPriceInUsd
       } else if (currentTab === 2) {
-        console.log('>>>>>>>> currentSaleStage => ', currentSaleStage)
         return currentSaleStage.scotty_price_in_usd
       }
     }
@@ -161,10 +144,7 @@ export default function TokenSalePanel() {
   }, [currentTab])
 
   useEffect(() => {
-    if (reloadTimeForInvestedTokens === 0) {
-      getInvestedTokens()
-      reloadTimeForInvestedTokens += 1
-    }
+    getInvestedTokens()
   }, [])
 
   /**
@@ -189,9 +169,6 @@ export default function TokenSalePanel() {
   useEffect(() => {
     if (currentSaleStage) {
       const currentDateTimeInMs = new Date().getTime()
-      console.log('>>>>>>>>>> currentDateTimeInMs => ', currentDateTimeInMs)
-      console.log('>>>>>>>>>> currentSaleStage.end_at => ', currentSaleStage.end_at)
-      console.log('>>>>>>>>>> offset => ', currentSaleStage.end_at - currentDateTimeInMs)
       setTimeOffset(currentSaleStage.end_at - currentDateTimeInMs);
     }
   }, [currentSaleStage])
@@ -204,7 +181,6 @@ export default function TokenSalePanel() {
   }, [])
 
   useEffect(() => {
-    console.log('>>>>>>>>>>>>>>> timeOffset => ', timeOffset)
     if (timeOffset > 0) {
       const oneSecond = 1000;
       const oneMinute = 60 * oneSecond;
