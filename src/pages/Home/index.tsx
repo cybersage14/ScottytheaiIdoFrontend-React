@@ -18,11 +18,6 @@ export default function Home() {
       <CompanionsSection />
       <HowToBuySection />
       <PlanSection />
-      <Box
-        component="img"
-        src="/assets/images/rockets.png"
-        width="100%"
-      />
       <CommunitySection />
     </Box>
   )
