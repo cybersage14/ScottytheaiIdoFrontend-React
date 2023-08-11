@@ -44,17 +44,16 @@ export default function LandingLayout() {
       ) : (
         <Stack sx={{ minHeight: '100vh' }} bgcolor={theme.palette.background.default}>
           <Topbar />
-          <Header />
           {isMobile ? (
-            <Box component="nav" bgcolor="black" py={2}>
+            <Box component="nav" bgcolor="black" py={2} position="relative" zIndex={20}>
               <Container>
-                <Stack component="nav" direction="row" justifyContent="space-between" alignItems="center">
-                  <Box
+                <Stack component="nav" direction="row" justifyContent="end" alignItems="center">
+                  {/* <Box
                     component="img"
                     src="/assets/images/hero-logo.png"
                     alt="Logo"
                     width="50%"
-                  />
+                  /> */}
 
                   <Box pt={1} px={1} borderRadius={1} bgcolor={grey[900]} onClick={() => setMobileMenuOpened(true)}>
                     <Box
@@ -68,6 +67,7 @@ export default function LandingLayout() {
           ) : (
             <></>
           )}
+          <Header />
           {navbarVisible ? isMobile ? (
             <MBNavbar setMobileMenuOpened={setMobileMenuOpened} />
           ) : (
