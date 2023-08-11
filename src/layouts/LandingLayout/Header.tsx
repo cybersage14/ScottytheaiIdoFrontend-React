@@ -25,7 +25,7 @@ export default function Header() {
         sx={{ objectFit: 'cover' }}
       />
 
-      <Box sx={{ background: 'rgba(0, 0, 0, 0.7)' }} pt={{ xs: 16, md: 36 }} pb={{ xs: 16, md: 0 }} position="relative" zIndex={10} px={2}>
+      <Box sx={{ background: 'rgba(0, 0, 0, 0.7)' }} pt={{ xs: 16, md: 36 }} pb={{ xs: 16, md: 0 }} position="relative" zIndex={10} pl={4} pr="12%">
         <Stack alignItems="center" gap={{ xs: 8, md: 36 }}>
           <Box
             component="img"
