@@ -9,16 +9,16 @@ export default function TokenSaleSection() {
     <Box component="section" bgcolor={grey[900]}>
       {/* Desktop */}
       <Box display={{ xs: 'none', md: 'block' }}>
-        <Grid container alignItems="center">
-          <Grid item md={8}>
-            <Stack alignItems="center" spacing={2}>
-              <Box
-                component="img"
-                src="/assets/images/developer-scotty.png"
-                alt="Developer Scotty"
-                width="100%"
-              />
-            </Stack>
+        <Grid container alignItems="stretch">
+          <Grid item md={8} sx={{ height: '100%' }}>
+            <Box
+              component="img"
+              src="/assets/images/developer-scotty.png"
+              alt="Developer Scotty"
+              height="100%"
+              width="100%"
+              sx={{ objectFit: 'cover' }}
+            />
           </Grid>
 
           <Grid item md={4} sx={{ pr: 2 }}>

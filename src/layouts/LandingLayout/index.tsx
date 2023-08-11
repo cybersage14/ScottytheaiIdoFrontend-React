@@ -9,7 +9,7 @@ import Topbar from './Topbar'
 import Header from './Header'
 import Footer from './Footer'
 import MBNavbar from './MBNavbar'
-import DPNavbar from './DPNavbar'
+// import DPNavbar from './DPNavbar'
 import { SCROLL_LINKS, THIRD_PARTY_LINKS } from '../../utils/constants'
 
 // --------------------------------------------------------------------------------------------------
@@ -71,7 +71,8 @@ export default function LandingLayout() {
           {navbarVisible ? isMobile ? (
             <MBNavbar setMobileMenuOpened={setMobileMenuOpened} />
           ) : (
-            <DPNavbar />
+            // <DPNavbar />
+            <></>
           ) : (
             <></>
           )}

@@ -197,107 +197,109 @@ export default function TokenSalePanel() {
   //  ------------------------------------------------------------------------------------------------
 
   return (
-    <Paper sx={{ bgcolor: theme.palette.primary.main, py: 6, px: 4, borderRadius: 4 }}>
-      {currentSaleStage && investedTokens.length > 0 ? (
-        <Stack alignItems="center" spacing={3}>
-          <Stack alignItems="center" spacing={3} width="100%">
-            {/* Title */}
-            <SectionTitle sx={{ color: grey[900], fontWeight: 700 }}>
-              {currentSaleStage.name}
-            </SectionTitle>
+    <Paper sx={{ bgcolor: theme.palette.primary.main, borderRadius: 4, height: '100%' }}>
+      <Box sx={{ py: 6, px: 4 }}>
+        {currentSaleStage && investedTokens.length > 0 ? (
+          <Stack alignItems="center" spacing={3}>
+            <Stack alignItems="center" spacing={3} width="100%">
+              {/* Title */}
+              <SectionTitle sx={{ color: grey[900], fontWeight: 700 }}>
+                {currentSaleStage.name}
+              </SectionTitle>
 
-            {/* Time */}
-            <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-              <TimePiece timeValue={days} timeUnit="Days" />
-              <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
-              <TimePiece timeValue={hours} timeUnit="Hours" />
-              <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
-              <TimePiece timeValue={minutes} timeUnit="Minutes" />
-              <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
-              <TimePiece timeValue={seconds} timeUnit="Seconds" />
+              {/* Time */}
+              <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
+                <TimePiece timeValue={days} timeUnit="Days" />
+                <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
+                <TimePiece timeValue={hours} timeUnit="Hours" />
+                <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
+                <TimePiece timeValue={minutes} timeUnit="Minutes" />
+                <Typography component="span" color={grey[100]} fontSize={28}>:</Typography>
+                <TimePiece timeValue={seconds} timeUnit="Seconds" />
+              </Stack>
+
+              {/* Price */}
+              <Stack>
+                <Typography color={grey[100]} fontWeight={600} fontSize={{ xs: 16, md: 24 }} textAlign="center">
+                  1 SCOTTY =&nbsp;
+                  <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
+                    {scottyPriceInToken.toFixed(VISIBLE_DECIMALS)} {investedTokens[currentTab - 1].token_symbol}
+                  </Typography>
+                </Typography>
+                <Typography color={grey[100]} fontWeight={600} fontSize={{ xs: 16, md: 24 }} textAlign="center">
+                  <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
+                    {tokenRaised}
+                  </Typography> {investedTokens[currentTab - 1].token_symbol} Raised
+                </Typography>
+              </Stack>
             </Stack>
 
-            {/* Price */}
-            <Stack>
-              <Typography color={grey[100]} fontWeight={600} fontSize={{ xs: 16, md: 24 }} textAlign="center">
-                1 SCOTTY =&nbsp;
-                <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
-                  {scottyPriceInToken.toFixed(VISIBLE_DECIMALS)} {investedTokens[currentTab - 1].token_symbol}
-                </Typography>
+            <ProgressBar value={saleProgressInPercentage} />
+
+            <Stack alignItems="center" spacing={4}>
+              <Typography color={grey[900]} fontWeight={600} fontSize={{ xs: 16, md: 24 }}>
+                {currentSaleStage.hard_cap - currentSaleStage.claimed_scotty_amount}&nbsp;
+                <Typography color={grey[100]} component="span" fontSize={{ xs: 16, md: 24 }}>Tokens Remaining</Typography>
               </Typography>
-              <Typography color={grey[100]} fontWeight={600} fontSize={{ xs: 16, md: 24 }} textAlign="center">
-                <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
-                  {tokenRaised}
-                </Typography> {investedTokens[currentTab - 1].token_symbol} Raised
-              </Typography>
+
+              {claimScottyEnabled ? (
+                <ClaimScotty />
+              ) : (
+                <Stack alignItems="center" spacing={2}>
+                  <Tabs onChange={handleCurrentTab} value={currentTab}>
+                    {investedTokens?.map(token => (
+                      <Tab
+                        key={token.id}
+                        label={
+                          <Stack direction="row" alignItems="center" spacing={1}>
+                            <Box
+                              component="img"
+                              src={token.img_src}
+                              alt={token.token_symbol}
+                              width={24}
+                            />
+                            <Typography
+                              component="span"
+                              color={currentTab === token.id ? grey[900] : grey[100]}
+                              fontSize={{ xs: 16, md: 24 }}
+                            >{token.token_name}</Typography>
+                          </Stack>
+                        }
+                        value={token.id}
+                      />
+                    ))}
+                  </Tabs>
+
+                  {currentTab === 1 ? (
+                    <TabEthereum
+                      remainedTokenAmount={remainedTokenAmount}
+                      scottyPriceInToken={scottyPriceInToken}
+                      investedTokenId={currentTab}
+                      currentSaleStage={currentSaleStage}
+                    />
+                  ) : (
+                    <TabUsdt
+                      remainedTokenAmount={remainedTokenAmount}
+                      scottyPriceInToken={scottyPriceInToken}
+                      investedTokenId={currentTab}
+                      currentSaleStage={currentSaleStage}
+                    />
+                  )}
+                </Stack>
+              )}
             </Stack>
           </Stack>
-
-          <ProgressBar value={saleProgressInPercentage} />
-
-          <Stack alignItems="center" spacing={4}>
-            <Typography color={grey[900]} fontWeight={600} fontSize={{ xs: 16, md: 24 }}>
-              {currentSaleStage.hard_cap - currentSaleStage.claimed_scotty_amount}&nbsp;
-              <Typography color={grey[100]} component="span" fontSize={{ xs: 16, md: 24 }}>Tokens Remaining</Typography>
-            </Typography>
-
-            {claimScottyEnabled ? (
+        ) : (
+          <Stack alignItems="center" justifyContent="center" minHeight={600} spacing={4}>
+            <SectionTitle sx={{ color: grey[900] }}>
+              {claimScottyEnabled ? 'Claim $Scotty now.' : 'No Sale Stage'}
+            </SectionTitle>
+            {claimScottyEnabled && (
               <ClaimScotty />
-            ) : (
-              <Stack alignItems="center" spacing={2}>
-                <Tabs onChange={handleCurrentTab} value={currentTab}>
-                  {investedTokens?.map(token => (
-                    <Tab
-                      key={token.id}
-                      label={
-                        <Stack direction="row" alignItems="center" spacing={1}>
-                          <Box
-                            component="img"
-                            src={token.img_src}
-                            alt={token.token_symbol}
-                            width={24}
-                          />
-                          <Typography
-                            component="span"
-                            color={currentTab === token.id ? grey[900] : grey[100]}
-                            fontSize={{ xs: 16, md: 24 }}
-                          >{token.token_name}</Typography>
-                        </Stack>
-                      }
-                      value={token.id}
-                    />
-                  ))}
-                </Tabs>
-
-                {currentTab === 1 ? (
-                  <TabEthereum
-                    remainedTokenAmount={remainedTokenAmount}
-                    scottyPriceInToken={scottyPriceInToken}
-                    investedTokenId={currentTab}
-                    currentSaleStage={currentSaleStage}
-                  />
-                ) : (
-                  <TabUsdt
-                    remainedTokenAmount={remainedTokenAmount}
-                    scottyPriceInToken={scottyPriceInToken}
-                    investedTokenId={currentTab}
-                    currentSaleStage={currentSaleStage}
-                  />
-                )}
-              </Stack>
             )}
           </Stack>
-        </Stack>
-      ) : (
-        <Stack alignItems="center" justifyContent="center" minHeight={600} spacing={4}>
-          <SectionTitle sx={{ color: grey[900] }}>
-            {claimScottyEnabled ? 'Claim $Scotty now.' : 'No Sale Stage'}
-          </SectionTitle>
-          {claimScottyEnabled && (
-            <ClaimScotty />
-          )}
-        </Stack>
-      )}
+        )}
+      </Box>
     </Paper>
   )
 }
