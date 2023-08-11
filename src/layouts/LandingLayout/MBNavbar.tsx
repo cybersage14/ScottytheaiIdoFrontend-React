@@ -16,7 +16,7 @@ export default function MBNavbar({ setMobileMenuOpened }: IProps) {
           width="50%"
         />
 
-        <Box pt={1} px={1} borderRadius={1} bgcolor={grey[900]} onClick={() => setMobileMenuOpened(true)}>
+        <Box pt={1} px={1} borderRadius={1} bgcolor={grey[800]} onClick={() => setMobileMenuOpened(true)}>
           <Box
             component="img"
             src="/assets/images/mobile-menu-icon.png"

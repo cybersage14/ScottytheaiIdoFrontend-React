@@ -54,7 +54,7 @@ const TEXTS_OF_PHASE_2: Array<IText> = [
   },
   {
     id: 5,
-    text: 'Scotty Awareness Campaign'
+    text: 'Scotty Picks Beta'
   }
 ]
 
