@@ -1,17 +1,16 @@
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { PY_OF_SECTION } from "../../../utils/constants";
 import TokenSalePanel from "./TokenSalePanel";
 
 //  ---------------------------------------------------------------------------------------------------------
 
 export default function TokenSaleSection() {
   return (
-    <Box component="section" py={PY_OF_SECTION} bgcolor={grey[900]}>
+    <Box component="section" bgcolor={grey[900]}>
       {/* Desktop */}
-      <Container maxWidth="xl" sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Box display={{ xs: 'none', md: 'block' }}>
         <Grid container alignItems="center">
-          <Grid item md={7}>
+          <Grid item md={8}>
             <Stack alignItems="center" spacing={2}>
               <Box
                 component="img"
@@ -19,23 +18,17 @@ export default function TokenSaleSection() {
                 alt="Developer Scotty"
                 width="100%"
               />
-              <Typography textAlign="center" color={grey[100]} px={16}>
-                Join the future of AI-powered technology today and sign up for Scotty.
-              </Typography>
-              <Button variant="contained" sx={{ borderRadius: 9999 }}>
-                Learn More
-              </Button>
             </Stack>
           </Grid>
 
-          <Grid item md={5}>
+          <Grid item md={4} sx={{ pr: 2 }}>
             <TokenSalePanel />
           </Grid>
         </Grid>
-      </Container>
+      </Box>
 
       {/* Mobile */}
-      <Container sx={{ display: { xs: 'block', md: 'none' } }}>
+      <Box display={{ xs: 'block', md: 'none' }} pb={4}>
         <Stack spacing={4}>
           <Box
             component="img"
@@ -43,17 +36,21 @@ export default function TokenSaleSection() {
             alt="Developer Scotty"
             width="100%"
           />
-          <TokenSalePanel />
-          <Stack alignItems="center" spacing={2}>
-            <Typography textAlign="center" color={grey[100]} fontSize={16}>
-              Join the future of AI-powered technology today and sign up for Scotty.
-            </Typography>
-            <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 14 }}>
-              Learn More
-            </Button>
-          </Stack>
+          <Container>
+            <Stack spacing={4}>
+              <TokenSalePanel />
+              <Stack alignItems="center" spacing={2}>
+                <Typography textAlign="center" color={grey[100]} fontSize={16}>
+                  Join the future of AI-powered technology today and sign up for Scotty.
+                </Typography>
+                <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 14 }}>
+                  Learn More
+                </Button>
+              </Stack>
+            </Stack>
+          </Container>
         </Stack>
-      </Container>
+      </Box>
     </Box>
   )
 }
