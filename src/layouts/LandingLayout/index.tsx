@@ -30,7 +30,7 @@ export default function LandingLayout() {
 
   window.addEventListener('scroll', () => {
     const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 750) {
+    if (scrolled > 770) {
       setNavbarVisible(true)
     } else {
       setNavbarVisible(false)

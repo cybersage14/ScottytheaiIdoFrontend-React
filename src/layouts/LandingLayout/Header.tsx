@@ -49,6 +49,7 @@ export default function Header() {
                 flexWrap="wrap"
                 alignItems="center"
                 gap={2}
+                py={2}
               >
                 {SCROLL_LINKS.map(scrollLink => (
                   <Button key={scrollLink.id} variant="text" sx={{ fontWeight: 500 }}>

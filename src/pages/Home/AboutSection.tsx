@@ -103,7 +103,7 @@ export default function AboutSection() {
                 bgcolor={grey[900]}
                 height={{ xs: 'none', md: '100%' }}
               >
-                <Stack flexGrow={1} spacing={3}>
+                <Stack flexGrow={1} spacing={{ xs: 3, md: 7 }}>
                   <Typography component="h2" textTransform="capitalize" fontSize={{ xs: 28, md: 40 }} color={grey[100]}>
                     ScottyChat
                   </Typography>
