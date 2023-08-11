@@ -25,10 +25,6 @@ const TEXTS: Array<IText> = [
   {
     id: 3,
     text: "Moving through the digital world with lightning-fast agility, darting through the blockchain like a ghost in the machine. Scotty bypasses security systems with ease, slipping through the tiniest gaps in firewalls and encryption algorithms."
-  },
-  {
-    id: 4,
-    text: "His greatest power was his intuition. A sixth sense for detecting fraud and deceit, able to sense when something was off in a transaction or network. When he did, he would spring into action, using his AI abilities to track down the source of the problem and neutralize it before it could do any harm."
   }
 ]
 
@@ -39,8 +35,8 @@ export default function AdventureSection() {
 
   return (
     <Box component="section" py={PY_OF_SECTION}>
-      <Container id="adventures">
-        <Grid container spacing={4} alignItems="center">
+      <Container maxWidth="xl" id="adventures">
+        <Grid container spacing={6} alignItems="center">
           <Grid item xs={12} md={6} sx={{ display: 'flex' }}>
             <Box
               component="img"
@@ -62,19 +58,15 @@ export default function AdventureSection() {
                 </SectionTitle>
               </Stack>
 
-              <Stack spacing={{ xs: 2, mt: 4 }}>
-                <Stack spacing={{ xs: 1, md: 2 }}>
-                  {TEXTS.map(textItem => (
-                    <Stack key={textItem.id} direction="row" spacing={2}>
-                      <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 0.5 }} />
-                      <Typography fontSize={14} color={grey[100]}>{textItem.text}</Typography>
-                    </Stack>
-                  ))}
-                </Stack>
-                <Typography fontSize={14} color={grey[100]}>
-                  It is these powers that made Scotty the AI such a force to be reckoned with in the cryptocurrency world. He is a protector, a guardian, and a champion of the people.
-                </Typography>
+              <Stack spacing={{ xs: 1, md: 2 }}>
+                {TEXTS.map(textItem => (
+                  <Stack key={textItem.id} direction="row" spacing={2}>
+                    <MuiIcon component={Icon} icon="formkit:radio" sx={{ fontSize: 12, color: theme.palette.primary.main, mt: 0.5 }} />
+                    <Typography fontSize={14} color={grey[100]}>{textItem.text}</Typography>
+                  </Stack>
+                ))}
               </Stack>
+
               <Box>
                 <Button variant="contained" sx={{ borderRadius: 9999, fontSize: 16, px: 4 }}>Learn More</Button>
               </Box>

@@ -1,40 +1,40 @@
 import { Box, Container, Grid, LinearProgress, Stack, Typography, useTheme } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { grey, orange } from "@mui/material/colors";
 import { Icon } from "@iconify/react";
 import SectionTitle from "../../components/SectionTitle";
 
 // -------------------------------------------------------------------------------------------------------
 
-interface IFaq {
-  id: number;
-  question: string;
-  answer: string;
-}
+// interface IFaq {
+//   id: number;
+//   question: string;
+//   answer: string;
+// }
 
 // -------------------------------------------------------------------------------------------------------
 
-const FAQS: Array<IFaq> = [
-  {
-    id: 1,
-    question: 'Create a Wallet',
-    answer: 'Download metamask or your wallet of choice from the app store or google play store for free. Desktop users, download the google chrome extension by going to metamask.io.'
-  },
-  {
-    id: 2,
-    question: 'Get Some ETH',
-    answer: 'Have ETH in your wallet to switch to $SCOTTY. If you don’t have any ETH, you can buy directly on metamask, transfer from another wallet, or buy on another exchange and send it to your wallet.'
-  },
-  {
-    id: 3,
-    question: 'Go to Uniswap',
-    answer: 'Connect to Uniswap. Go to app.uniswap.org in google chrome or on the browser inside your Metamask app. Connect your wallet. Paste the $SCOTTY token address into Uniswap, select Scotty, and confirm. When Metamask prompts you for a wallet signature, sign.'
-  },
-  {
-    id: 4,
-    question: 'Switch ETH for $SCOTTY',
-    answer: 'Switch ETH for $SCOTTY. We have ZERO taxes so you don’t need to worry about buying with a specific slippage, although you may need to use slippage during times of market volatility.'
-  }
-]
+// const FAQS: Array<IFaq> = [
+//   {
+//     id: 1,
+//     question: 'Create a Wallet',
+//     answer: 'Download metamask or your wallet of choice from the app store or google play store for free. Desktop users, download the google chrome extension by going to metamask.io.'
+//   },
+//   {
+//     id: 2,
+//     question: 'Get Some ETH',
+//     answer: 'Have ETH in your wallet to switch to $SCOTTY. If you don’t have any ETH, you can buy directly on metamask, transfer from another wallet, or buy on another exchange and send it to your wallet.'
+//   },
+//   {
+//     id: 3,
+//     question: 'Go to Uniswap',
+//     answer: 'Connect to Uniswap. Go to app.uniswap.org in google chrome or on the browser inside your Metamask app. Connect your wallet. Paste the $SCOTTY token address into Uniswap, select Scotty, and confirm. When Metamask prompts you for a wallet signature, sign.'
+//   },
+//   {
+//     id: 4,
+//     question: 'Switch ETH for $SCOTTY',
+//     answer: 'Switch ETH for $SCOTTY. We have ZERO taxes so you don’t need to worry about buying with a specific slippage, although you may need to use slippage during times of market volatility.'
+//   }
+// ]
 
 // -------------------------------------------------------------------------------------------------------
 
@@ -42,52 +42,68 @@ const TOKENOMICS = [
   {
     id: 1,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 2,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 3,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 4,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 5,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 6,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 7,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 8,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 9,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 2
   },
   {
     id: 10,
     label: 'Public Pool 30%',
-    tokenAmount: '3,000,000,000'
+    tokenAmount: '3,000,000,000',
+    status: 1
+  },
+  {
+    id: 11,
+    label: 'Public Pool 30%',
+    tokenAmount: '3,000,000,000',
+    status: 0
   }
 ]
 
@@ -100,7 +116,7 @@ export default function HowToBuySection() {
     <Box component="section" py={{ xs: 6, md: 12 }}>
       <Container sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 8, md: 16 } }}>
         {/* How to buy */}
-        <Box>
+        {/* <Box>
           <SectionTitle variant="h2" sx={{ textAlign: 'center' }}>How to Buy?</SectionTitle>
 
           <Stack spacing={3} sx={{ mt: { xs: 1, md: 0 } }}>
@@ -111,7 +127,7 @@ export default function HowToBuySection() {
               </Stack>
             ))}
           </Stack>
-        </Box>
+        </Box> */}
 
         {/* Supply */}
         <Stack spacing={4}>
@@ -167,7 +183,14 @@ export default function HowToBuySection() {
                     {TOKENOMICS.map(tokenomic => (
                       <Grid key={tokenomic.id} item xs={12} md={6}>
                         <Stack direction="row" alignItems="center" spacing={1}>
-                          <Box component={Icon} icon="mdi:paw" sx={{ fontSize: 36, color: theme.palette.primary.main }} />
+                          <Box
+                            component={Icon}
+                            icon="mdi:paw"
+                            sx={{
+                              fontSize: 36,
+                              color: tokenomic.status === 2 ? theme.palette.primary.main : tokenomic.status === 1 ? orange[900] : grey[900],
+                            }}
+                          />
                           <Stack>
                             <Typography component="span" color={grey[100]} fontSize={16}>{tokenomic.label}</Typography>
                             <Typography component="span" color={theme.palette.primary.main} fontSize={16}>{tokenomic.tokenAmount}</Typography>
