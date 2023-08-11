@@ -177,7 +177,7 @@ export default function SupplySection() {
 
                 <Stack width="fit-content" spacing={3} display={{ xs: 'flex', md: 'none' }}>
                   {TOKENOMICS.map(tokenomic => (
-                    <Stack direction="row" alignItems="center" spacing={1}>
+                    <Stack key={tokenomic.id} direction="row" alignItems="center" spacing={1}>
                       <Box
                         component={Icon}
                         icon="mdi:paw"

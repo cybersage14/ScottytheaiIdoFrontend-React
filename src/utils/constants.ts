@@ -459,3 +459,5 @@ export const THIRD_PARTY_LINKS: Array<IThirdPartyLink> = [
     href: "https://whitepaper.scottytheai.com"
   }
 ];
+export const MIN_LOADING_TIME = 30;
+export const MAX_LOADING_TIME = 60;

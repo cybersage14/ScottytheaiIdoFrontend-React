@@ -43,7 +43,7 @@ export default function AboutSection() {
                   <Typography color={grey[100]} fontSize={16}>
                     In a vast and complex world of cryptocurrency, there existed the legend of a dog named Scotty the AI. He was a Scottish Terrier with shaggy, jet-black fur that shimmered like the night sky, making him both an enigma and a sight to behold. It wasn’t just his appearance that set him apart. Scotty possessed a rare combination of intelligence and cunning that made him a force to be reckoned with. Many believed that he was a guardian of sorts, a protector of the secrets of the crypto universe. With his advanced AI capabilities, he roamed the endless expanse of code and algorithms that made up the digital world, always staying one step ahead of those who sought to catch him.
                   </Typography>
-                  <Stack direction="row">
+                  <Stack direction="row" justifyContent={{ xs: 'center', md: 'start' }}>
                     <Button variant="contained" sx={{ px: 4, borderRadius: 9999, fontSize: { xs: 14, md: 18 } }}>Buy Now</Button>
                   </Stack>
                 </Stack>
@@ -76,7 +76,7 @@ export default function AboutSection() {
                   <Typography color={grey[100]} fontSize={16}>
                     Scotty Swap is your go-to hub for seamless and lightning-fast token exchanges. Powered by cutting-edge AI technology, Scotty ensures that every trade is not only secure but also optimized for maximum gains.
                   </Typography>
-                  <Stack direction="row">
+                  <Stack direction="row" justifyContent={{ xs: 'center', md: 'start' }}>
                     <Button variant="contained" sx={{ px: 4, borderRadius: 9999, fontSize: { xs: 14, md: 18 } }}>Swap Now</Button>
                   </Stack>
                 </Stack>
@@ -110,7 +110,7 @@ export default function AboutSection() {
                   <Typography color={grey[100]} fontSize={16}>
                     The AI-powered crypto companion! Discuss cryptocurrencies, get market insights, and explore the world of digital assets.
                   </Typography>
-                  <Stack direction="row">
+                  <Stack direction="row" justifyContent={{ xs: 'center', md: 'start' }}>
                     <Button variant="contained" sx={{ px: 4, borderRadius: 9999, fontSize: { xs: 14, md: 18 } }}>Chat Now</Button>
                   </Stack>
                 </Stack>
@@ -120,6 +120,7 @@ export default function AboutSection() {
                   src="/assets/images/scottychat.png"
                   alt="ScottyChat"
                   width={{ xs: '50%', md: '30%' }}
+                  sx={{ objectFit: 'contain' }}
                 />
               </Stack>
             </Grid>

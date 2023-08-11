@@ -4,6 +4,7 @@ import { grey } from '@mui/material/colors'
 import { Icon } from '@iconify/react'
 import InitLoadProgressBar from './InitLoadProgressBar'
 import useInitLoading from '../hooks/useInitLoading'
+import { MAX_LOADING_TIME, MIN_LOADING_TIME } from '../utils/constants'
 
 export default function InitLoading() {
   const theme = useTheme()
@@ -13,13 +14,14 @@ export default function InitLoading() {
   const progressValueRef = useRef(progressValue)
   // 
   useEffect(() => {
+    const intervalTime = Math.floor(Math.random() * (MAX_LOADING_TIME - MIN_LOADING_TIME + 1)) + MIN_LOADING_TIME
     const intervalId = setInterval(() => {
       if (progressValueRef.current < 100) {
         setProgressValue(progressValue => progressValue + 1)
       } else {
         closeLoadingAct()
       }
-    }, 40)
+    }, intervalTime)
     return () => clearInterval(intervalId)
   }, [])
 
@@ -70,7 +72,7 @@ export default function InitLoading() {
                 <Icon icon="mdi:twitter" />
               </Button>
               <Button sx={{ bgcolor: grey[900], fontSize: 24, p: 2, borderRadius: 2, color: theme.palette.primary.main }}>
-                <Icon icon="ic:baseline-discord" />
+                <Icon icon="mingcute:telegram-fill" />
               </Button>
             </Stack>
           </Stack>
