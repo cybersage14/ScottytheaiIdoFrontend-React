@@ -11,11 +11,10 @@ export default function InitLoading() {
 
   const [progressValue, setProgressValue] = useState<number>(0)
   const progressValueRef = useRef(progressValue)
-
+  // 
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (progressValueRef.current < 100) {
-        console.log('>>>>>>>>>>>>>>>>>> progressValueRef.current => ', progressValueRef.current)
         setProgressValue(progressValue => progressValue + 1)
       } else {
         closeLoadingAct()
@@ -55,12 +54,12 @@ export default function InitLoading() {
           <Stack
             alignItems="center"
             justifyContent="center"
-            spacing={8}
+            spacing={{ xs: 4, md: 8 }}
             height="100%"
           >
-            <Box component="img" src="/assets/images/hero-logo.png" />
-            <Stack spacing={2} width="100%">
-              <Typography textAlign="center" textTransform="capitalize" color={grey[200]}>
+            <Box component="img" src="/assets/images/hero-logo.png" width={{ xs: '90%', sm: '80%', md: '100%' }} />
+            <Stack spacing={2} width="100%" alignItems="center">
+              <Typography textAlign="center" textTransform="capitalize" color={grey[200]} fontSize={{ xs: 16, md: 24 }}>
                 Initalizing the Systems...
               </Typography>
               <InitLoadProgressBar value={progressValue} />

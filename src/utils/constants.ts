@@ -1,4 +1,4 @@
-import { IInvestedToken } from "./interfaces";
+import { IInvestedToken, IScrollLink, IThirdPartyLink } from "./interfaces";
 
 export const REGEX_NUMBER_VALID = /^[0-9]*\.?[0-9]*$/;
 export const CONTRACT_ADDRESS = "0xB9E3C5693f0B808f50410C4fd28ee7f2B88E1B18";
@@ -423,3 +423,39 @@ export const INTERVAL_TIME_FOR_COINLORE = 600000; //  10 min
 export const VISIBLE_DECIMALS = 6;
 export const IN_PROGRESS = "In Progress";
 export const USDT_DECIMAL = 6;
+export const SCOTTY_CHAT_URL = "https://chat.scottytheai.com";
+export const SCROLL_LINKS: Array<IScrollLink> = [
+  {
+    id: 1,
+    label: "About",
+    to: "about"
+  },
+  {
+    id: 2,
+    label: "Adventures",
+    to: "adventures"
+  },
+  {
+    id: 3,
+    label: "Community",
+    to: "community"
+  },
+  {
+    id: 4,
+    label: "Plans",
+    to: "plans"
+  }
+];
+
+export const THIRD_PARTY_LINKS: Array<IThirdPartyLink> = [
+  {
+    id: 1,
+    label: "Swap",
+    href: "https://swap.scottytheai.com"
+  },
+  {
+    id: 2,
+    label: "Whitepaper",
+    href: "https://whitepaper.scottytheai.com"
+  }
+];

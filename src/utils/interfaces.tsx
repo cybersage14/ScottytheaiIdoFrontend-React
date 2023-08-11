@@ -4,6 +4,12 @@ export interface IScrollLink {
   to: string;
 }
 
+export interface IThirdPartyLink {
+  id: number;
+  label: string;
+  href: string;
+}
+
 export interface IInvestedToken {
   id: number;
   token_symbol: string;
