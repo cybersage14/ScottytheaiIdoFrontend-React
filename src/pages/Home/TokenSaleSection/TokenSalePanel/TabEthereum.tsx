@@ -7,11 +7,11 @@ import { toast } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
 import { grey } from "@mui/material/colors";
+import { bsc } from "wagmi/chains";
 import { CONTRACT_ADDRESS, IN_PROGRESS, REGEX_NUMBER_VALID } from "../../../../utils/constants";
 import api from "../../../../utils/api";
 import { TextField } from "../../../../components/styledComponents";
 import { IInvestedToken, ISaleStage } from "../../../../utils/interfaces";
-import { bsc } from "wagmi/chains";
 
 // ---------------------------------------------------------------------------------------
 
