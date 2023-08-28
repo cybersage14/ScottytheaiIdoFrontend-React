@@ -1,6 +1,6 @@
 import { ChangeEvent, useMemo, useState } from "react";
 import { Box, Button, CircularProgress, Grid, Stack } from "@mui/material";
-import { useAccount, useContractWrite, useDisconnect, useNetwork, usePrepareContractWrite, useSwitchNetwork, useWaitForTransaction } from "wagmi";
+import { mainnet, useAccount, useContractWrite, useDisconnect, useNetwork, usePrepareContractWrite, useSwitchNetwork, useWaitForTransaction } from "wagmi";
 import { useDebounce } from "use-debounce";
 import { toast } from "react-toastify";
 import { useWeb3Modal } from "@web3modal/react";
@@ -8,22 +8,22 @@ import { Icon } from "@iconify/react";
 import { parseUnits } from "viem";
 import { grey } from "@mui/material/colors";
 import { TextField } from "../../../../components/styledComponents";
-import { CHAIN_ID, CONTRACT_ADDRESS, IN_PROGRESS, REGEX_NUMBER_VALID, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, USDT_DECIMAL } from "../../../../utils/constants";
+import { CONTRACT_ADDRESS, IN_PROGRESS, REGEX_NUMBER_VALID, USDT_CONTRACT_ABI, USDT_CONTRACT_ADDRESS, USDT_DECIMAL } from "../../../../utils/constants";
 import api from "../../../../utils/api";
-import { ISaleStage } from "../../../../utils/interfaces";
+import { IInvestedToken, ISaleStage } from "../../../../utils/interfaces";
 
 // ---------------------------------------------------------------------------------------
 
 interface IProps {
   remainedTokenAmount: number;
   scottyPriceInToken: number;
-  investedTokenId: number;
+  investedToken: IInvestedToken;
   currentSaleStage: ISaleStage
 }
 
 // ---------------------------------------------------------------------------------------
 
-export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, investedTokenId, currentSaleStage }: IProps) {
+export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, investedToken, currentSaleStage }: IProps) {
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect();
   const { open } = useWeb3Modal();
@@ -73,7 +73,7 @@ export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, inves
     abi: USDT_CONTRACT_ABI,
     functionName: 'transfer',
     args: [CONTRACT_ADDRESS, parseUnits(`${Number(debouncedSellAmount)}`, USDT_DECIMAL)],
-    chainId: CHAIN_ID,
+    chainId: mainnet.id,
   });
   const { data, write: buy } = useContractWrite({
     ...config,
@@ -86,7 +86,7 @@ export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, inves
     onSuccess: () => {
       api.post('/ido/invest', {
         investorWalletAddress: address,
-        investedTokenId,
+        investedTokenId: investedToken.id,
         investedTokenAmount: Number(debouncedSellAmount),
         scottyAmount: Number(buyAmount),
         saleStageId: currentSaleStage.id
@@ -156,8 +156,8 @@ export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, inves
                 endAdornment: (
                   <Box
                     component="img"
-                    src="https://cryptologos.cc/logos/tether-usdt-logo.svg?v=024"
-                    alt="USDT"
+                    src={investedToken.img_src}
+                    alt={investedToken.token_name}
                     width={32}
                   />
                 )
@@ -189,7 +189,7 @@ export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, inves
         </Grid>
       </Box>
       <Stack display="grid" alignItems="center" spacing={1}>
-        {isConnected ? chain?.id === CHAIN_ID ? (
+        {isConnected ? chain?.id === mainnet.id ? (
           <>
             <Button
               variant="contained"
@@ -210,7 +210,7 @@ export default function TabUsdt({ remainedTokenAmount, scottyPriceInToken, inves
             </Button>
           </>
         ) : (
-          <Button variant="contained" sx={{ borderRadius: 9999, bgcolor: grey[900] }} onClick={() => switchNetwork?.(CHAIN_ID)}>
+          <Button variant="contained" sx={{ borderRadius: 9999, bgcolor: grey[900] }} onClick={() => switchNetwork?.(mainnet.id)}>
             Switch to Ethereum
           </Button>
         ) : (

@@ -1,29 +1,30 @@
 import { ChangeEvent, useMemo, useState } from "react";
 import { Box, Button, CircularProgress, Grid, Stack } from "@mui/material";
-import { useAccount, useDisconnect, useNetwork, usePrepareSendTransaction, useSendTransaction, useSwitchNetwork, useWaitForTransaction } from "wagmi";
+import { mainnet, useAccount, useDisconnect, useNetwork, usePrepareSendTransaction, useSendTransaction, useSwitchNetwork, useWaitForTransaction } from "wagmi";
 import { useDebounce } from "use-debounce";
 import { parseEther } from "viem";
 import { toast } from "react-toastify";
 import { Icon } from "@iconify/react";
 import { useWeb3Modal } from "@web3modal/react";
 import { grey } from "@mui/material/colors";
-import { CHAIN_ID, CONTRACT_ADDRESS, IN_PROGRESS, REGEX_NUMBER_VALID } from "../../../../utils/constants";
+import { CONTRACT_ADDRESS, IN_PROGRESS, REGEX_NUMBER_VALID } from "../../../../utils/constants";
 import api from "../../../../utils/api";
 import { TextField } from "../../../../components/styledComponents";
-import { ISaleStage } from "../../../../utils/interfaces";
+import { IInvestedToken, ISaleStage } from "../../../../utils/interfaces";
+import { bsc } from "wagmi/chains";
 
 // ---------------------------------------------------------------------------------------
 
 interface IProps {
   remainedTokenAmount: number;
   scottyPriceInToken: number;
-  investedTokenId: number;
+  investedToken: IInvestedToken;
   currentSaleStage: ISaleStage
 }
 
 // ---------------------------------------------------------------------------------------
 
-export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, currentSaleStage, investedTokenId }: IProps) {
+export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, currentSaleStage, investedToken }: IProps) {
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect()
   const { open } = useWeb3Modal()
@@ -64,9 +65,17 @@ export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, c
     return buyAmount
   }, [buyAmount])
 
+  const chainId = useMemo<number>(() => {
+    if (investedToken.id === 3) {
+      return bsc.id
+    }
+    return mainnet.id
+  }, [investedToken])
+
   /* ----------------- Send Ethereum from the wallet to the contract ------------------ */
   const { config } = usePrepareSendTransaction({
     to: CONTRACT_ADDRESS,
+    chainId,
     value: debouncedSellAmount ? parseEther(`${Number(debouncedSellAmount)}`) : undefined,
     onError: (error) => {
       const errorObject = JSON.parse(JSON.stringify(error))
@@ -83,7 +92,7 @@ export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, c
     onSuccess: () => {
       api.post('/ido/invest', {
         investorWalletAddress: address,
-        investedTokenId,
+        investedTokenId: investedToken.id,
         investedTokenAmount: Number(debouncedSellAmount),
         scottyAmount: Number(buyAmount),
         saleStageId: currentSaleStage.id
@@ -153,8 +162,8 @@ export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, c
                 endAdornment: (
                   <Box
                     component="img"
-                    src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=025"
-                    alt="Ethereum"
+                    src={investedToken.img_src}
+                    alt={investedToken.token_name}
                     width={32}
                   />
                 )
@@ -186,7 +195,7 @@ export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, c
         </Grid>
       </Box>
       <Stack display="grid" alignItems="center" spacing={1}>
-        {isConnected ? chain?.id === CHAIN_ID ? (
+        {isConnected ? chain?.id === chainId ? (
           <>
             <Button
               variant="contained"
@@ -207,8 +216,8 @@ export default function TabEthereum({ remainedTokenAmount, scottyPriceInToken, c
             </Button>
           </>
         ) : (
-          <Button variant="contained" sx={{ borderRadius: 9999, bgcolor: grey[900] }} onClick={() => switchNetwork?.(CHAIN_ID)}>
-            Switch to Ethereum
+          <Button variant="contained" sx={{ borderRadius: 9999, bgcolor: grey[900] }} onClick={() => switchNetwork?.(chainId)}>
+            Switch to {investedToken.token_name}
           </Button>
         ) : (
           <Button

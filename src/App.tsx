@@ -1,5 +1,6 @@
 import { ThemeProvider, createTheme } from '@mui/material'
 import { WagmiConfig, createConfig, mainnet } from 'wagmi'
+import { bsc } from 'wagmi/chains'
 import { EthereumClient, w3mConnectors } from '@web3modal/ethereum'
 import { createPublicClient, http } from 'viem'
 import { BrowserRouter } from 'react-router-dom'
@@ -47,7 +48,7 @@ const theme = createTheme({
 //  -----------------------------------------------------------------------------------
 
 const projectId = import.meta.env.VITE_PROJECT_ID || ''
-const chains = [mainnet]
+const chains = [mainnet, bsc]
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors: w3mConnectors({ projectId, chains }),

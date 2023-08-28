@@ -4,7 +4,7 @@ import { grey } from "@mui/material/colors"
 import SectionTitle from "../../../../components/SectionTitle"
 import TimePiece from "./TimePiece"
 import ProgressBar from "../../../../components/ProgressBar"
-import { COINLORE_ID_OF_ETHEREUM, INTERVAL_TIME, INTERVAL_TIME_FOR_COINLORE, VISIBLE_DECIMALS } from '../../../../utils/constants'
+import { COINLORE_ID_OF_BNB, COINLORE_ID_OF_ETHEREUM, INTERVAL_TIME, INTERVAL_TIME_FOR_COINLORE, VISIBLE_DECIMALS } from '../../../../utils/constants'
 import TabEthereum from './TabEthereum'
 import TabUsdt from './TabUsdt'
 import api from '../../../../utils/api'
@@ -23,6 +23,7 @@ export default function TokenSalePanel() {
   const [investedTokens, setInvestedTokens] = useState<Array<IInvestedToken>>([])
   const [tokenRaised, setTokenRaised] = useState<number>(0)
   const [ethPriceInUsd, setEthPriceInUsd] = useState<number>(0)
+  const [bnbPriceInUsd, setBnbPriceInUsd] = useState<number>(0)
   const [claimScottyEnabled, setClaimScottyEnabled] = useState<boolean>(false)
   const [timeOffset, setTimeOffset] = useState<number>(0)
   const [days, setDays] = useState<number>(0)
@@ -65,9 +66,10 @@ export default function TokenSalePanel() {
   }
 
   const getEthPriceInUsd = () => {
-    apiOfCoinLore.get(`/ticker/?id=${COINLORE_ID_OF_ETHEREUM}`)
+    apiOfCoinLore.get(`/ticker/?id=${COINLORE_ID_OF_ETHEREUM},${COINLORE_ID_OF_BNB}`)
       .then(res => {
         setEthPriceInUsd(res.data[0].price_usd)
+        setBnbPriceInUsd(res.data[1].price_usd)
       })
       .catch(error => {
         const errorObject = JSON.parse(JSON.stringify(error))
@@ -79,7 +81,11 @@ export default function TokenSalePanel() {
     api.get(`/ido/get-sale-data/${currentTabRef.current}`)
       .then(res => {
         const { raisedAmount, enabledSaleStage, claimScottyStatusData } = res.data
-        setTokenRaised(raisedAmount)
+        if (raisedAmount) {
+          setTokenRaised(raisedAmount)
+        } else {
+          setTokenRaised(0)
+        }
         if (enabledSaleStage) {
           setCurrentSaleStage({
             ...enabledSaleStage,
@@ -119,10 +125,12 @@ export default function TokenSalePanel() {
         return currentSaleStage.scotty_price_in_usd / ethPriceInUsd
       } else if (currentTab === 2) {
         return currentSaleStage.scotty_price_in_usd
+      } else if (currentTab === 3) {
+        return currentSaleStage.scotty_price_in_usd / bnbPriceInUsd
       }
     }
     return 0
-  }, [currentTab, currentSaleStage, ethPriceInUsd])
+  }, [currentTab, currentSaleStage, ethPriceInUsd, bnbPriceInUsd])
 
   const remainedTokenAmount = useMemo<number>(() => {
     if (currentSaleStage) {
@@ -270,18 +278,18 @@ export default function TokenSalePanel() {
                     ))}
                   </Tabs>
 
-                  {currentTab === 1 ? (
+                  {currentTab === 1 || currentTab === 3 ? (
                     <TabEthereum
                       remainedTokenAmount={remainedTokenAmount}
                       scottyPriceInToken={scottyPriceInToken}
-                      investedTokenId={currentTab}
+                      investedToken={investedTokens[currentTab - 1]}
                       currentSaleStage={currentSaleStage}
                     />
                   ) : (
                     <TabUsdt
                       remainedTokenAmount={remainedTokenAmount}
                       scottyPriceInToken={scottyPriceInToken}
-                      investedTokenId={currentTab}
+                      investedToken={investedTokens[currentTab - 1]}
                       currentSaleStage={currentSaleStage}
                     />
                   )}

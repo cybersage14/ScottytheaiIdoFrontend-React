@@ -397,6 +397,7 @@ export const USDT_CONTRACT_ABI = [
 ];
 export const COINLORE_ID_OF_ETHEREUM = 80;
 export const COINLORE_ID_OF_USDT = 518;
+export const COINLORE_ID_OF_BNB = 2710;
 
 //  Temp variables
 export const TOKEN_PRICE_IN_ETHEREUM = 0.00052;
