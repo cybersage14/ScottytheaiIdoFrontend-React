@@ -236,7 +236,7 @@ export default function TokenSalePanel() {
                 </Typography>
                 <Typography color={grey[100]} fontWeight={600} fontSize={{ xs: 16, md: 24 }} textAlign="center">
                   <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
-                    {tokenRaised}
+                    {`${tokenRaised}`.split('.')[1] ? `${tokenRaised}`.split('.')[1].length > 6 ? tokenRaised.toFixed(5) : tokenRaised : tokenRaised}
                   </Typography> {investedTokens[currentTab - 1].token_symbol} Raised
                 </Typography>
               </Stack>
