@@ -21,7 +21,8 @@ export default function TokenSalePanel() {
   const [currentTab, setCurrentTab] = useState<number>(1)
   const [currentSaleStage, setCurrentSaleStage] = useState<ISaleStage | null>()
   const [investedTokens, setInvestedTokens] = useState<Array<IInvestedToken>>([])
-  const [tokenRaised, setTokenRaised] = useState<number>(0)
+  // const [tokenRaised, setTokenRaised] = useState<number>(0)
+  const [totalRaisedInUSD, setTotalRaisedInUSD] = useState<number>(0)
   const [ethPriceInUsd, setEthPriceInUsd] = useState<number>(0)
   const [bnbPriceInUsd, setBnbPriceInUsd] = useState<number>(0)
   const [claimScottyEnabled, setClaimScottyEnabled] = useState<boolean>(false)
@@ -54,16 +55,16 @@ export default function TokenSalePanel() {
       })
   }
 
-  const getInvestedTokenRaised = () => {
-    api.get(`/ido/get-invested-token-raised/${currentTabRef.current}`)
-      .then(res => {
-        setTokenRaised(res.data.raisedAmount)
-      })
-      .catch(error => {
-        const errorObject = JSON.parse(JSON.stringify(error))
-        console.log('>>>>>>>>>>>> errorObject of getInvestedTokens => ', errorObject)
-      })
-  }
+  // const getInvestedTokenRaised = () => {
+  //   api.get(`/ido/get-invested-token-raised/${currentTabRef.current}`)
+  //     .then(res => {
+  //       setTokenRaised(res.data.raisedAmount)
+  //     })
+  //     .catch(error => {
+  //       const errorObject = JSON.parse(JSON.stringify(error))
+  //       console.log('>>>>>>>>>>>> errorObject of getInvestedTokens => ', errorObject)
+  //     })
+  // }
 
   const getEthPriceInUsd = () => {
     apiOfCoinLore.get(`/ticker/?id=${COINLORE_ID_OF_ETHEREUM},${COINLORE_ID_OF_BNB}`)
@@ -80,12 +81,38 @@ export default function TokenSalePanel() {
   const getSaleData = () => {
     api.get(`/ido/get-sale-data/${currentTabRef.current}`)
       .then(res => {
-        const { raisedAmount, enabledSaleStage, claimScottyStatusData } = res.data
-        if (raisedAmount) {
-          setTokenRaised(raisedAmount)
-        } else {
-          setTokenRaised(0)
+        const {
+          raisedAmountByInvestedToken,
+          // raisedAmount, 
+          enabledSaleStage,
+          claimScottyStatusData
+        } = res.data
+        if (raisedAmountByInvestedToken) {
+          if (raisedAmountByInvestedToken.length > 0) {
+            let _totalRaisedInUSD = 0;
+            for (let i = 0; i < raisedAmountByInvestedToken.length; i += 1) {
+              if (raisedAmountByInvestedToken[i].invested_token_amount === 'null') {
+                continue
+              } else {
+                if (raisedAmountByInvestedToken[i].invested_token_symbol === "ETH") {
+                  _totalRaisedInUSD += Number(raisedAmountByInvestedToken[i].invested_token_amount) * ethPriceInUsd
+                } else if (raisedAmountByInvestedToken[i].invested_token_symbol === "BNB") {
+                  _totalRaisedInUSD += Number(raisedAmountByInvestedToken[i].invested_token_amount) * bnbPriceInUsd
+                } else {
+                  _totalRaisedInUSD += Number(raisedAmountByInvestedToken[i].invested_token_amount)
+                }
+              }
+            }
+            setTotalRaisedInUSD(_totalRaisedInUSD)
+          }
         }
+
+        console.log('>>>>>>>>>>> enabledSaleStage => ', enabledSaleStage)
+        // if (raisedAmount) {
+        //   setTokenRaised(raisedAmount)
+        // } else {
+        //   setTokenRaised(0)
+        // }
         if (enabledSaleStage) {
           setCurrentSaleStage({
             ...enabledSaleStage,
@@ -148,7 +175,7 @@ export default function TokenSalePanel() {
    */
   useEffect(() => {
     currentTabRef.current = currentTab
-    getInvestedTokenRaised()
+    // getInvestedTokenRaised()
   }, [currentTab])
 
   useEffect(() => {
@@ -235,9 +262,12 @@ export default function TokenSalePanel() {
                   </Typography>
                 </Typography>
                 <Typography color={grey[100]} fontWeight={600} fontSize={{ xs: 16, md: 24 }} textAlign="center">
-                  <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
+                  {/* <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
                     {`${tokenRaised}`.split('.')[1] ? `${tokenRaised}`.split('.')[1].length > 6 ? tokenRaised.toFixed(5) : tokenRaised : tokenRaised}
-                  </Typography> {investedTokens[currentTab - 1].token_symbol} Raised
+                  </Typography> {investedTokens[currentTab - 1].token_symbol} Raised */}
+                  <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
+                    {totalRaisedInUSD}
+                  </Typography> USDT Raised
                 </Typography>
               </Stack>
             </Stack>
