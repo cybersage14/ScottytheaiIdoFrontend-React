@@ -266,7 +266,7 @@ export default function TokenSalePanel() {
                     {`${tokenRaised}`.split('.')[1] ? `${tokenRaised}`.split('.')[1].length > 6 ? tokenRaised.toFixed(5) : tokenRaised : tokenRaised}
                   </Typography> {investedTokens[currentTab - 1].token_symbol} Raised */}
                   <Typography color={grey[900]} component="span" fontSize={{ xs: 16, md: 24 }}>
-                    {totalRaisedInUSD}
+                    {`${totalRaisedInUSD}`.split('.')[1] ? `${totalRaisedInUSD}`.split('.')[1].length > 6 ? totalRaisedInUSD.toFixed(5) : totalRaisedInUSD : totalRaisedInUSD}
                   </Typography> USDT Raised
                 </Typography>
               </Stack>
